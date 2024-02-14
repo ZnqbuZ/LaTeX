@@ -1,0 +1,226 @@
+ \newcommand{ \twoheadrightarrowfill}{ \rightarrow}
+ \newcommand{ \rightparatrans}[2][]{ \stackrel{ \twoheadrightarrowfill #1}{ #2}}
+
+ \newcommand{ \twoheadleftarrowfill}{ \leftarrow}
+ \newcommand{ \leftparatrans}[2][]{ \stackrel{ #1 \twoheadleftarrowfill}{ #2}}
+
+ \newcommand{ \bra}[1]{ \left( #1 \right)}
+ \newcommand{ \dbra}[2]{ \left( #1, #2 \right)}
+ \newcommand{ \Bra}[1]{ \left \{ #1 \right \}}
+ \newcommand{ \set}[2]{ \left \{ #1 \middle \vert #2 \right \}}
+ \newcommand{ \sqbra}[1]{ \left[ #1 \right]}
+ \newcommand{ \angbra}[1]{ \left< #1 \right>}
+ \newcommand{ \abs}[1]{ \left \vert #1 \right \vert}
+ \newcommand{ \norm}[1]{ \left \Vert #1 \right \Vert}
+
+ \newcommand{ \q}[2]{{ \left. #1 \middle/ #2 \right.}}
+
+ \newcommand{ \rmnum}[1]{{ \romannumeral #1}}
+ \newcommand{ \Rmnum}[1]{{ \uppercase \expandafter{ \romannumeral #1}}}
+
+ \newcommand{ \slnid}[1]{ \textbf{ ( \rmnum{ #1})}}
+
+ \newcommand{ \inv }[ 1 ]{ \frac{ 1 }{ #1 } }
+ \newcommand{ \toinf}[2][]{ \lim_{ #2 \rightarrow #1 \infty}}
+ \newcommand{ \toinfsup}[2][]{ \varlimsup_{ #2 \rightarrow #1 \infty}}
+ \newcommand{ \toinfinf}[2][]{ \varliminf_{ #2 \rightarrow #1 \infty}}
+ \newcommand{ \series}[1][n=1]{ \sum_{ #1}^ \infty}
+ \newcommand{ \product}[1][n=1]{ \prod_{ #1}^ \infty}
+
+ \newcommand{ \x}{ \bra{x}}
+ \newcommand{ \X}{ \bra{X}}
+ \newcommand{ \y}{ \bra{y}}
+ \newcommand{ \Y}{ \bra{Y}}
+ \newcommand{ \nege}{ \bra{-1}}
+ \newcommand{ \e}{ \mathrm{e}}
+ \newcommand{ \transpose}[1]{ \prescript{T}{}{ #1}}
+
+ \newcommand{ \dif}{ \mathrm{d}}
+
+ \newcommand{ \dx}{ \dif x}
+ \newcommand{ \dy}{ \dif y}
+ \newcommand{ \dz}{ \dif z}
+ \newcommand{ \du}{ \dif u}
+ \newcommand{ \dv}{ \dif v}
+ \newcommand{ \ds}{ \dif s}
+ \newcommand{ \dt}{ \dif t}
+ \newcommand{ \dr}{ \dif r}
+ \newcommand{ \da}{ \dif \alpha}
+ \newcommand{ \bdp}{ \dif \symbfit{p}}
+ \newcommand{ \dth}{ \dif \theta}
+ \newcommand{ \dph}{ \dif \varphi}
+
+ \newcommand{ \D}[2]{ \frac{ \dif #1}{ \dif #2}}
+ \newcommand{ \DD}[2]{ \frac{ \dif^2 #1}{ \dif #2^2}}
+
+ \renewcommand{ \P}[2]{ \frac{ \partial #1}{ \partial #2}}
+ \newcommand{ \PP}[2]{ \frac{ \partial^2 #1}{ \partial #2^2}}
+ \newcommand{ \biP}[3]{ \frac{ \partial^2 #1}{ \partial #2 \partial #3}}
+ \newcommand{ \triP}[4]{ \frac{ \partial^3 #1}{ \partial #2 \partial #3 \partial #4}}
+
+ \newcommand{ \Do}[1]{ \D{}{ #1}}
+ \newcommand{ \DDo}[1]{ \DD{}{ #1}}
+
+ \newcommand{ \Po}[1]{ \P{}{ #1}}
+ \newcommand{ \PPo}[1]{ \PP{}{ #1}}
+
+ \newcommand{ \Px}[1]{ \P{ #1}{x}}
+ \newcommand{ \Py}[1]{ \P{ #1}{y}}
+ \newcommand{ \Pz}[1]{ \P{ #1}{z}}
+ \newcommand{ \Pt}[1]{ \P{ #1}{t}}
+ \renewcommand{ \Pr}[1]{ \P{ #1}{r}}
+ \newcommand{ \Pth}[1]{ \P{ #1}{ \theta}}
+ \newcommand{ \Pph}[1]{ \P{ #1}{ \varphi}}
+
+ \newcommand{ \Pxy}[1]{ \biP{ #1}{x}{y}}
+
+ \newcommand{ \PPx}[1]{ \PP{ #1}{x}}
+ \newcommand{ \PPy}[1]{ \PP{ #1}{y}}
+ \newcommand{ \PPz}[1]{ \PP{ #1}{z}}
+ \newcommand{ \PPt}[1]{ \PP{ #1}{t}}
+ \newcommand{ \PPr}[1]{ \PP{ #1}{r}}
+ \newcommand{ \PPth}[1]{ \PP{ #1}{ \theta}}
+ \newcommand{ \PPph}[1]{ \PP{ #1}{ \varphi}}
+
+ \newcommand{ \Dx}[1]{ \D{ #1}{x}}
+ \newcommand{ \Dy}[1]{ \D{ #1}{y}}
+ \newcommand{ \Dz}[1]{ \D{ #1}{z}}
+ \newcommand{ \Dt}[1]{ \D{ #1}{t}}
+ \newcommand{ \Dr}[1]{ \D{ #1}{r}}
+ \newcommand{ \Dth}[1]{ \D{ #1}{ \theta}}
+ \newcommand{ \Dph}[1]{ \D{ #1}{ \varphi}}
+
+ \newcommand{ \DDx}[1]{ \DD{ #1}{x}}
+ \newcommand{ \DDy}[1]{ \DD{ #1}{y}}
+ \newcommand{ \DDz}[1]{ \DD{ #1}{z}}
+ \newcommand{ \DDt}[1]{ \DD{ #1}{t}}
+ \newcommand{ \DDr}[1]{ \DD{ #1}{r}}
+ \newcommand{ \DDth}[1]{ \DD{ #1}{ \theta}}
+ \newcommand{ \DDph}[1]{ \DD{ #1}{ \varphi}}
+
+ \newcommand{ \infint}[3][x]{ \int_{ #2}^{+ \infty} #3 \dif  #1}
+ \newcommand{ \ceil}[1]{ \left \lceil #1 \right \rceil}
+ \newcommand{ \floor}[1]{ \left \lfloor #1 \right \rfloor}
+ \newcommand{ \vepsl}{ \varepsilon}
+
+ \newcommand{ \fserc}[2][n]{ \inv{ \pi} \int_{- \pi}^ \pi #2 \cos #1x \dx}
+ \newcommand{ \fsers}[2][n]{ \inv{ \pi} \int_{- \pi}^ \pi #2 \sin #1x \dx}
+ \newcommand{ \fsero}[1]{ \inv{2 \pi} \int_{- \pi}^ \pi #1 \dx}
+
+ \newcommand{ \diag}[1]{ \diagop \Bra{ #1}}
+
+ \newcommand{ \sint}{ \int \limits}
+ \newcommand{ \dint}{ \iint \limits}
+ \newcommand{ \tint}{ \iiint \limits}
+
+ \newcommand{ \restrict}[3][]{{ \left.{ #2} \right \downarrow_{ #3}^{ #1}}}
+ \newcommand{ \induce}[3][]{{ \left.{ #2} \right \uparrow^{ #3}_{ #1}}}
+
+ \newcommand{ \sumcyc}{ \sum_{ \text{cyc}}}
+
+ \newcommand{ \ol}{ \overline}
+ \newcommand{ \ul}{ \underline}
+ \newcommand{ \wh}{ \widehat}
+ \newcommand{ \wt}{ \widetilde}
+
+ \newcommand{ \id}{ \mathrm{id}}
+
+ \newcommand{ \Pairs}{{ \mathsf{Pairs}}}
+ \newcommand{ \Set}{{ \mathsf{Set}}}
+ \newcommand{ \Top}{{ \mathsf{Top}}}
+ \newcommand{ \Grp}{{ \mathsf{Grp}}}
+ \newcommand{ \Mod}{{ \mathsf{Mod}}}
+ \newcommand{ \Vect}{{ \mathsf{Vect}}}
+ \newcommand{ \Alg}{{ \mathsf{Alg}}}
+
+ \newcommand{ \commacat}[2]{{ \left( #1 \middle \downarrow  #2 \right)}}
+
+ \DeclareMathOperator{ \im}{im}
+ \DeclareMathOperator{ \codim}{codim}
+ \DeclareMathOperator{ \interior}{int}
+ \DeclareMathOperator{ \tr}{tr}
+ \DeclareMathOperator{ \ch}{char}
+ \DeclareMathOperator{ \sgn}{sgn}
+ \DeclareMathOperator{ \diam}{diam}
+ \DeclareMathOperator{ \diagop}{diag}
+ \DeclareMathOperator{ \arcsinh}{arcsinh}
+ \DeclareMathOperator{ \arccosh}{arcsinh}
+ \DeclareMathOperator{ \arctanh}{arcsinh}
+ \DeclareMathOperator{ \arccoth}{arcsinh}
+ \DeclareMathOperator{ \proj}{proj}
+ \DeclareMathOperator{ \rank}{rank}
+ \DeclareMathOperator{ \supp}{supp}
+ \DeclareMathOperator{ \grad}{ \mathbf{grad}}
+ \DeclareMathOperator{ \diver}{div}
+ \DeclareMathOperator{ \curl}{curl}
+ \DeclareMathOperator{ \rot}{ \mathbf{rot}}
+ \DeclareMathOperator{ \ric}{Ricci}
+ \DeclareMathOperator{ \ein}{Einstein}
+ \DeclareMathOperator{ \len}{len}
+ \DeclareMathOperator{ \inc}{inc}
+ \DeclareMathOperator{ \rad}{rad}
+ \DeclareMathOperator{ \soc}{soc}
+ \DeclareMathOperator{ \Ann}{Ann}
+ \DeclareMathOperator{ \Aut}{Aut}
+ \DeclareMathOperator{ \Der}{Der}
+ \DeclareMathOperator{ \End}{End}
+ \DeclareMathOperator{ \Hom}{Hom}
+ \DeclareMathOperator{ \Lie}{Lie}
+ \DeclareMathOperator{ \Syl}{Syl}
+ \DeclareMathOperator{ \Orb}{Orb}
+ \DeclareMathOperator{ \Stab}{Stab}
+ \DeclareMathOperator{ \Gal}{Gal}
+ \DeclareMathOperator{ \A}{A}
+ \DeclareMathOperator{ \M}{M}
+ \DeclareMathOperator{ \GL}{GL}
+ \DeclareMathOperator{ \SL}{SL}
+ \DeclareMathOperator{ \U}{U}
+ \DeclareMathOperator{ \SU}{SU}
+ \DeclareMathOperator{ \OO}{O}
+ \DeclareMathOperator{ \SO}{SO}
+ \DeclareMathOperator{ \hol}{hol}
+ \DeclareMathOperator{ \Hol}{Hol}
+ \DeclareMathOperator{ \ord}{ord}
+ \DeclareMathOperator{ \Norm}{Norm}
+ \DeclareMathOperator{ \Trace}{Trace}
+ \DeclareMathOperator{ \con}{con}
+ \DeclareMathOperator{ \ad}{ad}
+ \DeclareMathOperator{ \Ad}{Ad}
+ \DeclareMathOperator{ \spanspace}{span}
+ \DeclareMathOperator{ \gr}{gr}
+
+ \DeclareMathOperator{ \ob}{ob}
+ \DeclareMathOperator{ \dom}{dom}
+ \DeclareMathOperator{ \codom}{codom}
+ \DeclareMathOperator{ \coker}{coker}
+
+ \DeclareMathOperator{ \rt}{rt}
+
+%  \begin{mathcal abbreviation}
+ \newcommand{ \mcalA}{{ \mathcal{A}}}
+ \newcommand{ \mcalB}{{ \mathcal{B}}}
+ \newcommand{ \mcalC}{{ \mathcal{C}}}
+ \newcommand{ \mcalD}{{ \mathcal{D}}}
+ \newcommand{ \mcalE}{{ \mathcal{E}}}
+ \newcommand{ \mcalF}{{ \mathcal{F}}}
+ \newcommand{ \mcalG}{{ \mathcal{G}}}
+ \newcommand{ \mcalH}{{ \mathcal{H}}}
+ \newcommand{ \mcalI}{{ \mathcal{I}}}
+ \newcommand{ \mcalJ}{{ \mathcal{J}}}
+ \newcommand{ \mcalK}{{ \mathcal{K}}}
+ \newcommand{ \mcalL}{{ \mathcal{L}}}
+ \newcommand{ \mcalM}{{ \mathcal{M}}}
+ \newcommand{ \mcalN}{{ \mathcal{N}}}
+ \newcommand{ \mcalO}{{ \mathcal{O}}}
+ \newcommand{ \mcalP}{{ \mathcal{P}}}
+ \newcommand{ \mcalQ}{{ \mathcal{Q}}}
+ \newcommand{ \mcalR}{{ \mathcal{R}}}
+ \newcommand{ \mcalS}{{ \mathcal{S}}}
+ \newcommand{ \mcalT}{{ \mathcal{T}}}
+ \newcommand{ \mcalU}{{ \mathcal{U}}}
+ \newcommand{ \mcalV}{{ \mathcal{V}}}
+ \newcommand{ \mcalW}{{ \mathcal{W}}}
+ \newcommand{ \mcalX}{{ \mathcal{X}}}
+ \newcommand{ \mcalY}{{ \mathcal{Y}}}
+ \newcommand{ \mcalZ}{{ \mathcal{Z}}}
+%  \end{mathcal abbreviation}

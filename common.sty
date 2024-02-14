@@ -1,0 +1,341 @@
+\RequirePackage[tbtags]{amsmath}
+\RequirePackage{amsthm,thmtools}
+\RequirePackage{amssymb,extarrows,etoolbox,mathtools,tensor}
+\RequirePackage{array}
+\RequirePackage[backend=biber,style=alphabetic]{biblatex}
+\RequirePackage{bm}
+\RequirePackage{booktabs}
+\RequirePackage{cancel}
+\RequirePackage{draftwatermark}
+\RequirePackage{enumerate}
+\RequirePackage[shortlabels]{enumitem}
+\RequirePackage[lastexercise]{exercise}
+\RequirePackage{fancyhdr}
+\RequirePackage{geometry,graphbox,makecell,multicol,setspace,type1cm}
+\RequirePackage[
+    pdfstartview=FitH,
+    CJKbookmarks=true,
+    bookmarksnumbered=true,
+    bookmarksopen=true,
+    colorlinks=true,
+    citecolor=darkred,
+    linkcolor=darkblue,
+]{hyperref}
+\RequirePackage[nameinlink]{cleveref}
+\RequirePackage[indent]{parskip}
+\RequirePackage{pdfpages}
+\RequirePackage{siunitx}
+\RequirePackage{standalone}
+\RequirePackage{tikz-cd,color}
+
+\tikzset{elegant/.style={smooth, red, thick, samples=101}}
+\tikzcdset{arrow style=math font}
+
+\definecolor{darkred}{rgb}{0.6,0,0}
+\definecolor{darkblue}{rgb}{0,0,0.55}
+
+\crefname{equation}{}{}
+
+\renewcommand{\fontsubfuzz}{\maxdimen}
+
+\numberwithin{equation}{section}
+\swapnumbers
+
+\setcounter{secnumdepth}{3}
+
+\raggedbottom
+
+\geometry{left=2cm,right=2cm,top=2cm,bottom=2cm}
+
+\newenvironment{gpmtrx}{\setcellgapes{5pt}\makegapedcells\begin{pmatrix}}{\end{pmatrix}}
+\newenvironment{gvmtrx}{\setcellgapes{5pt}\makegapedcells\begin{vmatrix}}{\end{vmatrix}}
+\newenvironment{garr}[1]{\setcellgapes{5pt}\makegapedcells\begin{array}{#1}}{\end{array}}
+
+\makeatletter
+\newcommand{\pushright}[1]{\ifmeasuring@#1\else\omit\hfill$\displaystyle#1$\fi\ignorespaces}
+
+\newcommand{\twoheadrightarrowfill}{$\m@th \smash -\mkern -7mu\cleaders \hbox {$\mkern -2mu\smash -\mkern -2mu$}\hfill \mkern -7mu \mathord \twoheadrightarrow $}
+
+\newcommand{\twoheadleftarrowfill}{$\m@th \mathord \twoheadleftarrow \mkern -7mu\cleaders \hbox {$\mkern -2mu\smash -\mkern -2mu$}\hfill \mkern -7mu\smash -$}
+
+\newcommand{\rightparatrans}[2][\@nil]{%
+    \def\tmp{#1}%
+    \ifx\tmp\@nnil
+        \vbox {\m@th \ialign {##\crcr \twoheadrightarrowfill \crcr \noalign {\kern -\z@ \nointerlineskip } $\hfil \displaystyle {#2}\hfil $\crcr }}
+    \else
+        \vbox {\m@th \ialign {##\crcr ${\scriptscriptstyle #1}$\!\! \twoheadrightarrowfill  \crcr \noalign {\kern -\z@ \nointerlineskip } $\hfil \displaystyle {#2}\hfil $\crcr }}
+    \fi}
+
+\newcommand{\leftparatrans}[2][\@nil]{%
+    \def\tmp{#1}%
+    \ifx\tmp\@nnil
+        \vbox {\m@th \ialign {##\crcr \twoheadleftarrowfill \crcr \noalign {\kern -\z@ \nointerlineskip } $\hfil \displaystyle {#2}\hfil $\crcr }}
+    \else
+        \vbox {\m@th \ialign {##\crcr \twoheadleftarrowfill ${\scriptscriptstyle #1}$\!\! \crcr \noalign {\kern -\z@ \nointerlineskip } $\hfil \displaystyle {#2}\hfil $\crcr }}
+    \fi}
+
+\DeclarePairedDelimiter\raw@bra\lparen\rparen
+\def\bra{\@ifstar{\raw@bra}{\raw@bra*}}
+\DeclarePairedDelimiterX\raw@dbra[2]\lparen\rparen{#1,#2}
+\def\dbra{\@ifstar{\raw@dbra}{\raw@dbra*}}
+\DeclarePairedDelimiter\raw@Bra\lbrace\rbrace
+\def\Bra{\@ifstar{\raw@Bra}{\raw@Bra*}}
+\DeclarePairedDelimiterX\raw@set[2]\lbrace\rbrace{{#1}\,\delimsize\vert\,\mathopen{}{#2}}
+\def\set{\@ifstar{\raw@set}{\raw@set*}}
+\DeclarePairedDelimiter\raw@sqbra\lbrack\rbrack
+\def\sqbra{\@ifstar{\raw@sqbra}{\raw@sqbra*}}
+\DeclarePairedDelimiter\raw@angbra\langle\rangle
+\def\angbra{\@ifstar{\raw@angbra}{\raw@angbra*}}
+\DeclarePairedDelimiter\raw@abs\lvert\rvert
+\def\abs{\@ifstar{\raw@abs}{\raw@abs*}}
+\DeclarePairedDelimiter\raw@norm\lVert\rVert
+\def\norm{\@ifstar{\raw@norm}{\raw@norm*}}
+\makeatother
+
+\newcommand{\q}[2]{{\left.#1\middle/#2\right.}}
+\newcommand{\coq}[2]{{\left.#1\middle\backslash#2\right.}}
+
+\newcommand{\rmnum}[1]{{\romannumeral#1}}
+\newcommand{\Rmnum}[1]{{\uppercase\expandafter{\romannumeral#1}}}
+
+\newcommand{\slnid}[1]{\textbf{(\rmnum{#1})}}
+
+\newcommand{\inv}[1]{\frac{1}{#1}}
+\newcommand{\toinf}[2][]{\lim_{#2\rightarrow#1\infty}}
+\newcommand{\toinfsup}[2][]{\varlimsup_{#2\rightarrow#1\infty}}
+\newcommand{\toinfinf}[2][]{\varliminf_{#2\rightarrow#1\infty}}
+\newcommand{\series}[1][n=1]{\sum_{#1}^\infty}
+\newcommand{\product}[1][n=1]{\prod_{#1}^\infty}
+
+\newcommand{\x}{\bra{x}}
+\newcommand{\X}{\bra{X}}
+\newcommand{\y}{\bra{y}}
+\newcommand{\Y}{\bra{Y}}
+\newcommand{\nege}{\bra{-1}}
+\newcommand{\e}{\mathrm{e}}
+\newcommand{\transpose}[1]{\prescript{T}{}{#1}}
+
+\newcommand{\dif}{\mathrm{d}}
+
+\newcommand{\dx}{\dif x}
+\newcommand{\dy}{\dif y}
+\newcommand{\dz}{\dif z}
+\newcommand{\du}{\dif u}
+\newcommand{\dv}{\dif v}
+\newcommand{\ds}{\dif s}
+\newcommand{\dt}{\dif t}
+\newcommand{\dr}{\dif r}
+\newcommand{\da}{\dif\alpha}
+\newcommand{\bdp}{\dif\symbfit{p}}
+\newcommand{\dth}{\dif\theta}
+\newcommand{\dph}{\dif\varphi}
+
+\newcommand{\D}[2]{\frac{\dif#1}{\dif#2}}
+\newcommand{\DD}[2]{\frac{\dif^2#1}{\dif#2^2}}
+
+\renewcommand{\P}[2]{\frac{\partial#1}{\partial#2}}
+\newcommand{\PP}[2]{\frac{\partial^2#1}{\partial#2^2}}
+\newcommand{\biP}[3]{\frac{\partial^2#1}{\partial#2\partial#3}}
+\newcommand{\triP}[4]{\frac{\partial^3#1}{\partial#2\partial#3\partial#4}}
+
+\newcommand{\Do}[1]{\D{}{#1}}
+\newcommand{\DDo}[1]{\DD{}{#1}}
+
+\newcommand{\Po}[1]{\P{}{#1}}
+\newcommand{\PPo}[1]{\PP{}{#1}}
+
+\newcommand{\Px}[1]{\P{#1}{x}}
+\newcommand{\Py}[1]{\P{#1}{y}}
+\newcommand{\Pz}[1]{\P{#1}{z}}
+\newcommand{\Pt}[1]{\P{#1}{t}}
+\renewcommand{\Pr}[1]{\P{#1}{r}}
+\newcommand{\Pth}[1]{\P{#1}{\theta}}
+\newcommand{\Pph}[1]{\P{#1}{\varphi}}
+
+\newcommand{\Pxy}[1]{\biP{#1}{x}{y}}
+
+\newcommand{\PPx}[1]{\PP{#1}{x}}
+\newcommand{\PPy}[1]{\PP{#1}{y}}
+\newcommand{\PPz}[1]{\PP{#1}{z}}
+\newcommand{\PPt}[1]{\PP{#1}{t}}
+\newcommand{\PPr}[1]{\PP{#1}{r}}
+\newcommand{\PPth}[1]{\PP{#1}{\theta}}
+\newcommand{\PPph}[1]{\PP{#1}{\varphi}}
+
+\newcommand{\Dx}[1]{\D{#1}{x}}
+\newcommand{\Dy}[1]{\D{#1}{y}}
+\newcommand{\Dz}[1]{\D{#1}{z}}
+\newcommand{\Dt}[1]{\D{#1}{t}}
+\newcommand{\Dr}[1]{\D{#1}{r}}
+\newcommand{\Dth}[1]{\D{#1}{\theta}}
+\newcommand{\Dph}[1]{\D{#1}{\varphi}}
+
+\newcommand{\DDx}[1]{\DD{#1}{x}}
+\newcommand{\DDy}[1]{\DD{#1}{y}}
+\newcommand{\DDz}[1]{\DD{#1}{z}}
+\newcommand{\DDt}[1]{\DD{#1}{t}}
+\newcommand{\DDr}[1]{\DD{#1}{r}}
+\newcommand{\DDth}[1]{\DD{#1}{\theta}}
+\newcommand{\DDph}[1]{\DD{#1}{\varphi}}
+
+\newcommand{\infint}[3][x]{\int_{#2}^{+\infty}#3\dif #1}
+\newcommand{\ceil}[1]{\left\lceil#1\right\rceil}
+\newcommand{\floor}[1]{\left\lfloor#1\right\rfloor}
+\newcommand{\vepsl}{\varepsilon}
+
+\newcommand{\fserc}[2][n]{\inv{\pi}\int_{-\pi}^\pi#2\cos#1x\dx}
+\newcommand{\fsers}[2][n]{\inv{\pi}\int_{-\pi}^\pi#2\sin#1x\dx}
+\newcommand{\fsero}[1]{\inv{2\pi}\int_{-\pi}^\pi#1\dx}
+
+\newcommand{\diag}[1]{\diagop\Bra{#1}}
+
+\newcommand{\sint}{\int\limits}
+\newcommand{\dint}{\iint\limits}
+\newcommand{\tint}{\iiint\limits}
+
+\newcommand{\restrict}[3][]{{\left.{#2}\right\downarrow_{#3}^{#1}}}
+\newcommand{\induce}[3][]{{\left.{#2}\right\uparrow^{#3}_{#1}}}
+
+\newcommand{\sumcyc}{\sum_{\text{cyc}}}
+
+\newcommand{\ol}{\overline}
+\newcommand{\ul}{\underline}
+\newcommand{\wh}{\widehat}
+\newcommand{\wt}{\widetilde}
+
+\newcommand{\id}{\mathrm{id}}
+
+\newcommand{\Cat}{{\mathsf{Cat}}} % categories
+\newcommand{\Fib}{{\mathsf{Fib}}} % fibrations
+\newcommand{\Cone}{{\mathsf{Cone}}} % cones
+\newcommand{\Pairs}{{\mathsf{Pairs}}} % pairs
+\newcommand{\Set}{{\mathsf{Set}}} % sets
+\newcommand{\Top}{{\mathsf{Top}}} % topological spaces
+\newcommand{\Op}{{\mathsf{Op}}} % open sets
+\newcommand{\Man}{{\mathsf{Man}}} % manifolds
+\newcommand{\FBun}{{\mathsf{FBun}}} % fibre bundles
+\newcommand{\VBun}{{\mathsf{VBun}}} % vector bundles
+\newcommand{\PBun}{{\mathsf{PBun}}} % principal bundles
+\newcommand{\Grp}{{\mathsf{Grp}}} % groups
+\newcommand{\Ab}{{\mathsf{Ab}}} % abelian groups
+\newcommand{\LieGrp}{{\mathsf{LieGrp}}} % Lie groups
+\newcommand{\LieGrpd}{{\mathsf{LieGrpd}}} % Lie groupoids
+\newcommand{\LieAlg}{{\mathsf{LieAlg}}} % Lie algebras
+\newcommand{\Grpd}{{\mathsf{Grpd}}} % groupoids
+\newcommand{\Ring}{{\mathsf{Ring}}} % rings
+\newcommand{\CRing}{{\mathsf{CRing}}} % commutative rings
+\newcommand{\Mod}{{\mathsf{Mod}}} % modules
+\newcommand{\Vect}{{\mathsf{Vect}}} % vector spaces
+\newcommand{\Alg}{{\mathsf{Alg}}} % algebras
+\newcommand{\AlgVar}{\mathsf{AlgVar}} % algebraic varieties
+\newcommand{\PSh}{{\mathsf{PSh}}} % presheaves
+\newcommand{\Sh}{{\mathsf{Sh}}} % sheaves
+\newcommand{\Sch}{{\mathsf{Sch}}} % schemes
+\DeclareMathOperator{\FunOp}{\mathsf{Fun}}
+\newcommand{\Fun}[2]{{\FunOp\dbra{#1}{#2}}} % functors
+
+\DeclareMathOperator{\yo}{\text{よ}} % yoneda embedding
+
+\newcommand{\commacat}[2]{{\left(#1\middle\downarrow #2\right)}} % comma category
+
+\DeclareMathOperator{\Def}{Def} % definable sets
+\DeclareMathOperator{\ev}{ev} % evaluation
+\DeclareMathOperator{\im}{im} % image
+\DeclareMathOperator{\codim}{codim} % codimension
+\DeclareMathOperator{\interior}{int} % interior
+\DeclareMathOperator{\tr}{tr} % trace
+\DeclareMathOperator{\ch}{char} % characteristic
+\DeclareMathOperator{\sgn}{sgn} % sign
+\DeclareMathOperator{\diam}{diam} % diameter
+\DeclareMathOperator{\diagop}{diag} % diagonal
+\DeclareMathOperator{\arcsinh}{arcsinh} % arcsinh
+\DeclareMathOperator{\arccosh}{arcsinh} % arccosh
+\DeclareMathOperator{\arctanh}{arcsinh} % arctanh
+\DeclareMathOperator{\arccoth}{arcsinh} % arccoth
+\DeclareMathOperator{\pr}{pr} % projection
+\DeclareMathOperator{\proj}{proj} % projection
+\DeclareMathOperator{\rank}{rank} % rank
+\DeclareMathOperator{\supp}{supp} % support
+\DeclareMathOperator{\grad}{\mathbf{grad}} % gradient
+\DeclareMathOperator{\dvs}{div} % divisor
+\DeclareMathOperator{\diver}{div} % divergence
+\DeclareMathOperator{\curl}{curl} % curl
+\DeclareMathOperator{\rot}{\mathbf{rot}} % rotation
+\DeclareMathOperator{\ric}{Ricci} % Ricci curvature
+\DeclareMathOperator{\ein}{Einstein} % Einstein tensor
+\DeclareMathOperator{\len}{len} % length
+\DeclareMathOperator{\inc}{inc} % inclusion
+\DeclareMathOperator{\rad}{rad} % radical
+\DeclareMathOperator{\soc}{soc} % socle
+\DeclareMathOperator{\Ann}{Ann} % annihilator
+\DeclareMathOperator{\Aut}{Aut} % automorphism
+\DeclareMathOperator{\Iso}{Iso} % isomorphism
+\DeclareMathOperator{\Der}{Der} % derivation
+\DeclareMathOperator{\End}{End} % endomorphism
+\DeclareMathOperator{\Hom}{Hom} % homomorphism
+\DeclareMathOperator{\Nat}{Nat} % natural transformation
+\DeclareMathOperator{\Lie}{Lie} % Lie functor
+\DeclareMathOperator{\Syl}{Syl} % Sylow subgroup
+\DeclareMathOperator{\Orb}{Orb} % orbit
+\DeclareMathOperator{\orb}{orb} % orbit set
+\DeclareMathOperator{\Stab}{Stab} % stabilizer
+\DeclareMathOperator{\Gal}{Gal} % Galois group
+\DeclareMathOperator{\M}{M} % matrix group
+\DeclareMathOperator{\GL}{GL} % general linear group
+\DeclareMathOperator{\SL}{SL} % special linear group
+\DeclareMathOperator{\U}{U} % unitary group
+\DeclareMathOperator{\SU}{SU} % special unitary group
+\DeclareMathOperator{\OO}{O} % orthogonal group
+\DeclareMathOperator{\SO}{SO} % special orthogonal group
+\DeclareMathOperator{\hol}{hol} % linear holonomy group
+\DeclareMathOperator{\Hol}{Hol} % affine holonomy group
+\DeclareMathOperator{\ord}{ord} % order
+\DeclareMathOperator{\Norm}{Norm} % norm
+\DeclareMathOperator{\Trace}{Trace} % trace
+\DeclareMathOperator{\A}{A}
+\DeclareMathOperator{\con}{con}
+\DeclareMathOperator{\ad}{ad}
+\DeclareMathOperator{\Ad}{Ad}
+\DeclareMathOperator{\spanspace}{span}
+\DeclareMathOperator{\gr}{gr}
+\DeclareMathOperator{\Eff}{Eff}
+\DeclareMathOperator{\DscDt}{DD} % descent datum
+
+\DeclareMathOperator{\ob}{ob} % object
+\DeclareMathOperator{\dom}{dom} % domain
+\DeclareMathOperator{\codom}{codom} % codomain
+\DeclareMathOperator{\coker}{coker} % cokernel
+\DeclareMathOperator{\cov}{cov} % covering
+\DeclareMathOperator{\Cov}{Cov} % covering
+\DeclareMathOperator{\Sv}{Sv} % sieve
+
+\DeclareMathOperator{\rt}{rt}
+
+% \begin{mathcal abbreviation}
+\newcommand{\mcalA}{{\mathcal{A}}}
+\newcommand{\mcalB}{{\mathcal{B}}}
+\newcommand{\mcalC}{{\mathcal{C}}}
+\newcommand{\mcalD}{{\mathcal{D}}}
+\newcommand{\mcalE}{{\mathcal{E}}}
+\newcommand{\mcalF}{{\mathcal{F}}}
+\newcommand{\mcalG}{{\mathcal{G}}}
+\newcommand{\mcalH}{{\mathcal{H}}}
+\newcommand{\mcalI}{{\mathcal{I}}}
+\newcommand{\mcalJ}{{\mathcal{J}}}
+\newcommand{\mcalK}{{\mathcal{K}}}
+\newcommand{\mcalL}{{\mathcal{L}}}
+\newcommand{\mcalM}{{\mathcal{M}}}
+\newcommand{\mcalN}{{\mathcal{N}}}
+\newcommand{\mcalO}{{\mathcal{O}}}
+\newcommand{\mcalP}{{\mathcal{P}}}
+\newcommand{\mcalQ}{{\mathcal{Q}}}
+\newcommand{\mcalR}{{\mathcal{R}}}
+\newcommand{\mcalS}{{\mathcal{S}}}
+\newcommand{\mcalT}{{\mathcal{T}}}
+\newcommand{\mcalU}{{\mathcal{U}}}
+\newcommand{\mcalV}{{\mathcal{V}}}
+\newcommand{\mcalW}{{\mathcal{W}}}
+\newcommand{\mcalX}{{\mathcal{X}}}
+\newcommand{\mcalY}{{\mathcal{Y}}}
+\newcommand{\mcalZ}{{\mathcal{Z}}}
+% \end{mathcal abbreviation}

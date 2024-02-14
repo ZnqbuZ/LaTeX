@@ -1,0 +1,93 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{config}[Partial Config]
+
+\RequirePackage{fontspec}
+\RequirePackage[warnings-off={mathtools-colon,mathtools-overbracket}]{unicode-math}
+
+\setmathfont{XITS Math}
+\setmathfont[range={\mathcal,\mathbfcal}, StylisticSet=1]{XITS Math}
+
+\AtBeginEnvironment{proof}{\vspace*{-\parskip}}
+
+\newcommand{\lang}{}
+\newcommand{\en}{en}
+\newcommand{\cn}{cn}
+\DeclareOption{en}{\renewcommand{\lang}{en}}
+\DeclareOption{cn}{\renewcommand{\lang}{cn}}
+\DeclareOption*{\PackageWarning{preamble}{Unknown option '\CurrentOption'}}
+\ProcessOptions\relax
+
+\ifx\lang\en
+
+\newtheorem{theorem}[equation]{Theorem}
+\newtheorem{proposition}[equation]{Proposition}
+\newtheorem{definition}[equation]{Definition}
+\newtheorem{corollary}[equation]{Corollary}
+\newtheorem{example}[equation]{Example}
+\newtheorem{remark}[equation]{Remark}
+
+\fi
+
+\ifx\lang\cn
+
+\RequirePackage[fontset=none]{ctex}
+
+\setCJKmainfont{Noto Serif CJK SC}[BoldFont=Noto Serif CJK SC Bold, ItalicFont=FZQingFangSongS Bold]
+\setCJKsansfont{FZLTHProGBK}[BoldFont=FZLTHProGBK DemiBold]
+\setCJKmonofont{Noto Sans Mono CJK SC}
+
+\setCJKfamilyfont{zhsong}{Noto Serif CJK SC}[BoldFont=Noto Serif CJK SC Bold]
+\setCJKfamilyfont{zhhei}{FZLTHProGBK}[BoldFont=FZLTHProGBK DemiBold]
+\setCJKfamilyfont{zhfs}{FZQingFangSongS Bold}
+\setCJKfamilyfont{zhyou}{FZLanTingYuan-R-GBK}[BoldFont=FZLanTingYuan-DB1-GBK]
+\setCJKfamilyfont{zhkai}{FZNewKai-Z03}[BoldFont=FZCuKaiS-R-GB]
+\setCJKfamilyfont{zhli}{FZHuaLi-M14S}
+
+% \renewcommand{\sectionautorefname}{节}
+\crefname{section}{}{}
+\crefname{chapter}{}{}
+\crefname{appendix}{附录}{附录}
+\creflabelformat{section}{#2第#1节#3}
+\creflabelformat{chapter}{#2第#1章#3}
+
+% \AtBeginEnvironment{proof}{\vspace*{-2\parskip}}
+
+\renewcommand{\proofname}{\indent 证明}
+\newenvironment{proof*}{\begin{proof}\renewcommand{\qedsymbol}{}}{\end{proof}}
+
+\newenvironment{sln}{\renewcommand{\proofname}{\indent 解}\begin{proof}}{\end{proof}\renewcommand{\proofname}{\indent 证明}}
+\newenvironment{sln*}{\renewcommand{\proofname}{\indent 解}\begin{proof*}\renewcommand{\proofname}{\indent 解}}{\end{proof*}\renewcommand{\proofname}{\indent 证明}}
+
+\declaretheoremstyle[
+    headfont=\CJKfamily{zhkai}\bfseries,
+    notefont=\CJKfamily{zhkai}\bfseries,
+    bodyfont=\CJKfamily{zhkai},
+    headindent=2em
+]{thmsty}
+
+\declaretheorem[name=定义,numberlike=equation,style=thmsty]{definition}
+\crefname{definition}{定义}{定义}
+\declaretheorem[name=定理,numberlike=equation,style=thmsty]{theorem}
+\crefname{theorem}{定理}{定理}
+\declaretheorem[name=引理,numberlike=equation,style=thmsty]{lemma}
+\crefname{lemma}{引理}{引理}
+\declaretheorem[name=推论,numberlike=equation,style=thmsty]{corollary}
+\crefname{corollary}{推论}{推论}
+\declaretheorem[name=命题,numberlike=equation,style=thmsty]{proposition}
+\crefname{proposition}{命题}{命题}
+\declaretheorem[name=注,numberlike=equation,style=thmsty]{remark}
+\crefname{remark}{注}{注}
+\declaretheorem[name=例,numberlike=equation,style=thmsty]{example}
+\crefname{example}{例}{例}
+\declaretheorem[name=公理,numberlike=equation,style=thmsty]{axiom}
+\crefname{axiom}{公理}{公理}
+\declaretheorem[name=公理,numbered=no,style=thmsty]{axiom*}
+\crefname{axiom*}{公理}{公理}
+
+\declaretheorem[name=主定理,style=thmsty]{maintheorem}
+
+\fi
+
+\let\lang\undefined
+\let\en\undefined
+\let\cn\undefined
