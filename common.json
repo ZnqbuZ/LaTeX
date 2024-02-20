@@ -255,6 +255,7 @@
     },
     "id": {},
     "Cat": {},
+    "MonCat": {},
     "Fib": {},
     "Cone": {},
     "Pairs": {},
@@ -358,6 +359,12 @@
     "Cov": {},
     "Sv": {},
     "rt": {},
+    "LMod{}": {
+      "snippet": "LMod{${1:}}"
+    },
+    "RMod{}": {
+      "snippet": "RMod{${1:}}"
+    },
     "mcalA": {},
     "mcalB": {},
     "mcalC": {},
