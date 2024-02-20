@@ -92,8 +92,8 @@
 \def\norm{\@ifstar{\raw@norm}{\raw@norm*}}
 \makeatother
 
-\newcommand{\q}[2]{{\left.#1\middle/#2\right.}}
-\newcommand{\coq}[2]{{\left.#1\middle\backslash#2\right.}}
+\newcommand{\q}[2]{{#1\kern-2\nulldelimiterspace\left/#2\right.\kern-2\nulldelimiterspace}}
+\newcommand{\coq}[2]{{\kern-2\nulldelimiterspace\left.#1\right\backslash\kern-2\nulldelimiterspace#2}}
 
 \newcommand{\rmnum}[1]{{\romannumeral#1}}
 \newcommand{\Rmnum}[1]{{\uppercase\expandafter{\romannumeral#1}}}
@@ -206,6 +206,7 @@
 \newcommand{\id}{\mathrm{id}}
 
 \newcommand{\Cat}{{\mathsf{Cat}}} % categories
+\newcommand{\MonCat}{{\mathsf{MonCat}}} % categories
 \newcommand{\Fib}{{\mathsf{Fib}}} % fibrations
 \newcommand{\Cone}{{\mathsf{Cone}}} % cones
 \newcommand{\Pairs}{{\mathsf{Pairs}}} % pairs
@@ -237,6 +238,9 @@
 \DeclareMathOperator{\yo}{\text{よ}} % yoneda embedding
 
 \newcommand{\commacat}[2]{{\left(#1\middle\downarrow #2\right)}} % comma category
+
+\newcommand{\LMod}[1]{#1\text{-}\Mod} % left modules
+\newcommand{\RMod}[1]{\Mod\text{-}#1} % right modules
 
 \DeclareMathOperator{\Def}{Def} % definable sets
 \DeclareMathOperator{\ev}{ev} % evaluation
