@@ -253,6 +253,10 @@
     "wt{}": {
       "snippet": "wt{${1:}}"
     },
+    "EAut": {},
+    "EIso": {},
+    "EEnd": {},
+    "EHom": {},
     "id": {},
     "Cat": {},
     "MonCat": {},
