@@ -2,7 +2,11 @@
 \RequirePackage{amsthm,thmtools}
 \RequirePackage{amssymb,extarrows,etoolbox,mathtools,tensor}
 \RequirePackage{array}
+
 \RequirePackage[backend=biber,style=alphabetic]{biblatex}
+\DeclareFieldFormat{postnote}{#1}
+\DeclareFieldFormat{multipostnote}{#1}
+
 \RequirePackage{bm}
 \RequirePackage{booktabs}
 \RequirePackage{cancel}
@@ -11,7 +15,10 @@
 \RequirePackage[shortlabels]{enumitem}
 \RequirePackage[lastexercise]{exercise}
 \RequirePackage{fancyhdr}
+
 \RequirePackage{geometry,graphbox,makecell,multicol,setspace,type1cm}
+\geometry{left=2cm,right=2cm,top=2cm,bottom=2cm}
+
 \RequirePackage[
     pdfstartview=FitH,
     CJKbookmarks=true,
@@ -21,20 +28,21 @@
     citecolor=darkred,
     linkcolor=darkblue,
 ]{hyperref}
+
 \RequirePackage[nameinlink]{cleveref}
+\crefname{equation}{}{}
+
 \RequirePackage[indent]{parskip}
 \RequirePackage{pdfpages}
 \RequirePackage{siunitx}
 \RequirePackage{standalone}
-\RequirePackage{tikz-cd,color}
 
+\RequirePackage{tikz-cd,color}
 \tikzset{elegant/.style={smooth, red, thick, samples=101}}
 \tikzcdset{arrow style=math font}
 
 \definecolor{darkred}{rgb}{0.6,0,0}
 \definecolor{darkblue}{rgb}{0,0,0.55}
-
-\crefname{equation}{}{}
 
 \renewcommand{\fontsubfuzz}{\maxdimen}
 
@@ -44,8 +52,6 @@
 \setcounter{secnumdepth}{3}
 
 \raggedbottom
-
-\geometry{left=2cm,right=2cm,top=2cm,bottom=2cm}
 
 \newenvironment{gpmtrx}{\setcellgapes{5pt}\makegapedcells\begin{pmatrix}}{\end{pmatrix}}
 \newenvironment{gvmtrx}{\setcellgapes{5pt}\makegapedcells\begin{vmatrix}}{\end{vmatrix}}
@@ -205,6 +211,11 @@
 
 \newcommand{\id}{\mathrm{id}}
 
+\newcommand{\EAut}{{\mathsf{Aut}}} % enriched automorphism
+\newcommand{\EIso}{{\mathsf{Iso}}} % enriched isomorphism
+\newcommand{\EEnd}{{\mathsf{End}}} % enriched endomorphism
+\newcommand{\EHom}{{\mathsf{Hom}}} % enriched homomorphism
+
 \newcommand{\Cat}{{\mathsf{Cat}}} % categories
 \newcommand{\MonCat}{{\mathsf{MonCat}}} % categories
 \newcommand{\Fib}{{\mathsf{Fib}}} % fibrations
@@ -272,9 +283,9 @@
 \DeclareMathOperator{\rad}{rad} % radical
 \DeclareMathOperator{\soc}{soc} % socle
 \DeclareMathOperator{\Ann}{Ann} % annihilator
+\DeclareMathOperator{\Der}{Der} % derivation
 \DeclareMathOperator{\Aut}{Aut} % automorphism
 \DeclareMathOperator{\Iso}{Iso} % isomorphism
-\DeclareMathOperator{\Der}{Der} % derivation
 \DeclareMathOperator{\End}{End} % endomorphism
 \DeclareMathOperator{\Hom}{Hom} % homomorphism
 \DeclareMathOperator{\Nat}{Nat} % natural transformation
