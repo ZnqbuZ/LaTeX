@@ -1,0 +1,7 @@
+indentPreamble: 1
+
+lookForAlignDelims:
+  gpmtrx: 1
+  gvmtx: 1
+  garr: 1
+  tikzcd: 1

@@ -1,406 +1,1135 @@
 {
-  "includes": {},
-  "macros": {
-    "pushright{}": {
-      "snippet": "pushright{${1:}}"
-    },
-    "rightparatrans{}": {
-      "snippet": "rightparatrans{${1:}}"
-    },
-    "leftparatrans{}": {
-      "snippet": "leftparatrans{${1:}}"
-    },
-    "bra{}": {
-      "snippet": "bra{${1:}}"
-    },
-    "dbra{}{}": {
-      "snippet": "dbra{${1:}}{${2:}}"
-    },
-    "Bra{}": {
-      "snippet": "Bra{${1:}}"
-    },
-    "set{}{}": {
-      "snippet": "set{${1:}}{${2:}}"
-    },
-    "sqbra{}": {
-      "snippet": "sqbra{${1:}}"
-    },
-    "angbra{}": {
-      "snippet": "angbra{${1:}}"
-    },
-    "abs{}": {
-      "snippet": "abs{${1:}}"
-    },
-    "norm{}": {
-      "snippet": "norm{${1:}}"
-    },
-    "q{}{}": {
-      "snippet": "q{${1:}}{${2:}}"
-    },
-    "coq{}{}": {
-      "snippet": "coq{${1:}}{${2:}}"
-    },
-    "rmnum{}": {
-      "snippet": "rmnum{${1:}}"
-    },
-    "Rmnum{}": {
-      "snippet": "Rmnum{${1:}}"
-    },
-    "slnid{}": {
-      "snippet": "slnid{${1:}}"
-    },
-    "inv{}": {
-      "snippet": "inv{${1:}}"
-    },
-    "toinf{}{}": {
-      "snippet": "toinf{${1:}}{${2:}}"
-    },
-    "toinfsup{}{}": {
-      "snippet": "toinfsup{${1:}}{${2:}}"
-    },
-    "toinfinf{}{}": {
-      "snippet": "toinfinf{${1:}}{${2:}}"
-    },
-    "series{}": {
-      "snippet": "series{${1:}}"
-    },
-    "product{}": {
-      "snippet": "product{${1:}}"
-    },
-    "x": {},
-    "X": {},
-    "y": {},
-    "Y": {},
-    "nege": {},
-    "e": {},
-    "transpose{}": {
-      "snippet": "transpose{${1:}}"
-    },
-    "dif": {},
-    "dx": {},
-    "dy": {},
-    "dz": {},
-    "du": {},
-    "dv": {},
-    "ds": {},
-    "dt": {},
-    "dr": {},
-    "da": {},
-    "bdp": {},
-    "dth": {},
-    "dph": {},
-    "D{}{}": {
-      "snippet": "D{${1:}}{${2:}}"
-    },
-    "DD{}{}": {
-      "snippet": "DD{${1:}}{${2:}}"
-    },
-    "P{}{}": {
-      "snippet": "P{${1:}}{${2:}}"
-    },
-    "PP{}{}": {
-      "snippet": "PP{${1:}}{${2:}}"
-    },
-    "biP{}{}{}": {
-      "snippet": "biP{${1:}}{${2:}}{${3:}}"
-    },
-    "triP{}{}{}{}": {
-      "snippet": "triP{${1:}}{${2:}}{${3:}}{${4:}}"
-    },
-    "Do{}": {
-      "snippet": "Do{${1:}}"
-    },
-    "DDo{}": {
-      "snippet": "DDo{${1:}}"
-    },
-    "Po{}": {
-      "snippet": "Po{${1:}}"
-    },
-    "PPo{}": {
-      "snippet": "PPo{${1:}}"
-    },
-    "Px{}": {
-      "snippet": "Px{${1:}}"
-    },
-    "Py{}": {
-      "snippet": "Py{${1:}}"
-    },
-    "Pz{}": {
-      "snippet": "Pz{${1:}}"
-    },
-    "Pt{}": {
-      "snippet": "Pt{${1:}}"
-    },
-    "Pr{}": {
-      "snippet": "Pr{${1:}}"
-    },
-    "Pth{}": {
-      "snippet": "Pth{${1:}}"
-    },
-    "Pph{}": {
-      "snippet": "Pph{${1:}}"
-    },
-    "Pxy{}": {
-      "snippet": "Pxy{${1:}}"
-    },
-    "PPx{}": {
-      "snippet": "PPx{${1:}}"
-    },
-    "PPy{}": {
-      "snippet": "PPy{${1:}}"
-    },
-    "PPz{}": {
-      "snippet": "PPz{${1:}}"
-    },
-    "PPt{}": {
-      "snippet": "PPt{${1:}}"
-    },
-    "PPr{}": {
-      "snippet": "PPr{${1:}}"
-    },
-    "PPth{}": {
-      "snippet": "PPth{${1:}}"
-    },
-    "PPph{}": {
-      "snippet": "PPph{${1:}}"
-    },
-    "Dx{}": {
-      "snippet": "Dx{${1:}}"
-    },
-    "Dy{}": {
-      "snippet": "Dy{${1:}}"
-    },
-    "Dz{}": {
-      "snippet": "Dz{${1:}}"
-    },
-    "Dt{}": {
-      "snippet": "Dt{${1:}}"
-    },
-    "Dr{}": {
-      "snippet": "Dr{${1:}}"
-    },
-    "Dth{}": {
-      "snippet": "Dth{${1:}}"
-    },
-    "Dph{}": {
-      "snippet": "Dph{${1:}}"
-    },
-    "DDx{}": {
-      "snippet": "DDx{${1:}}"
-    },
-    "DDy{}": {
-      "snippet": "DDy{${1:}}"
-    },
-    "DDz{}": {
-      "snippet": "DDz{${1:}}"
-    },
-    "DDt{}": {
-      "snippet": "DDt{${1:}}"
-    },
-    "DDr{}": {
-      "snippet": "DDr{${1:}}"
-    },
-    "DDth{}": {
-      "snippet": "DDth{${1:}}"
-    },
-    "DDph{}": {
-      "snippet": "DDph{${1:}}"
-    },
-    "infint{}{}{}": {
-      "snippet": "infint{${1:}}{${2:}}{${3:}}"
-    },
-    "ceil{}": {
-      "snippet": "ceil{${1:}}"
-    },
-    "floor{}": {
-      "snippet": "floor{${1:}}"
-    },
-    "vepsl": {},
-    "fserc{}{}": {
-      "snippet": "fserc{${1:}}{${2:}}"
-    },
-    "fsers{}{}": {
-      "snippet": "fsers{${1:}}{${2:}}"
-    },
-    "fsero{}": {
-      "snippet": "fsero{${1:}}"
-    },
-    "diag{}": {
-      "snippet": "diag{${1:}}"
-    },
-    "sint": {},
-    "dint": {},
-    "tint": {},
-    "restrict{}{}": {
-      "snippet": "restrict{${1:}}{${2:}}"
-    },
-    "restrict{}{}{}": {
-      "snippet": "restrict{${1:}}{${2:}}{${3:}}"
-    },
-    "induce{}{}{}": {
-      "snippet": "induce{${1:}}{${2:}}{${3:}}"
-    },
-    "sumcyc": {},
-    "ol{}": {
-      "snippet": "ol{${1:}}"
-    },
-    "ul{}": {
-      "snippet": "ul{${1:}}"
-    },
-    "wh{}": {
-      "snippet": "wh{${1:}}"
-    },
-    "wt{}": {
-      "snippet": "wt{${1:}}"
-    },
-    "EAut": {},
-    "EIso": {},
-    "EEnd": {},
-    "EHom": {},
-    "id": {},
-    "Cat": {},
-    "MonCat": {},
-    "Fib": {},
-    "Cone": {},
-    "Pairs": {},
-    "Set": {},
-    "Top": {},
-    "Op": {},
-    "Man": {},
-    "FBun": {},
-    "VBun": {},
-    "PBun": {},
-    "Grp": {},
-    "Ab": {},
-    "LieGrp": {},
-    "LieGrpd": {},
-    "LieAlg": {},
-    "Grpd": {},
-    "Ring": {},
-    "CRing": {},
-    "Mod": {},
-    "Vect": {},
-    "Alg": {},
-    "AlgVar": {},
-    "PSh": {},
-    "Sh": {},
-    "Sch": {},
-    "FunOp": {},
-    "Fun{}{}": {
-      "snippet": "Fun{${1:}}{${2:}}"
-    },
-    "yo": {},
-    "commacat{}{}": {
-      "snippet": "commacat{${1:}}{${2:}}"
-    },
-    "Def": {},
-    "ev": {},
-    "im": {},
-    "codim": {},
-    "interior": {},
-    "tr": {},
-    "ch": {},
-    "sgn": {},
-    "diam": {},
-    "diagop": {},
-    "arcsinh": {},
-    "arccosh": {},
-    "arctanh": {},
-    "arccoth": {},
-    "pr": {},
-    "proj": {},
-    "rank": {},
-    "supp": {},
-    "grad": {},
-    "dvs": {},
-    "diver": {},
-    "curl": {},
-    "rot": {},
-    "ric": {},
-    "ein": {},
-    "len": {},
-    "inc": {},
-    "rad": {},
-    "soc": {},
-    "Ann": {},
-    "Aut": {},
-    "Iso": {},
-    "Der": {},
-    "End": {},
-    "Hom": {},
-    "Nat": {},
-    "Lie": {},
-    "Syl": {},
-    "Orb": {},
-    "orb": {},
-    "Stab": {},
-    "Gal": {},
-    "A": {},
-    "M": {},
-    "GL": {},
-    "SL": {},
-    "U": {},
-    "SU": {},
-    "OO": {},
-    "SO": {},
-    "hol": {},
-    "Hol": {},
-    "ord": {},
-    "Norm": {},
-    "Trace": {},
-    "con": {},
-    "ad": {},
-    "Ad": {},
-    "spanspace": {},
-    "gr": {},
-    "Eff": {},
-    "DscDt": {},
-    "ob": {},
-    "dom": {},
-    "codom": {},
-    "coker": {},
-    "cov": {},
-    "Cov": {},
-    "Sv": {},
-    "rt": {},
-    "LMod{}": {
-      "snippet": "LMod{${1:}}"
-    },
-    "RMod{}": {
-      "snippet": "RMod{${1:}}"
-    },
-    "mcalA": {},
-    "mcalB": {},
-    "mcalC": {},
-    "mcalD": {},
-    "mcalE": {},
-    "mcalF": {},
-    "mcalG": {},
-    "mcalH": {},
-    "mcalI": {},
-    "mcalJ": {},
-    "mcalK": {},
-    "mcalL": {},
-    "mcalM": {},
-    "mcalN": {},
-    "mcalO": {},
-    "mcalP": {},
-    "mcalQ": {},
-    "mcalR": {},
-    "mcalS": {},
-    "mcalT": {},
-    "mcalU": {},
-    "mcalV": {},
-    "mcalW": {},
-    "mcalX": {},
-    "mcalY": {},
-    "mcalZ": {}
-  },
-  "envs": {
-    "gpmtrx": {},
-    "gvmtrx": {},
-    "garr": {}
-  },
-  "options": [],
-  "keyvals": []
+  "deps": [],
+  "macros": [
+    {
+      "name": "pushright",
+      "arg": {
+        "format": "{}",
+        "snippet": "pushright{${1:}}"
+      }
+    },
+    {
+      "name": "rightparatrans",
+      "arg": {
+        "format": "{}",
+        "snippet": "rightparatrans{${1:}}"
+      }
+    },
+    {
+      "name": "leftparatrans",
+      "arg": {
+        "format": "{}",
+        "snippet": "leftparatrans{${1:}}"
+      }
+    },
+    {
+      "name": "bra",
+      "arg": {
+        "format": "{}",
+        "snippet": "bra{${1:}}"
+      }
+    },
+    {
+      "name": "dbra",
+      "arg": {
+        "format": "{}{}",
+        "snippet": "dbra{${1:}}{${2:}}"
+      }
+    },
+    {
+      "name": "Bra",
+      "arg": {
+        "format": "{}",
+        "snippet": "Bra{${1:}}"
+      }
+    },
+    {
+      "name": "set",
+      "arg": {
+        "format": "{}{}",
+        "snippet": "set{${1:}}{${2:}}"
+      }
+    },
+    {
+      "name": "sqbra",
+      "arg": {
+        "format": "{}",
+        "snippet": "sqbra{${1:}}"
+      }
+    },
+    {
+      "name": "angbra",
+      "arg": {
+        "format": "{}",
+        "snippet": "angbra{${1:}}"
+      }
+    },
+    {
+      "name": "abs",
+      "arg": {
+        "format": "{}",
+        "snippet": "abs{${1:}}"
+      }
+    },
+    {
+      "name": "norm",
+      "arg": {
+        "format": "{}",
+        "snippet": "norm{${1:}}"
+      }
+    },
+    {
+      "name": "q",
+      "arg": {
+        "format": "{}{}",
+        "snippet": "q{${1:}}{${2:}}"
+      }
+    },
+    {
+      "name": "coq",
+      "arg": {
+        "format": "{}{}",
+        "snippet": "coq{${1:}}{${2:}}"
+      }
+    },
+    {
+      "name": "rmnum",
+      "arg": {
+        "format": "{}",
+        "snippet": "rmnum{${1:}}"
+      }
+    },
+    {
+      "name": "Rmnum",
+      "arg": {
+        "format": "{}",
+        "snippet": "Rmnum{${1:}}"
+      }
+    },
+    {
+      "name": "slnid",
+      "arg": {
+        "format": "{}",
+        "snippet": "slnid{${1:}}"
+      }
+    },
+    {
+      "name": "inv",
+      "arg": {
+        "format": "{}",
+        "snippet": "inv{${1:}}"
+      }
+    },
+    {
+      "name": "toinf",
+      "arg": {
+        "format": "{}{}",
+        "snippet": "toinf{${1:}}{${2:}}"
+      }
+    },
+    {
+      "name": "toinfsup",
+      "arg": {
+        "format": "{}{}",
+        "snippet": "toinfsup{${1:}}{${2:}}"
+      }
+    },
+    {
+      "name": "toinfinf",
+      "arg": {
+        "format": "{}{}",
+        "snippet": "toinfinf{${1:}}{${2:}}"
+      }
+    },
+    {
+      "name": "series",
+      "arg": {
+        "format": "{}",
+        "snippet": "series{${1:}}"
+      }
+    },
+    {
+      "name": "product",
+      "arg": {
+        "format": "{}",
+        "snippet": "product{${1:}}"
+      }
+    },
+    {
+      "name": "x"
+    },
+    {
+      "name": "X"
+    },
+    {
+      "name": "y"
+    },
+    {
+      "name": "Y"
+    },
+    {
+      "name": "z"
+    },
+    {
+      "name": "Z"
+    },
+    {
+      "name": "nege"
+    },
+    {
+      "name": "e"
+    },
+    {
+      "name": "ii"
+    },
+    {
+      "name": "transpose",
+      "arg": {
+        "format": "{}",
+        "snippet": "transpose{${1:}}"
+      }
+    },
+    {
+      "name": "dif"
+    },
+    {
+      "name": "dx"
+    },
+    {
+      "name": "dy"
+    },
+    {
+      "name": "dz"
+    },
+    {
+      "name": "du"
+    },
+    {
+      "name": "dv"
+    },
+    {
+      "name": "ds"
+    },
+    {
+      "name": "dt"
+    },
+    {
+      "name": "dr"
+    },
+    {
+      "name": "da"
+    },
+    {
+      "name": "bdp"
+    },
+    {
+      "name": "dth"
+    },
+    {
+      "name": "dph"
+    },
+    {
+      "name": "D",
+      "arg": {
+        "format": "{}{}",
+        "snippet": "D{${1:}}{${2:}}"
+      }
+    },
+    {
+      "name": "DD",
+      "arg": {
+        "format": "{}{}",
+        "snippet": "DD{${1:}}{${2:}}"
+      }
+    },
+    {
+      "name": "P",
+      "arg": {
+        "format": "{}{}",
+        "snippet": "P{${1:}}{${2:}}"
+      }
+    },
+    {
+      "name": "PP",
+      "arg": {
+        "format": "{}{}",
+        "snippet": "PP{${1:}}{${2:}}"
+      }
+    },
+    {
+      "name": "biP",
+      "arg": {
+        "format": "{}{}{}",
+        "snippet": "biP{${1:}}{${2:}}{${3:}}"
+      }
+    },
+    {
+      "name": "triP",
+      "arg": {
+        "format": "{}{}{}{}",
+        "snippet": "triP{${1:}}{${2:}}{${3:}}{${4:}}"
+      }
+    },
+    {
+      "name": "Do",
+      "arg": {
+        "format": "{}",
+        "snippet": "Do{${1:}}"
+      }
+    },
+    {
+      "name": "DDo",
+      "arg": {
+        "format": "{}",
+        "snippet": "DDo{${1:}}"
+      }
+    },
+    {
+      "name": "Po",
+      "arg": {
+        "format": "{}",
+        "snippet": "Po{${1:}}"
+      }
+    },
+    {
+      "name": "PPo",
+      "arg": {
+        "format": "{}",
+        "snippet": "PPo{${1:}}"
+      }
+    },
+    {
+      "name": "Px",
+      "arg": {
+        "format": "{}",
+        "snippet": "Px{${1:}}"
+      }
+    },
+    {
+      "name": "Py",
+      "arg": {
+        "format": "{}",
+        "snippet": "Py{${1:}}"
+      }
+    },
+    {
+      "name": "Pz",
+      "arg": {
+        "format": "{}",
+        "snippet": "Pz{${1:}}"
+      }
+    },
+    {
+      "name": "Pt",
+      "arg": {
+        "format": "{}",
+        "snippet": "Pt{${1:}}"
+      }
+    },
+    {
+      "name": "Pth",
+      "arg": {
+        "format": "{}",
+        "snippet": "Pth{${1:}}"
+      }
+    },
+    {
+      "name": "Pph",
+      "arg": {
+        "format": "{}",
+        "snippet": "Pph{${1:}}"
+      }
+    },
+    {
+      "name": "Pxy",
+      "arg": {
+        "format": "{}",
+        "snippet": "Pxy{${1:}}"
+      }
+    },
+    {
+      "name": "PPx",
+      "arg": {
+        "format": "{}",
+        "snippet": "PPx{${1:}}"
+      }
+    },
+    {
+      "name": "PPy",
+      "arg": {
+        "format": "{}",
+        "snippet": "PPy{${1:}}"
+      }
+    },
+    {
+      "name": "PPz",
+      "arg": {
+        "format": "{}",
+        "snippet": "PPz{${1:}}"
+      }
+    },
+    {
+      "name": "PPt",
+      "arg": {
+        "format": "{}",
+        "snippet": "PPt{${1:}}"
+      }
+    },
+    {
+      "name": "PPr",
+      "arg": {
+        "format": "{}",
+        "snippet": "PPr{${1:}}"
+      }
+    },
+    {
+      "name": "PPth",
+      "arg": {
+        "format": "{}",
+        "snippet": "PPth{${1:}}"
+      }
+    },
+    {
+      "name": "PPph",
+      "arg": {
+        "format": "{}",
+        "snippet": "PPph{${1:}}"
+      }
+    },
+    {
+      "name": "Dx",
+      "arg": {
+        "format": "{}",
+        "snippet": "Dx{${1:}}"
+      }
+    },
+    {
+      "name": "Dy",
+      "arg": {
+        "format": "{}",
+        "snippet": "Dy{${1:}}"
+      }
+    },
+    {
+      "name": "Dz",
+      "arg": {
+        "format": "{}",
+        "snippet": "Dz{${1:}}"
+      }
+    },
+    {
+      "name": "Dt",
+      "arg": {
+        "format": "{}",
+        "snippet": "Dt{${1:}}"
+      }
+    },
+    {
+      "name": "Dr",
+      "arg": {
+        "format": "{}",
+        "snippet": "Dr{${1:}}"
+      }
+    },
+    {
+      "name": "Dth",
+      "arg": {
+        "format": "{}",
+        "snippet": "Dth{${1:}}"
+      }
+    },
+    {
+      "name": "Dph",
+      "arg": {
+        "format": "{}",
+        "snippet": "Dph{${1:}}"
+      }
+    },
+    {
+      "name": "DDx",
+      "arg": {
+        "format": "{}",
+        "snippet": "DDx{${1:}}"
+      }
+    },
+    {
+      "name": "DDy",
+      "arg": {
+        "format": "{}",
+        "snippet": "DDy{${1:}}"
+      }
+    },
+    {
+      "name": "DDz",
+      "arg": {
+        "format": "{}",
+        "snippet": "DDz{${1:}}"
+      }
+    },
+    {
+      "name": "DDt",
+      "arg": {
+        "format": "{}",
+        "snippet": "DDt{${1:}}"
+      }
+    },
+    {
+      "name": "DDr",
+      "arg": {
+        "format": "{}",
+        "snippet": "DDr{${1:}}"
+      }
+    },
+    {
+      "name": "DDth",
+      "arg": {
+        "format": "{}",
+        "snippet": "DDth{${1:}}"
+      }
+    },
+    {
+      "name": "DDph",
+      "arg": {
+        "format": "{}",
+        "snippet": "DDph{${1:}}"
+      }
+    },
+    {
+      "name": "infint",
+      "arg": {
+        "format": "{}{}{}",
+        "snippet": "infint{${1:}}{${2:}}{${3:}}"
+      }
+    },
+    {
+      "name": "ceil",
+      "arg": {
+        "format": "{}",
+        "snippet": "ceil{${1:}}"
+      }
+    },
+    {
+      "name": "floor",
+      "arg": {
+        "format": "{}",
+        "snippet": "floor{${1:}}"
+      }
+    },
+    {
+      "name": "fserc",
+      "arg": {
+        "format": "{}{}",
+        "snippet": "fserc{${1:}}{${2:}}"
+      }
+    },
+    {
+      "name": "fsers",
+      "arg": {
+        "format": "{}{}",
+        "snippet": "fsers{${1:}}{${2:}}"
+      }
+    },
+    {
+      "name": "fsero",
+      "arg": {
+        "format": "{}",
+        "snippet": "fsero{${1:}}"
+      }
+    },
+    {
+      "name": "diag",
+      "arg": {
+        "format": "{}",
+        "snippet": "diag{${1:}}"
+      }
+    },
+    {
+      "name": "sint"
+    },
+    {
+      "name": "dint"
+    },
+    {
+      "name": "tint"
+    },
+    {
+      "name": "restrict",
+      "arg": {
+        "format": "{}{}",
+        "snippet": "restrict{${1:}}{${2:}}"
+      }
+    },
+    {
+      "name": "restrict",
+      "arg": {
+        "format": "{}{}{}",
+        "snippet": "restrict{${1:}}{${2:}}{${3:}}"
+      }
+    },
+    {
+      "name": "induce",
+      "arg": {
+        "format": "{}{}{}",
+        "snippet": "induce{${1:}}{${2:}}{${3:}}"
+      }
+    },
+    {
+      "name": "sumcyc"
+    },
+    {
+      "name": "ol",
+      "arg": {
+        "format": "{}",
+        "snippet": "ol{${1:}}"
+      }
+    },
+    {
+      "name": "ul",
+      "arg": {
+        "format": "{}",
+        "snippet": "ul{${1:}}"
+      }
+    },
+    {
+      "name": "wh",
+      "arg": {
+        "format": "{}",
+        "snippet": "wh{${1:}}"
+      }
+    },
+    {
+      "name": "wt",
+      "arg": {
+        "format": "{}",
+        "snippet": "wt{${1:}}"
+      }
+    },
+    {
+      "name": "EAut"
+    },
+    {
+      "name": "EIso"
+    },
+    {
+      "name": "EEnd"
+    },
+    {
+      "name": "EHom"
+    },
+    {
+      "name": "id"
+    },
+    {
+      "name": "Cat"
+    },
+    {
+      "name": "MonCat"
+    },
+    {
+      "name": "Fib"
+    },
+    {
+      "name": "Pairs"
+    },
+    {
+      "name": "Set"
+    },
+    {
+      "name": "Top"
+    },
+    {
+      "name": "Op"
+    },
+    {
+      "name": "Ofd"
+    },
+    {
+      "name": "Mfd"
+    },
+    {
+      "name": "FBun"
+    },
+    {
+      "name": "VBun"
+    },
+    {
+      "name": "PBun"
+    },
+    {
+      "name": "Mon"
+    },
+    {
+      "name": "OrbC"
+    },
+    {
+      "name": "Grp"
+    },
+    {
+      "name": "Ab"
+    },
+    {
+      "name": "TopGrp"
+    },
+    {
+      "name": "LieGrp"
+    },
+    {
+      "name": "LieGrpd"
+    },
+    {
+      "name": "LieAlg"
+    },
+    {
+      "name": "Grpd"
+    },
+    {
+      "name": "Ring"
+    },
+    {
+      "name": "CRing"
+    },
+    {
+      "name": "Mod"
+    },
+    {
+      "name": "Field"
+    },
+    {
+      "name": "Vect"
+    },
+    {
+      "name": "Alg"
+    },
+    {
+      "name": "AlgVar"
+    },
+    {
+      "name": "PSh"
+    },
+    {
+      "name": "Sh"
+    },
+    {
+      "name": "Aff"
+    },
+    {
+      "name": "Sch"
+    },
+    {
+      "name": "FunOp"
+    },
+    {
+      "name": "Fun",
+      "arg": {
+        "format": "{}{}",
+        "snippet": "Fun{${1:}}{${2:}}"
+      }
+    },
+    {
+      "name": "GrCRing"
+    },
+    {
+      "name": "GrMod"
+    },
+    {
+      "name": "Cone"
+    },
+    {
+      "name": "cCone"
+    },
+    {
+      "name": "Wdg"
+    },
+    {
+      "name": "cWdg"
+    },
+    {
+      "name": "El"
+    },
+    {
+      "name": "yo"
+    },
+    {
+      "name": "oy"
+    },
+    {
+      "name": "commacat",
+      "arg": {
+        "format": "{}{}",
+        "snippet": "commacat{${1:}}{${2:}}"
+      }
+    },
+    {
+      "name": "LMod",
+      "arg": {
+        "format": "{}",
+        "snippet": "LMod{${1:}}"
+      }
+    },
+    {
+      "name": "RMod",
+      "arg": {
+        "format": "{}",
+        "snippet": "RMod{${1:}}"
+      }
+    },
+    {
+      "name": "Log"
+    },
+    {
+      "name": "Def"
+    },
+    {
+      "name": "ev"
+    },
+    {
+      "name": "im"
+    },
+    {
+      "name": "codim"
+    },
+    {
+      "name": "interior"
+    },
+    {
+      "name": "tr"
+    },
+    {
+      "name": "ch"
+    },
+    {
+      "name": "sgn"
+    },
+    {
+      "name": "sing"
+    },
+    {
+      "name": "diam"
+    },
+    {
+      "name": "diagop"
+    },
+    {
+      "name": "arcsinh"
+    },
+    {
+      "name": "arccosh"
+    },
+    {
+      "name": "arctanh"
+    },
+    {
+      "name": "arccoth"
+    },
+    {
+      "name": "pr"
+    },
+    {
+      "name": "proj"
+    },
+    {
+      "name": "rank"
+    },
+    {
+      "name": "supp"
+    },
+    {
+      "name": "grad"
+    },
+    {
+      "name": "dvs"
+    },
+    {
+      "name": "diver"
+    },
+    {
+      "name": "curl"
+    },
+    {
+      "name": "rot"
+    },
+    {
+      "name": "ric"
+    },
+    {
+      "name": "ein"
+    },
+    {
+      "name": "len"
+    },
+    {
+      "name": "inc"
+    },
+    {
+      "name": "rad"
+    },
+    {
+      "name": "soc"
+    },
+    {
+      "name": "Ann"
+    },
+    {
+      "name": "Aut"
+    },
+    {
+      "name": "Iso"
+    },
+    {
+      "name": "Der"
+    },
+    {
+      "name": "End"
+    },
+    {
+      "name": "Hom"
+    },
+    {
+      "name": "Nat"
+    },
+    {
+      "name": "Lie"
+    },
+    {
+      "name": "Syl"
+    },
+    {
+      "name": "Orb"
+    },
+    {
+      "name": "orb"
+    },
+    {
+      "name": "Stab"
+    },
+    {
+      "name": "Gal"
+    },
+    {
+      "name": "A"
+    },
+    {
+      "name": "M"
+    },
+    {
+      "name": "GL"
+    },
+    {
+      "name": "SL"
+    },
+    {
+      "name": "U"
+    },
+    {
+      "name": "SU"
+    },
+    {
+      "name": "OO"
+    },
+    {
+      "name": "SO"
+    },
+    {
+      "name": "so"
+    },
+    {
+      "name": "hol"
+    },
+    {
+      "name": "Hol"
+    },
+    {
+      "name": "ord"
+    },
+    {
+      "name": "Norm"
+    },
+    {
+      "name": "Trace"
+    },
+    {
+      "name": "con"
+    },
+    {
+      "name": "ad"
+    },
+    {
+      "name": "Ad"
+    },
+    {
+      "name": "spanspace"
+    },
+    {
+      "name": "gr"
+    },
+    {
+      "name": "Eff"
+    },
+    {
+      "name": "DscDt"
+    },
+    {
+      "name": "dis"
+    },
+    {
+      "name": "Spec"
+    },
+    {
+      "name": "Specm"
+    },
+    {
+      "name": "Frac"
+    },
+    {
+      "name": "hght"
+    },
+    {
+      "name": "depth"
+    },
+    {
+      "name": "T"
+    },
+    {
+      "name": "Proj"
+    },
+    {
+      "name": "vol"
+    },
+    {
+      "name": "Gr"
+    },
+    {
+      "name": "res"
+    },
+    {
+      "name": "Ext"
+    },
+    {
+      "name": "Tor"
+    },
+    {
+      "name": "Lan"
+    },
+    {
+      "name": "Ran"
+    },
+    {
+      "name": "ob"
+    },
+    {
+      "name": "mor"
+    },
+    {
+      "name": "dom"
+    },
+    {
+      "name": "codom"
+    },
+    {
+      "name": "coker"
+    },
+    {
+      "name": "cov"
+    },
+    {
+      "name": "Cov"
+    },
+    {
+      "name": "Sv"
+    },
+    {
+      "name": "rt"
+    },
+    {
+      "name": "mcalA"
+    },
+    {
+      "name": "mcalB"
+    },
+    {
+      "name": "mcalC"
+    },
+    {
+      "name": "mcalD"
+    },
+    {
+      "name": "mcalE"
+    },
+    {
+      "name": "mcalF"
+    },
+    {
+      "name": "mcalG"
+    },
+    {
+      "name": "mcalH"
+    },
+    {
+      "name": "mcalI"
+    },
+    {
+      "name": "mcalJ"
+    },
+    {
+      "name": "mcalK"
+    },
+    {
+      "name": "mcalL"
+    },
+    {
+      "name": "mcalM"
+    },
+    {
+      "name": "mcalN"
+    },
+    {
+      "name": "mcalO"
+    },
+    {
+      "name": "mcalP"
+    },
+    {
+      "name": "mcalQ"
+    },
+    {
+      "name": "mcalR"
+    },
+    {
+      "name": "mcalS"
+    },
+    {
+      "name": "mcalT"
+    },
+    {
+      "name": "mcalU"
+    },
+    {
+      "name": "mcalV"
+    },
+    {
+      "name": "mcalW"
+    },
+    {
+      "name": "mcalX"
+    },
+    {
+      "name": "mcalY"
+    },
+    {
+      "name": "mcalZ"
+    }
+  ],
+  "envs": [
+    {
+      "name": "gpmtrx"
+    },
+    {
+      "name": "gvmtrx"
+    },
+    {
+      "name": "garr"
+    }
+  ],
+  "keys": {},
+  "args": []
 }

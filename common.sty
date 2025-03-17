@@ -1,6 +1,6 @@
 \RequirePackage[tbtags]{amsmath}
 \RequirePackage{amsthm,thmtools}
-\RequirePackage{amssymb,extarrows,etoolbox,mathtools,tensor}
+\RequirePackage{amssymb,extarrows,etoolbox,mathtools,overarrows,tensor}
 \RequirePackage{array}
 
 \RequirePackage[backend=biber,style=alphabetic]{biblatex}
@@ -10,14 +10,24 @@
 \RequirePackage{bm}
 \RequirePackage{booktabs}
 \RequirePackage{cancel}
+\RequirePackage{color}
+\RequirePackage{csquotes}
 \RequirePackage{draftwatermark}
 \RequirePackage{enumerate}
 \RequirePackage[shortlabels]{enumitem}
 \RequirePackage[lastexercise]{exercise}
 \RequirePackage{fancyhdr}
+\RequirePackage{graphbox,makecell,multicol,setspace,type1cm}
+\RequirePackage{imakeidx}
+\RequirePackage[indent]{parskip}
+\RequirePackage{pdfpages}
+\RequirePackage{scalerel}
+\RequirePackage{siunitx}
 
-\RequirePackage{geometry,graphbox,makecell,multicol,setspace,type1cm}
-\geometry{left=2cm,right=2cm,top=2cm,bottom=2cm}
+% Cannot be dumped by LuaLaTeX
+\RequirePackage{adjustbox,trimclip}
+\RequirePackage{standalone}
+\RequirePackage{tikz-cd}
 
 \RequirePackage[
     pdfstartview=FitH,
@@ -28,16 +38,13 @@
     citecolor=darkred,
     linkcolor=darkblue,
 ]{hyperref}
-
 \RequirePackage[nameinlink]{cleveref}
+\RequirePackage{geometry}
+
 \crefname{equation}{}{}
 
-\RequirePackage[indent]{parskip}
-\RequirePackage{pdfpages}
-\RequirePackage{siunitx}
-\RequirePackage{standalone}
+\geometry{left=2cm,right=2cm,top=2cm,bottom=2cm}
 
-\RequirePackage{tikz-cd,color}
 \tikzset{elegant/.style={smooth, red, thick, samples=101}}
 \tikzcdset{arrow style=math font}
 
@@ -58,27 +65,77 @@
 \newenvironment{garr}[1]{\setcellgapes{5pt}\makegapedcells\begin{array}{#1}}{\end{array}}
 
 \makeatletter
+
 \newcommand{\pushright}[1]{\ifmeasuring@#1\else\omit\hfill$\displaystyle#1$\fi\ignorespaces}
 
-\newcommand{\twoheadrightarrowfill}{$\m@th \smash -\mkern -7mu\cleaders \hbox {$\mkern -2mu\smash -\mkern -2mu$}\hfill \mkern -7mu \mathord \twoheadrightarrow $}
+\newcommand{\lowermathbox}[1]{\mathpalette\lowermathbox@{#1}}
+\newcommand{\lowermathbox@}[2]{
+    \settoheight{\@tempdima}{\m@th$\smallermathstyle{X}$}
+    \raisebox{-0.5\@tempdima}{\m@th$#1#2$}}
 
-\newcommand{\twoheadleftarrowfill}{$\m@th \mathord \twoheadleftarrow \mkern -7mu\cleaders \hbox {$\mkern -2mu\smash -\mkern -2mu$}\hfill \mkern -7mu\smash -$}
+\NewOverArrowCommand{\rightptarrow@}{%
+    start={},
+    middle=\harrowextender,
+    end={\clipbox{.5em 0pt 0pt 0pt}{$\rightharpoonup\mathrel{\mspace{-15mu}}\rightharpoonup$}},
+    trim start=0,
+    trim middle=3,
+    trim end=2,
+    shift left=5,
+    shift right=-1
+}
+
+\NewOverArrowCommand{\rightptarrowx@}{%
+    start={\hphantom{\smallermathstyle X}},
+    middle=\harrowextender,
+    end={\clipbox{.5em 0pt 0pt 0pt}{$\rightharpoonup\mathrel{\mspace{-15mu}}\rightharpoonup$}},
+    trim start=1,
+    trim middle=2,
+    trim end=1,
+    shift left=-2,
+    shift right=-2
+}
 
 \newcommand{\rightparatrans}[2][\@nil]{%
     \def\tmp{#1}%
     \ifx\tmp\@nnil
-        \vbox {\m@th \ialign {##\crcr \twoheadrightarrowfill \crcr \noalign {\kern -\z@ \nointerlineskip } $\hfil \displaystyle {#2}\hfil $\crcr }}
+        \rightptarrow@{#2}
     \else
-        \vbox {\m@th \ialign {##\crcr ${\scriptscriptstyle #1}$\!\! \twoheadrightarrowfill  \crcr \noalign {\kern -\z@ \nointerlineskip } $\hfil \displaystyle {#2}\hfil $\crcr }}
-    \fi}
+        \settowidth{\@tempdima}{$#1$}
+        \tensor[^{\lowermathbox{\smallermathstyle{#1}}\mspace{-12mu}}]{{\rightptarrowx@{#2}}}{}
+    \fi
+}
+
+\NewOverArrowCommand{\leftptarrow@}{%
+    start={\clipbox{0pt 0pt .5em 0pt}{$\leftharpoonup\mathrel{\mspace{-15mu}}\leftharpoonup$}},
+    middle=\harrowextender,
+    end={},
+    trim start=2,
+    trim middle=3,
+    trim end=0,
+    shift left=2,
+    shift right=2
+}
+
+\NewOverArrowCommand{\leftptarrowx@}{%
+    start={\clipbox{0pt 0pt .5em 0pt}{$\leftharpoonup\mathrel{\mspace{-15mu}}\leftharpoonup$}},
+    middle=\harrowextender,
+    end={\hphantom{\smallermathstyle X}},
+    trim start=1,
+    trim middle=2,
+    trim end=0,
+    shift left=2,
+    shift right=-4
+}
 
 \newcommand{\leftparatrans}[2][\@nil]{%
     \def\tmp{#1}%
     \ifx\tmp\@nnil
-        \vbox {\m@th \ialign {##\crcr \twoheadleftarrowfill \crcr \noalign {\kern -\z@ \nointerlineskip } $\hfil \displaystyle {#2}\hfil $\crcr }}
+        \leftptarrow@{#2}
     \else
-        \vbox {\m@th \ialign {##\crcr \twoheadleftarrowfill ${\scriptscriptstyle #1}$\!\! \crcr \noalign {\kern -\z@ \nointerlineskip } $\hfil \displaystyle {#2}\hfil $\crcr }}
-    \fi}
+        \settowidth{\@tempdima}{$#1$}
+        \tensor{{\leftptarrowx@{#2}}}{^{\mspace{-12mu}\lowermathbox{\smallermathstyle{#1}}}}
+    \fi
+}
 
 \DeclarePairedDelimiter\raw@bra\lparen\rparen
 \def\bra{\@ifstar{\raw@bra}{\raw@bra*}}
@@ -96,10 +153,39 @@
 \def\abs{\@ifstar{\raw@abs}{\raw@abs*}}
 \DeclarePairedDelimiter\raw@norm\lVert\rVert
 \def\norm{\@ifstar{\raw@norm}{\raw@norm*}}
+
 \makeatother
 
-\newcommand{\q}[2]{{#1\kern-2\nulldelimiterspace\left/#2\right.\kern-2\nulldelimiterspace}}
-\newcommand{\coq}[2]{{\kern-2\nulldelimiterspace\left.#1\right\backslash\kern-2\nulldelimiterspace#2}}
+\newcommand{\q}[2]{{\ThisStyle{
+                {\raisebox{0.5\nulldelimiterspace}{\ensuremath{\SavedStyle{#1}}}}
+                    {
+                        \kern-\nulldelimiterspace
+                        \left.
+                        \vphantom{\ensuremath{\SavedStyle{#1}}}
+                        \kern-\nulldelimiterspace
+                        \middle/
+                        \kern-\nulldelimiterspace
+                        \vphantom{\ensuremath{\SavedStyle{#2}}}
+                        \right.
+                        \kern-\nulldelimiterspace
+                    }
+                    {\raisebox{-0.5\nulldelimiterspace}{\ensuremath{\SavedStyle{#2}}}}
+            }}}
+\newcommand{\coq}[2]{{\ThisStyle{
+                {\raisebox{-0.5\nulldelimiterspace}{\ensuremath{\SavedStyle{#2}}}}
+                    {
+                        \kern-\nulldelimiterspace
+                        \left.
+                        \vphantom{\ensuremath{\SavedStyle{#2}}}
+                        \kern-\nulldelimiterspace
+                        \middle\backslash
+                        \kern-\nulldelimiterspace
+                        \vphantom{\ensuremath{\SavedStyle{#1}}}
+                        \right.
+                        \kern-\nulldelimiterspace
+                    }
+                    {\raisebox{0.5\nulldelimiterspace}{\ensuremath{\SavedStyle{#1}}}}
+            }}}
 
 \newcommand{\rmnum}[1]{{\romannumeral#1}}
 \newcommand{\Rmnum}[1]{{\uppercase\expandafter{\romannumeral#1}}}
@@ -117,8 +203,11 @@
 \newcommand{\X}{\bra{X}}
 \newcommand{\y}{\bra{y}}
 \newcommand{\Y}{\bra{Y}}
+\newcommand{\z}{\bra{z}}
+\newcommand{\Z}{\bra{Z}}
 \newcommand{\nege}{\bra{-1}}
 \newcommand{\e}{\mathrm{e}}
+\newcommand{\ii}{\mathrm{i}}
 \newcommand{\transpose}[1]{\prescript{T}{}{#1}}
 
 \newcommand{\dif}{\mathrm{d}}
@@ -211,25 +300,33 @@
 
 \newcommand{\id}{\mathrm{id}}
 
-\newcommand{\EAut}{{\mathsf{Aut}}} % enriched automorphism
-\newcommand{\EIso}{{\mathsf{Iso}}} % enriched isomorphism
-\newcommand{\EEnd}{{\mathsf{End}}} % enriched endomorphism
-\newcommand{\EHom}{{\mathsf{Hom}}} % enriched homomorphism
+\DeclareMathOperator{\EAut}{\mathsf{Aut}} % enriched automorphism
+\DeclareMathOperator{\EIso}{\mathsf{Iso}} % enriched isomorphism
+\DeclareMathOperator{\EEnd}{\mathsf{End}} % enriched endomorphism
+\DeclareMathOperator{\EHom}{\mathsf{Hom}} % enriched homomorphism
+
+% \DeclareMathOperator{\EAut}{\mcalA ut} % enriched automorphism
+% \DeclareMathOperator{\EIso}{\mcalI so} % enriched isomorphism
+% \DeclareMathOperator{\EEnd}{\mcalE nd} % enriched endomorphism
+% \DeclareMathOperator{\EHom}{\mcalH om} % enriched homomorphism
 
 \newcommand{\Cat}{{\mathsf{Cat}}} % categories
-\newcommand{\MonCat}{{\mathsf{MonCat}}} % categories
+\newcommand{\MonCat}{{\mathsf{MonCat}}} % monoidal categories
 \newcommand{\Fib}{{\mathsf{Fib}}} % fibrations
-\newcommand{\Cone}{{\mathsf{Cone}}} % cones
 \newcommand{\Pairs}{{\mathsf{Pairs}}} % pairs
 \newcommand{\Set}{{\mathsf{Set}}} % sets
 \newcommand{\Top}{{\mathsf{Top}}} % topological spaces
 \newcommand{\Op}{{\mathsf{Op}}} % open sets
-\newcommand{\Man}{{\mathsf{Man}}} % manifolds
+\newcommand{\Ofd}{{\mathsf{Ofd}}} % orbifolds
+\newcommand{\Mfd}{{\mathsf{Mfd}}} % manifolds
 \newcommand{\FBun}{{\mathsf{FBun}}} % fibre bundles
 \newcommand{\VBun}{{\mathsf{VBun}}} % vector bundles
 \newcommand{\PBun}{{\mathsf{PBun}}} % principal bundles
+\newcommand{\OrbC}{{\mathsf{Orb}}} % orbit category
+\newcommand{\Mon}{{\mathsf{Mon}}} % monoids
 \newcommand{\Grp}{{\mathsf{Grp}}} % groups
 \newcommand{\Ab}{{\mathsf{Ab}}} % abelian groups
+\newcommand{\TopGrp}{{\mathsf{TopGrp}}} % topological groups
 \newcommand{\LieGrp}{{\mathsf{LieGrp}}} % Lie groups
 \newcommand{\LieGrpd}{{\mathsf{LieGrpd}}} % Lie groupoids
 \newcommand{\LieAlg}{{\mathsf{LieAlg}}} % Lie algebras
@@ -237,22 +334,36 @@
 \newcommand{\Ring}{{\mathsf{Ring}}} % rings
 \newcommand{\CRing}{{\mathsf{CRing}}} % commutative rings
 \newcommand{\Mod}{{\mathsf{Mod}}} % modules
+\newcommand{\Field}{{\mathsf{Field}}} % groups
 \newcommand{\Vect}{{\mathsf{Vect}}} % vector spaces
-\newcommand{\Alg}{{\mathsf{Alg}}} % algebras
+\newcommand{\Alg}{{\mathsf{Alg}}} % (unital) associative algebras
 \newcommand{\AlgVar}{\mathsf{AlgVar}} % algebraic varieties
 \newcommand{\PSh}{{\mathsf{PSh}}} % presheaves
 \newcommand{\Sh}{{\mathsf{Sh}}} % sheaves
+\newcommand{\Aff}{{\mathsf{Aff}}} % affine schemes
 \newcommand{\Sch}{{\mathsf{Sch}}} % schemes
 \DeclareMathOperator{\FunOp}{\mathsf{Fun}}
 \newcommand{\Fun}[2]{{\FunOp\dbra{#1}{#2}}} % functors
 
+\newcommand{\GrCRing}{{\mathsf{GrCRing}}} % graded commutative rings
+\newcommand{\GrMod}{{\mathsf{GrMod}}} % graded modules
+
+\newcommand{\Cone}{{\mathsf{Cone}}} % cones
+\newcommand{\cCone}{{\mathsf{cCone}}} % cocones
+\newcommand{\Wdg}{{\mathsf{Wdg}}} % wedges
+\newcommand{\cWdg}{{\mathsf{cWdg}}} % cowedges
+
+\newcommand{\El}{{\mathsf{El}}} % category of elements
+
 \DeclareMathOperator{\yo}{\text{よ}} % yoneda embedding
+\DeclareMathOperator{\oy}{\text{\reflectbox{よ}}}
 
 \newcommand{\commacat}[2]{{\left(#1\middle\downarrow #2\right)}} % comma category
 
 \newcommand{\LMod}[1]{#1\text{-}\Mod} % left modules
 \newcommand{\RMod}[1]{\Mod\text{-}#1} % right modules
 
+\DeclareMathOperator{\Log}{Log} % principal branch of logarithm
 \DeclareMathOperator{\Def}{Def} % definable sets
 \DeclareMathOperator{\ev}{ev} % evaluation
 \DeclareMathOperator{\im}{im} % image
@@ -261,6 +372,7 @@
 \DeclareMathOperator{\tr}{tr} % trace
 \DeclareMathOperator{\ch}{char} % characteristic
 \DeclareMathOperator{\sgn}{sgn} % sign
+\DeclareMathOperator{\sing}{sing} % singular
 \DeclareMathOperator{\diam}{diam} % diameter
 \DeclareMathOperator{\diagop}{diag} % diagonal
 \DeclareMathOperator{\arcsinh}{arcsinh} % arcsinh
@@ -302,6 +414,7 @@
 \DeclareMathOperator{\SU}{SU} % special unitary group
 \DeclareMathOperator{\OO}{O} % orthogonal group
 \DeclareMathOperator{\SO}{SO} % special orthogonal group
+\DeclareMathOperator{\so}{\mathfrak{so}} % special orthogonal Lie algebra
 \DeclareMathOperator{\hol}{hol} % linear holonomy group
 \DeclareMathOperator{\Hol}{Hol} % affine holonomy group
 \DeclareMathOperator{\ord}{ord} % order
@@ -312,11 +425,30 @@
 \DeclareMathOperator{\ad}{ad}
 \DeclareMathOperator{\Ad}{Ad}
 \DeclareMathOperator{\spanspace}{span}
-\DeclareMathOperator{\gr}{gr}
-\DeclareMathOperator{\Eff}{Eff}
+\DeclareMathOperator{\gr}{gr} % graded
+\DeclareMathOperator{\Eff}{Eff} % effective
 \DeclareMathOperator{\DscDt}{DD} % descent datum
+\DeclareMathOperator{\dis}{dis} % discrete category
+\DeclareMathOperator{\Spec}{Spec} % spectrum
+\DeclareMathOperator{\Specm}{Specm} % maximal spectrum
+\DeclareMathOperator{\Frac}{Frac} % field of fractions
+\DeclareMathOperator{\hght}{ht} % height
+\DeclareMathOperator{\depth}{depth} % depth
+\DeclareMathOperator{\T}{T}
+\DeclareMathOperator{\Proj}{Proj} % projective spectrum
+\DeclareMathOperator{\vol}{vol} % volume
+\DeclareMathOperator{\Gr}{Gr} % Grassmannian
+
+\DeclareMathOperator{\res}{res} % residue
+
+\DeclareMathOperator{\Ext}{Ext} % extension
+\DeclareMathOperator{\Tor}{Tor} % torsion
+
+\DeclareMathOperator{\Lan}{Lan} % left Kan extension
+\DeclareMathOperator{\Ran}{Ran} % right Kan extension
 
 \DeclareMathOperator{\ob}{ob} % object
+\DeclareMathOperator{\mor}{mor} % morphism
 \DeclareMathOperator{\dom}{dom} % domain
 \DeclareMathOperator{\codom}{codom} % codomain
 \DeclareMathOperator{\coker}{coker} % cokernel
@@ -353,4 +485,32 @@
 \newcommand{\mcalX}{{\mathcal{X}}}
 \newcommand{\mcalY}{{\mathcal{Y}}}
 \newcommand{\mcalZ}{{\mathcal{Z}}}
+
+
+\newcommand{\mcala}{{\mathcal{a}}}
+\newcommand{\mcalb}{{\mathcal{b}}}
+\newcommand{\mcalc}{{\mathcal{c}}}
+\newcommand{\mcald}{{\mathcal{d}}}
+\newcommand{\mcale}{{\mathcal{e}}}
+\newcommand{\mcalf}{{\mathcal{f}}}
+\newcommand{\mcalg}{{\mathcal{g}}}
+\newcommand{\mcalh}{{\mathcal{h}}}
+\newcommand{\mcali}{{\mathcal{i}}}
+\newcommand{\mcalj}{{\mathcal{j}}}
+\newcommand{\mcalk}{{\mathcal{k}}}
+\newcommand{\mcall}{{\mathcal{l}}}
+\newcommand{\mcalm}{{\mathcal{m}}}
+\newcommand{\mcaln}{{\mathcal{n}}}
+\newcommand{\mcalo}{{\mathcal{o}}}
+\newcommand{\mcalp}{{\mathcal{p}}}
+\newcommand{\mcalq}{{\mathcal{q}}}
+\newcommand{\mcalr}{{\mathcal{r}}}
+\newcommand{\mcals}{{\mathcal{s}}}
+\newcommand{\mcalt}{{\mathcal{t}}}
+\newcommand{\mcalu}{{\mathcal{u}}}
+\newcommand{\mcalv}{{\mathcal{v}}}
+\newcommand{\mcalw}{{\mathcal{w}}}
+\newcommand{\mcalx}{{\mathcal{x}}}
+\newcommand{\mcaly}{{\mathcal{y}}}
+\newcommand{\mcalz}{{\mathcal{z}}}
 % \end{mathcal abbreviation}
