@@ -2,6 +2,13 @@
   "deps": [],
   "macros": [
     {
+      "name": "zcref",
+      "arg": {
+        "format": "{}",
+        "snippet": "zcref{${1:}}"
+      }
+    },
+    {
       "name": "pushright",
       "arg": {
         "format": "{}",
@@ -48,6 +55,13 @@
       "arg": {
         "format": "{}{}",
         "snippet": "set{${1:}}{${2:}}"
+      }
+    },
+    {
+      "name": "set*",
+      "arg": {
+        "format": "{}",
+        "snippet": "set*{${1:}}"
       }
     },
     {
