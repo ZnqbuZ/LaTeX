@@ -2,6 +2,8 @@
 
 cd "$(dirname "$(realpath "$0")")" || exit 1
 
+rm /etc/fonts/conf.d/09-LaTeX.conf /etc/fonts/conf.d/09-texlive.conf
+
 cat <<EOF > /etc/fonts/conf.d/09-LaTeX.conf
 <?xml version="1.0"?>
 <!DOCTYPE fontconfig SYSTEM "fonts.dtd">
