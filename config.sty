@@ -1,13 +1,24 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{config}[Partial Config]
 
-% \RequirePackage{fontspec}
-\RequirePackage[warnings-off={mathtools-colon,mathtools-overbracket}]{unicode-math}
+\RequirePackage[warnings-off={mathtools-colon, mathtools-overbracket}]{unicode-math}
 \RequirePackage[default]{fontsetup}
-% \setmathfont{STIX Two Math}
-\setmathfont[range={\mathcal,\mathbfcal}, StylisticSet=1]{NewComputerModernMath}
+\setmathfont[range={\mathcal, \mathbfcal}, StylisticSet=1]{NewComputerModernMath}
 
 \AtBeginEnvironment{proof}{\vspace*{-\parskip}}
+
+\swapnumbers
+
+\NewDocumentCommand{\declthm}{ o m m }{
+    \IfValueTF{#1}
+    {\declaretheorem[name=#3, #1]{#2}}
+    {\declaretheorem[name=#3]{#2}}
+}
+
+\NewDocumentCommand{\newthm}{ O{plain} m m }{
+    \declthm[numberlike=equation, style=#1]{#2}{#3}
+    \declthm[numbered=no, style=#1]{#2*}{#3}
+}
 
 \newcommand{\lang}{}
 \newcommand{\en}{en}
@@ -20,152 +31,124 @@
 \ProcessOptions\relax
 
 \ifx\lang\en
+    \RequirePackage[english, provide=*]{babel}
 
-\RequirePackage[english, provide=*]{babel}
-\RequirePackage[nameinlink]{cleveref}
+    \newthm{theorem}{Theorem}{plain}
+    \newthm{lemma}{Lemma}{plain}
+    \newthm{corollary}{Corollary}{plain}
+    \newthm{proposition}{Proposition}{plain}
+    \newthm{axiom}{Axiom}{plain}
 
-\declaretheorem[name=Theorem, numberlike=equation, style=plain]{theorem}
-\declaretheorem[name=Lemma, numberlike=equation, style=plain]{lemma}
-\declaretheorem[name=Corollary, numberlike=equation, style=plain]{corollary}
-\declaretheorem[name=Proposition, numberlike=equation, style=plain]{proposition}
-\declaretheorem[name=Axiom, numberlike=equation, style=plain]{axiom}
+    \newthm{definition}{Definition}{definition}
 
-\declaretheorem[name=Definition, numberlike=equation, style=definition]{definition}
-
-\declaretheorem[name=Remark, numberlike=equation, style=remark]{remark}
-\declaretheorem[name=Example, numberlike=equation, style=remark]{example}
-
-\declaretheorem[name=Theorem, numbered=no, style=plain]{theorem*}
-\declaretheorem[name=Lemma, numbered=no, style=plain]{lemma*}
-\declaretheorem[name=Corollary, numbered=no, style=plain]{corollary*}
-\declaretheorem[name=Proposition, numbered=no, style=plain]{proposition*}
-\declaretheorem[name=Axiom, numbered=no, style=plain]{axiom*}
-
-\declaretheorem[name=Definition, numbered=no, style=definition]{definition*}
-
-\declaretheorem[name=Remark, numbered=no, style=remark]{remark*}
-\declaretheorem[name=Example, numbered=no, style=remark]{example*}
+    \newthm{remark}{Remark}{remark}
+    \newthm{example}{Example}{remark}
 
 \fi
 
 \ifx\lang\fr
+    \RequirePackage[french, provide=*]{babel}
 
-\RequirePackage[french, provide=*]{babel}
-\RequirePackage[nameinlink,french]{cleveref}
-\declaretheorem[name=Th\'eor\`eme, numberlike=equation, style=plain]{theorem}
-\declaretheorem[name=Lemme, numberlike=equation, style=plain]{lemma}
-\declaretheorem[name=Corollaire, numberlike=equation, style=plain]{corollary}
-\declaretheorem[name=Proposition, numberlike=equation, style=plain]{proposition}
-\declaretheorem[name=Axiome, numberlike=equation, style=plain]{axiom}
+    \newthm{theorem}{Th\'eor\`eme}{plain}
+    \newthm{lemma}{Lemme}{plain}
+    \newthm{corollary}{Corollaire}{plain}
+    \newthm{proposition}{Proposition}{plain}
+    \newthm{axiom}{Axiome}{plain}
 
-\declaretheorem[name=D\'efinition, numberlike=equation, style=definition]{definition}
+    \newthm{definition}{D\'efinition}{definition}
 
-\declaretheorem[name=Remarque, numberlike=equation, style=remark]{remark}
-\declaretheorem[name=Exemple, numberlike=equation, style=remark]{example}
-
-\declaretheorem[name=Th\'eor\`eme, numbered=no, style=plain]{theorem*}
-\declaretheorem[name=Lemme, numbered=no, style=plain]{lemma*}
-\declaretheorem[name=Corollaire, numbered=no, style=plain]{corollary*}
-\declaretheorem[name=Proposition, numbered=no, style=plain]{proposition*}
-\declaretheorem[name=Axiome, numbered=no, style=plain]{axiom*}
-
-\declaretheorem[name=D\'efinition, numbered=no, style=definition]{definition*}
-
-\declaretheorem[name=Remarque, numbered=no, style=remark]{remark*}
-\declaretheorem[name=Exemple, numbered=no, style=remark]{example*}
+    \newthm{remark}{Remarque}{remark}
+    \newthm{example}{Exemple}{remark}
 
 \fi
 
 \ifx\lang\cn
-
-\IfClassLoadedTF{ctexart}{}
-  {\IfClassLoadedTF{ctexbook}{}
-    {\IfClassLoadedTF{ctexrep}{}
-      {\IfClassLoadedTF{ctexbeamer}{}
-        {
-         \PackageWarning{ctexclass-check}{The document class is not a valid ctex class}{}
-         \RequirePackage[fontset=none]{ctex}
-         \PackageWarning{ctexclass-check}{CTeX package loaded}{}
+    \IfClassLoadedTF{ctexart}{}
+    {\IfClassLoadedTF{ctexbook}{}
+        {\IfClassLoadedTF{ctexrep}{}
+            {\IfClassLoadedTF{ctexbeamer}{}
+                {
+                    \PackageWarning{ctexclass-check}{The document class is not a valid ctex class}{}
+                    \RequirePackage[fontset=none]{ctex}
+                    \PackageWarning{ctexclass-check}{CTeX package loaded}{}
+                }
+            }
         }
-      }
     }
-  }
 
-\makeatother
+    \setCJKfamilyfont{zhsong}{Noto Serif CJK SC}[BoldFont=Noto Serif CJK SC Bold]
+    \setCJKfamilyfont{zhhei}{FZLTHProGBK}[BoldFont=FZLTHProGBK DemiBold]
+    \setCJKfamilyfont{zhfs}{FZQingFangSongS Bold}
+    \setCJKfamilyfont{zhyou}{FZLanTingYuan-R-GBK}[BoldFont=FZLanTingYuan-DB1-GBK]
+    \setCJKfamilyfont{zhkai}{FZNewKai-Z03}[BoldFont=FZCuKaiS-R-GB]
+    \setCJKfamilyfont{zhli}{FZHuaLi-M14S}
 
-\RequirePackage[nameinlink]{cleveref}
-% \RequirePackage[chinese, provide=*]{babel}
+    \setCJKmainfont{Noto Serif CJK SC}[BoldFont=Noto Serif CJK SC Bold, ItalicFont=FZQingFangSongS Bold]
+    \setCJKsansfont{FZLTHProGBK}[BoldFont=FZLTHProGBK DemiBold]
+    \setCJKmonofont{Noto Sans Mono CJK SC}
 
-\setCJKfamilyfont{zhsong}{Noto Serif CJK SC}[BoldFont=Noto Serif CJK SC Bold]
-\setCJKfamilyfont{zhhei}{FZLTHProGBK}[BoldFont=FZLTHProGBK DemiBold]
-\setCJKfamilyfont{zhfs}{FZQingFangSongS Bold}
-\setCJKfamilyfont{zhyou}{FZLanTingYuan-R-GBK}[BoldFont=FZLanTingYuan-DB1-GBK]
-\setCJKfamilyfont{zhkai}{FZNewKai-Z03}[BoldFont=FZCuKaiS-R-GB]
-\setCJKfamilyfont{zhli}{FZHuaLi-M14S}
+    \zcsetup{pairsep={ 和 }, listsep={、}, lastsep={ 及 }, rangesep={ 至 }}
 
-\setCJKmainfont{Noto Serif CJK SC}[BoldFont=Noto Serif CJK SC Bold, ItalicFont=FZQingFangSongS Bold]
-\setCJKsansfont{FZLTHProGBK}[BoldFont=FZLTHProGBK DemiBold]
-\setCJKmonofont{Noto Sans Mono CJK SC}
+    \zcRefTypeSetup{chapter}{refbounds={,第,章,}}
+    \zcRefTypeSetup{section}{refbounds={,第,节,}}
+    \zcRefTypeSetup{subsection}{refbounds={,第,小节,}}
 
-% \renewcommand{\sectionautorefname}{节}
-\crefname{section}{}{}
-\crefname{chapter}{}{}
-\crefname{appendix}{附录}{附录}
-\creflabelformat{section}{#2第#1节#3}
-\creflabelformat{chapter}{#2第#1章#3}
+    \zcrename{appendix}{附录}
+    \zcnoname{chapter}
+    \zcnoname{section}
+    \zcnoname{subsection}
 
-% \AtBeginEnvironment{proof}{\vspace*{-2\parskip}}
+    \renewcommand{\proofname}{\indent 证明}
+    \newenvironment{proof*}{\begin{proof}\renewcommand{\qedsymbol}{}}{\end{proof}}
 
-\renewcommand{\proofname}{\indent 证明}
-\newenvironment{proof*}{\begin{proof}\renewcommand{\qedsymbol}{}}{\end{proof}}
+    \newenvironment{sln}{\renewcommand{\proofname}{\indent 解}\begin{proof}}{\end{proof}\renewcommand{\proofname}{\indent 证明}}
+    \newenvironment{sln*}{\renewcommand{\proofname}{\indent 解}\begin{proof*}\renewcommand{\proofname}{\indent 解}}{\end{proof*}\renewcommand{\proofname}{\indent 证明}}
 
-\newenvironment{sln}{\renewcommand{\proofname}{\indent 解}\begin{proof}}{\end{proof}\renewcommand{\proofname}{\indent 证明}}
-\newenvironment{sln*}{\renewcommand{\proofname}{\indent 解}\begin{proof*}\renewcommand{\proofname}{\indent 解}}{\end{proof*}\renewcommand{\proofname}{\indent 证明}}
+    \declaretheoremstyle[
+        headfont=\CJKfamily{zhkai}\bfseries,
+        notefont=\CJKfamily{zhkai}\bfseries,
+        bodyfont=\CJKfamily{zhkai},
+        headindent=2em
+    ]{cthm}
 
-\declaretheoremstyle[
-    headfont=\CJKfamily{zhkai}\bfseries,
-    notefont=\CJKfamily{zhkai}\bfseries,
-    bodyfont=\CJKfamily{zhkai},
-    headindent=2em
-]{cthm}
+    \declaretheoremstyle[
+        headfont=\CJKfamily{zhkai}\bfseries,
+        notefont=\CJKfamily{zhkai}\bfseries,
+        bodyfont=\CJKfamily{zhsong},
+        headindent=2em
+    ]{cdef}
 
-\declaretheoremstyle[
-    headfont=\CJKfamily{zhkai}\bfseries,
-    notefont=\CJKfamily{zhkai}\bfseries,
-    bodyfont=\CJKfamily{zhsong},
-    headindent=2em
-]{cdef}
+    \declaretheoremstyle[
+        headfont=\CJKfamily{zhkai},
+        notefont=\CJKfamily{zhkai},
+        bodyfont=\CJKfamily{zhkai},
+        headindent=2em
+    ]{crem}
 
-\declaretheoremstyle[
-    headfont=\CJKfamily{zhkai},
-    notefont=\CJKfamily{zhkai},
-    bodyfont=\CJKfamily{zhkai},
-    headindent=2em
-]{crem}
+    \RenewDocumentCommand{\declthm}{ o m m }{
+        \IfValueTF{#1}
+        {\declaretheorem[name=#3, refname={#3, #3}, Refname={#3, #3}, #1]{#2}}
+        {\declaretheorem[name=#3, refname={#3, #3}, Refname={#3, #3}]{#2}}
+    }
 
-\declaretheorem[name=定理,numberlike=equation,style=cthm]{theorem}
-\declaretheorem[name=引理,numberlike=equation,style=cthm]{lemma}
-\declaretheorem[name=推论,numberlike=equation,style=cthm]{corollary}
-\declaretheorem[name=命题,numberlike=equation,style=cthm]{proposition}
-\declaretheorem[name=公理,numberlike=equation,style=cthm]{axiom}
+    \RenewDocumentCommand{\newthm}{ O{cthm} m m }{
+        \declthm[numberlike=equation, style=#1]{#2}{#3}
+        \declthm[numbered=no, style=#1]{#2*}{#3}
+    }
 
-\declaretheorem[name=定义,numberlike=equation,style=cdef]{definition}
+    \newthm{theorem}{定理}
+    \newthm{lemma}{引理}
+    \newthm{corollary}{推论}
+    \newthm{proposition}{命题}
+    \newthm{axiom}{公理}
 
-\declaretheorem[name=注,numberlike=equation,style=crem]{remark}
-\declaretheorem[name=例,numberlike=equation,style=crem]{example}
+    \newthm[cdef]{definition}{定义}
 
-\declaretheorem[name=定理, numbered=no, style=cthm]{theorem*}
-\declaretheorem[name=引理, numbered=no, style=cthm]{lemma*}
-\declaretheorem[name=推论, numbered=no, style=cthm]{corollary*}
-\declaretheorem[name=命题, numbered=no, style=cthm]{proposition*}
-\declaretheorem[name=公理, numbered=no, style=cthm]{axiom*}
+    \newthm[crem]{remark}{注}
+    \newthm[crem]{example}{例}
 
-\declaretheorem[name=定义, numbered=no, style=cdef]{definition*}
-
-\declaretheorem[name=注, numbered=no, style=crem]{remark*}
-\declaretheorem[name=例, numbered=no, style=crem]{example*}
-
-\declaretheorem[name=主定理,style=cthm]{maintheorem}
+    \declthm[style=cthm]{maintheorem}{主定理}
+    \renewcommand{\themaintheorem}{\Roman{maintheorem}}
 
 \fi
 
@@ -173,5 +156,3 @@
 \let\en\undefined
 \let\fr\undefined
 \let\cn\undefined
-
-\crefname{equation}{}{}

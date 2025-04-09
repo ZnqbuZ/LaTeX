@@ -38,6 +38,23 @@
     citecolor=darkred,
     linkcolor=darkblue,
 ]{hyperref}
+\RequirePackage{zref-clever}
+
+\zcsetup{hyperref=true, nameinlink=true}
+\newcommand{\zcrename}[2]{\zcRefTypeSetup{#1}{
+        Name-sg=#2,
+        name-sg=#2,
+        Name-pl=#2,
+        name-pl=#2,
+        Name-sg-ab=#2,
+        name-sg-ab=#2,
+        Name-pl-ab=#2,
+        name-pl-ab=#2
+    }}
+
+\newcommand{\zcnoname}[1]{\zcrename{#1}{}}
+
+\zcnoname{equation}
 
 \RequirePackage{geometry}
 
@@ -52,7 +69,6 @@
 \renewcommand{\fontsubfuzz}{\maxdimen}
 
 \numberwithin{equation}{section}
-\swapnumbers
 
 \setcounter{secnumdepth}{3}
 
@@ -100,6 +116,7 @@
     \else
         \settowidth{\@tempdima}{$#1$}
         \tensor[^{\lowermathbox{\smallermathstyle{#1}}\mspace{-12mu}}]{{\rightptarrowx@{#2}}}{}
+        
     \fi
 }
 
@@ -132,6 +149,7 @@
     \else
         \settowidth{\@tempdima}{$#1$}
         \tensor{{\leftptarrowx@{#2}}}{^{\mspace{-12mu}\lowermathbox{\smallermathstyle{#1}}}}
+        
     \fi
 }
 
