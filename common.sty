@@ -160,6 +160,7 @@
 \DeclarePairedDelimiter\raw@Bra\lbrace\rbrace
 \def\Bra{\@ifstar{\raw@Bra}{\raw@Bra*}}
 \DeclarePairedDelimiterX\raw@set[2]\lbrace\rbrace{\,{#1}\,\delimsize\vert\,\mathopen{}{#2}\,}
+\DeclarePairedDelimiterX\raw@set*[1]\lbrace\rbrace{\,{#1}\,}
 \def\set{\@ifstar{\raw@set}{\raw@set*}}
 \DeclarePairedDelimiter\raw@sqbra\lbrack\rbrack
 \def\sqbra{\@ifstar{\raw@sqbra}{\raw@sqbra*}}
