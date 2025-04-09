@@ -22,6 +22,7 @@
 \ifx\lang\en
 
 \RequirePackage[english, provide=*]{babel}
+\RequirePackage[nameinlink]{cleveref}
 
 \declaretheorem[name=Definition, numberlike=equation, style=definition]{definition}
 \declaretheorem[name=Theorem, numberlike=equation, style=plain]{theorem}
@@ -49,10 +50,11 @@
 \ifx\lang\fr
 
 \RequirePackage[french, provide=*]{babel}
+\RequirePackage[nameinlink,french]{cleveref}
 
 \declaretheorem[name=D\'efinition, numberlike=equation, style=definition]{definition}
 \declaretheorem[name=Th\'eor\`eme, numberlike=equation, style=plain]{theorem}
-\declaretheorem[name=Lemme, Refname={Lemme, Lemmes}, numberlike=equation, style=plain]{lemma}
+\declaretheorem[name=Lemme, numberlike=equation, style=plain]{lemma}
 \declaretheorem[name=Corollaire, numberlike=equation, style=plain]{corollary}
 \declaretheorem[name=Proposition, numberlike=equation, style=plain]{proposition}
 \declaretheorem[name=Axiome, numberlike=equation, style=plain]{axiom}
@@ -63,7 +65,7 @@
 
 \declaretheorem[name=D\'efinition, numbered=no, style=definition]{definition*}
 \declaretheorem[name=Th\'eor\`eme, numbered=no, style=plain]{theorem*}
-\declaretheorem[name=Lemme, Refname={Lemme, Lemmes}, numbered=no, style=plain]{lemma*}
+\declaretheorem[name=Lemme, numbered=no, style=plain]{lemma*}
 \declaretheorem[name=Corollaire, numbered=no, style=plain]{corollary*}
 \declaretheorem[name=Proposition, numbered=no, style=plain]{proposition*}
 \declaretheorem[name=Axiome, numbered=no, style=plain]{axiom*}
@@ -76,6 +78,7 @@
 \ifx\lang\cn
 
 \RequirePackage[fontset=none]{ctex}
+\RequirePackage[nameinlink]{cleveref}
 % \RequirePackage[chinese, provide=*]{babel}
 
 \setCJKmainfont{Noto Serif CJK SC}[BoldFont=Noto Serif CJK SC Bold, ItalicFont=FZQingFangSongS Bold]
