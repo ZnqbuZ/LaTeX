@@ -30,27 +30,27 @@
 \RequirePackage{tikz-cd}
 
 \RequirePackage[
-    pdfstartview=FitH,
-    CJKbookmarks=true,
-    bookmarksnumbered=true,
-    bookmarksopen=true,
-    colorlinks=true,
-    citecolor=darkred,
-    linkcolor=darkblue,
+	pdfstartview=FitH,
+	CJKbookmarks=true,
+	bookmarksnumbered=true,
+	bookmarksopen=true,
+	colorlinks=true,
+	citecolor=darkred,
+	linkcolor=darkblue,
 ]{hyperref}
 \RequirePackage{zref-clever}
 
 \zcsetup{hyperref=true, nameinlink=true}
 \newcommand{\zcrename}[2]{\zcRefTypeSetup{#1}{
-        Name-sg=#2,
-        name-sg=#2,
-        Name-pl=#2,
-        name-pl=#2,
-        Name-sg-ab=#2,
-        name-sg-ab=#2,
-        Name-pl-ab=#2,
-        name-pl-ab=#2
-    }}
+		Name-sg=#2,
+		name-sg=#2,
+		Name-pl=#2,
+		name-pl=#2,
+		Name-sg-ab=#2,
+		name-sg-ab=#2,
+		Name-pl-ab=#2,
+		name-pl-ab=#2
+	}}
 
 \newcommand{\zcnoname}[1]{\zcrename{#1}{}}
 
@@ -84,73 +84,73 @@
 
 \newcommand{\lowermathbox}[1]{\mathpalette\lowermathbox@{#1}}
 \newcommand{\lowermathbox@}[2]{
-    \settoheight{\@tempdima}{\m@th$\smallermathstyle{X}$}
-    \raisebox{-0.5\@tempdima}{\m@th$#1#2$}}
+	\settoheight{\@tempdima}{\m@th$\smallermathstyle{X}$}
+	\raisebox{-0.5\@tempdima}{\m@th$#1#2$}}
 
 \NewOverArrowCommand{\rightptarrow@}{%
-    start={},
-    middle=\harrowextender,
-    end={\clipbox{.5em 0pt 0pt 0pt}{$\rightharpoonup\mathrel{\mspace{-15mu}}\rightharpoonup$}},
-    trim start=0,
-    trim middle=3,
-    trim end=2,
-    shift left=5,
-    shift right=-1
+	start={},
+	middle=\harrowextender,
+	end={\clipbox{.5em 0pt 0pt 0pt}{$\rightharpoonup\mathrel{\mspace{-15mu}}\rightharpoonup$}},
+	trim start=0,
+	trim middle=3,
+	trim end=2,
+	shift left=5,
+	shift right=-1
 }
 
 \NewOverArrowCommand{\rightptarrowx@}{%
-    start={\hphantom{\smallermathstyle X}},
-    middle=\harrowextender,
-    end={\clipbox{.5em 0pt 0pt 0pt}{$\rightharpoonup\mathrel{\mspace{-15mu}}\rightharpoonup$}},
-    trim start=1,
-    trim middle=2,
-    trim end=1,
-    shift left=-2,
-    shift right=-2
+	start={\hphantom{\smallermathstyle X}},
+	middle=\harrowextender,
+	end={\clipbox{.5em 0pt 0pt 0pt}{$\rightharpoonup\mathrel{\mspace{-15mu}}\rightharpoonup$}},
+	trim start=1,
+	trim middle=2,
+	trim end=1,
+	shift left=-2,
+	shift right=-2
 }
 
 \newcommand{\rightparatrans}[2][\@nil]{%
-    \def\tmp{#1}%
-    \ifx\tmp\@nnil
-        \rightptarrow@{#2}
-    \else
-        \settowidth{\@tempdima}{$#1$}
-        \tensor[^{\lowermathbox{\smallermathstyle{#1}}\mspace{-12mu}}]{{\rightptarrowx@{#2}}}{}
-        
-    \fi
+	\def\tmp{#1}%
+	\ifx\tmp\@nnil
+		\rightptarrow@{#2}
+	\else
+		\settowidth{\@tempdima}{$#1$}
+		\tensor[^{\lowermathbox{\smallermathstyle{#1}}\mspace{-12mu}}]{{\rightptarrowx@{#2}}}{}
+		
+	\fi
 }
 
 \NewOverArrowCommand{\leftptarrow@}{%
-    start={\clipbox{0pt 0pt .5em 0pt}{$\leftharpoonup\mathrel{\mspace{-15mu}}\leftharpoonup$}},
-    middle=\harrowextender,
-    end={},
-    trim start=2,
-    trim middle=3,
-    trim end=0,
-    shift left=2,
-    shift right=2
+	start={\clipbox{0pt 0pt .5em 0pt}{$\leftharpoonup\mathrel{\mspace{-15mu}}\leftharpoonup$}},
+	middle=\harrowextender,
+	end={},
+	trim start=2,
+	trim middle=3,
+	trim end=0,
+	shift left=2,
+	shift right=2
 }
 
 \NewOverArrowCommand{\leftptarrowx@}{%
-    start={\clipbox{0pt 0pt .5em 0pt}{$\leftharpoonup\mathrel{\mspace{-15mu}}\leftharpoonup$}},
-    middle=\harrowextender,
-    end={\hphantom{\smallermathstyle X}},
-    trim start=1,
-    trim middle=2,
-    trim end=0,
-    shift left=2,
-    shift right=-4
+	start={\clipbox{0pt 0pt .5em 0pt}{$\leftharpoonup\mathrel{\mspace{-15mu}}\leftharpoonup$}},
+	middle=\harrowextender,
+	end={\hphantom{\smallermathstyle X}},
+	trim start=1,
+	trim middle=2,
+	trim end=0,
+	shift left=2,
+	shift right=-4
 }
 
 \newcommand{\leftparatrans}[2][\@nil]{%
-    \def\tmp{#1}%
-    \ifx\tmp\@nnil
-        \leftptarrow@{#2}
-    \else
-        \settowidth{\@tempdima}{$#1$}
-        \tensor{{\leftptarrowx@{#2}}}{^{\mspace{-12mu}\lowermathbox{\smallermathstyle{#1}}}}
-        
-    \fi
+	\def\tmp{#1}%
+	\ifx\tmp\@nnil
+		\leftptarrow@{#2}
+	\else
+		\settowidth{\@tempdima}{$#1$}
+		\tensor{{\leftptarrowx@{#2}}}{^{\mspace{-12mu}\lowermathbox{\smallermathstyle{#1}}}}
+		
+	\fi
 }
 
 \DeclarePairedDelimiter\raw@bra\lparen\rparen
@@ -160,7 +160,6 @@
 \DeclarePairedDelimiter\raw@Bra\lbrace\rbrace
 \def\Bra{\@ifstar{\raw@Bra}{\raw@Bra*}}
 \DeclarePairedDelimiterX\raw@set[2]\lbrace\rbrace{\,{#1}\,\delimsize\vert\,\mathopen{}{#2}\,}
-\DeclarePairedDelimiterX\raw@set*[1]\lbrace\rbrace{\,{#1}\,}
 \def\set{\@ifstar{\raw@set}{\raw@set*}}
 \DeclarePairedDelimiter\raw@sqbra\lbrack\rbrack
 \def\sqbra{\@ifstar{\raw@sqbra}{\raw@sqbra*}}
@@ -174,35 +173,35 @@
 \makeatother
 
 \newcommand{\q}[2]{{\ThisStyle{
-                {\raisebox{0.5\nulldelimiterspace}{\ensuremath{\SavedStyle{#1}}}}
-                    {
-                        \kern-\nulldelimiterspace
-                        \left.
-                        \vphantom{\ensuremath{\SavedStyle{#1}}}
-                        \kern-\nulldelimiterspace
-                        \middle/
-                        \kern-\nulldelimiterspace
-                        \vphantom{\ensuremath{\SavedStyle{#2}}}
-                        \right.
-                        \kern-\nulldelimiterspace
-                    }
-                    {\raisebox{-0.5\nulldelimiterspace}{\ensuremath{\SavedStyle{#2}}}}
-            }}}
+				{\raisebox{0.5\nulldelimiterspace}{\ensuremath{\SavedStyle{#1}}}}
+					{
+						\kern-\nulldelimiterspace
+						\left.
+						\vphantom{\ensuremath{\SavedStyle{#1}}}
+						\kern-\nulldelimiterspace
+						\middle/
+						\kern-\nulldelimiterspace
+						\vphantom{\ensuremath{\SavedStyle{#2}}}
+						\right.
+						\kern-\nulldelimiterspace
+					}
+					{\raisebox{-0.5\nulldelimiterspace}{\ensuremath{\SavedStyle{#2}}}}
+			}}}
 \newcommand{\coq}[2]{{\ThisStyle{
-                {\raisebox{-0.5\nulldelimiterspace}{\ensuremath{\SavedStyle{#2}}}}
-                    {
-                        \kern-\nulldelimiterspace
-                        \left.
-                        \vphantom{\ensuremath{\SavedStyle{#2}}}
-                        \kern-\nulldelimiterspace
-                        \middle\backslash
-                        \kern-\nulldelimiterspace
-                        \vphantom{\ensuremath{\SavedStyle{#1}}}
-                        \right.
-                        \kern-\nulldelimiterspace
-                    }
-                    {\raisebox{0.5\nulldelimiterspace}{\ensuremath{\SavedStyle{#1}}}}
-            }}}
+				{\raisebox{-0.5\nulldelimiterspace}{\ensuremath{\SavedStyle{#2}}}}
+					{
+						\kern-\nulldelimiterspace
+						\left.
+						\vphantom{\ensuremath{\SavedStyle{#2}}}
+						\kern-\nulldelimiterspace
+						\middle\backslash
+						\kern-\nulldelimiterspace
+						\vphantom{\ensuremath{\SavedStyle{#1}}}
+						\right.
+						\kern-\nulldelimiterspace
+					}
+					{\raisebox{0.5\nulldelimiterspace}{\ensuremath{\SavedStyle{#1}}}}
+			}}}
 
 \newcommand{\rmnum}[1]{{\romannumeral#1}}
 \newcommand{\Rmnum}[1]{{\uppercase\expandafter{\romannumeral#1}}}
@@ -317,116 +316,209 @@
 
 \newcommand{\id}{\mathrm{id}}
 
-\DeclareMathOperator{\EAut}{\mathsf{Aut}} % enriched automorphism
-\DeclareMathOperator{\EIso}{\mathsf{Iso}} % enriched isomorphism
-\DeclareMathOperator{\EEnd}{\mathsf{End}} % enriched endomorphism
-\DeclareMathOperator{\EHom}{\mathsf{Hom}} % enriched homomorphism
+\ExplSyntaxOn
 
-% \DeclareMathOperator{\EAut}{\mcalA ut} % enriched automorphism
-% \DeclareMathOperator{\EIso}{\mcalI so} % enriched isomorphism
-% \DeclareMathOperator{\EEnd}{\mcalE nd} % enriched endomorphism
-% \DeclareMathOperator{\EHom}{\mcalH om} % enriched homomorphism
+\cs_new_protected:Npn \__zz_declare_mathsf_name:n #1
+{
+	\regex_extract_once:nnNTF { ^(.*?)=(.*)$ } { #1 } \l_tmpa_seq
+	{
+		\seq_pop_left:NN \l_tmpa_seq \l_tmpa_tl
+		
+		\seq_pop_left:NN \l_tmpa_seq \l_tmpa_tl
+		\seq_pop_left:NN \l_tmpa_seq \l_tmpb_tl
+	}
+	{
+		\tl_set:Nn \l_tmpa_tl { #1 }
+		\tl_set:Nn \l_tmpb_tl { #1 }
+	}
+	
+	\exp_args:Nx \iow_log:n  { Declaring~mathsf~name: ~\exp_not:c \l_tmpa_tl~ -> ~{ \exp_not:N \mathsf { \exp_not:V \l_tmpb_tl } } }
 
-\newcommand{\Cat}{{\mathsf{Cat}}} % categories
-\newcommand{\MonCat}{{\mathsf{MonCat}}} % monoidal categories
-\newcommand{\Fib}{{\mathsf{Fib}}} % fibrations
-\newcommand{\Pairs}{{\mathsf{Pairs}}} % pairs
-\newcommand{\Set}{{\mathsf{Set}}} % sets
-\newcommand{\Top}{{\mathsf{Top}}} % topological spaces
-\newcommand{\Op}{{\mathsf{Op}}} % open sets
-\newcommand{\Ofd}{{\mathsf{Ofd}}} % orbifolds
-\newcommand{\Mfd}{{\mathsf{Mfd}}} % manifolds
-\newcommand{\FBun}{{\mathsf{FBun}}} % fibre bundles
-\newcommand{\VBun}{{\mathsf{VBun}}} % vector bundles
-\newcommand{\PBun}{{\mathsf{PBun}}} % principal bundles
-\newcommand{\OrbC}{{\mathsf{Orb}}} % orbit category
-\newcommand{\Mon}{{\mathsf{Mon}}} % monoids
-\newcommand{\Grp}{{\mathsf{Grp}}} % groups
-\newcommand{\Ab}{{\mathsf{Ab}}} % abelian groups
-\newcommand{\TopGrp}{{\mathsf{TopGrp}}} % topological groups
-\newcommand{\LieGrp}{{\mathsf{LieGrp}}} % Lie groups
-\newcommand{\LieGrpd}{{\mathsf{LieGrpd}}} % Lie groupoids
-\newcommand{\LieAlg}{{\mathsf{LieAlg}}} % Lie algebras
-\newcommand{\Grpd}{{\mathsf{Grpd}}} % groupoids
-\newcommand{\Ring}{{\mathsf{Ring}}} % rings
-\newcommand{\CRing}{{\mathsf{CRing}}} % commutative rings
-\newcommand{\Mod}{{\mathsf{Mod}}} % modules
-\newcommand{\Field}{{\mathsf{Field}}} % groups
-\newcommand{\Vect}{{\mathsf{Vect}}} % vector spaces
-\newcommand{\Alg}{{\mathsf{Alg}}} % (unital) associative algebras
-\newcommand{\AlgVar}{\mathsf{AlgVar}} % algebraic varieties
-\newcommand{\PSh}{{\mathsf{PSh}}} % presheaves
-\newcommand{\Sh}{{\mathsf{Sh}}} % sheaves
-\newcommand{\Aff}{{\mathsf{Aff}}} % affine schemes
-\newcommand{\Sch}{{\mathsf{Sch}}} % schemes
+	\exp_args:Ncx \newcommand \l_tmpa_tl { { \exp_not:N \mathsf { \exp_not:V \l_tmpb_tl } } }
+}
+
+\clist_const:Nn \l_zz_mathsf_name_list
+{
+	Cat,		% categories
+	MonCat,		% monoidal categories
+	Fib,		% fibrations
+	Pair,		% pairs
+	Set,		% sets
+	Top,		% topological spaces
+	Op,			% open sets
+	Ofd,		% orbifolds
+	Mfd,		% manifolds
+	FBun,		% fibre bundles
+	VBun,		% vector bundles
+	PBun,		% principal bundles
+	OrbC=Orb,	% orbit category
+	Mon,		% monoids
+	Grp,		% groups
+	Ab,			% abelian groups
+	TopGrp,		% topological groups
+	LieGrp,		% Lie groups
+	LieGrpd,	% Lie groupoids
+	LieAlg,		% Lie algebras
+	Grpd,		% groupoids
+	Ring,		% rings
+	CRing,		% commutative rings
+	Mod,		% modules
+	Field,		% fields
+	Vect,		% vector spaces
+	Alg,		% (unital) associative algebras
+	AlgVar,		% algebraic varieties
+	PSh,		% presheaves
+	Sh,			% sheaves
+	Aff,		% affine schemes
+	Sch,		% schemes
+
+	GrCRing,	% graded commutative rings
+	GrMod,		% graded modules
+	Cone,		% cones
+	cCone,		% cocones
+	Wdg,		% wedges
+	cWdg,		% cowedges
+	El,			% category of elements
+}
+
 \DeclareMathOperator{\FunOp}{\mathsf{Fun}}
 \newcommand{\Fun}[2]{{\FunOp\dbra{#1}{#2}}} % functors
-
-\newcommand{\GrCRing}{{\mathsf{GrCRing}}} % graded commutative rings
-\newcommand{\GrMod}{{\mathsf{GrMod}}} % graded modules
-
-\newcommand{\Cone}{{\mathsf{Cone}}} % cones
-\newcommand{\cCone}{{\mathsf{cCone}}} % cocones
-\newcommand{\Wdg}{{\mathsf{Wdg}}} % wedges
-\newcommand{\cWdg}{{\mathsf{cWdg}}} % cowedges
-
-\newcommand{\El}{{\mathsf{El}}} % category of elements
-
-\DeclareMathOperator{\yo}{\text{よ}} % yoneda embedding
-\DeclareMathOperator{\oy}{\text{\reflectbox{よ}}}
 
 \newcommand{\commacat}[2]{{\left(#1\middle\downarrow #2\right)}} % comma category
 
 \newcommand{\LMod}[1]{#1\text{-}\Mod} % left modules
 \newcommand{\RMod}[1]{\Mod\text{-}#1} % right modules
 
-\makeatletter
-
-\ExplSyntaxOn
+\clist_map_function:NN \l_zz_mathsf_name_list \__zz_declare_mathsf_name:n
 
 \cs_new_protected:Npn \__zz_declare_math_operator:n #1
 {
-    \regex_extract_once:nnNTF { ^(.*?)=(.*)$ } { #1 } \l_tmpa_seq
-    {
-        \seq_pop_left:NN \l_tmpa_seq \l_tmpa_tl
-        
-        \seq_pop_left:NN \l_tmpa_seq \l_tmpa_tl
-        \seq_pop_left:NN \l_tmpa_seq \l_tmpb_tl
-    }
-    {
-        \tl_set:Nn \l_tmpa_tl { #1 }
-        \tl_set:Nn \l_tmpb_tl { #1 }
-    }
-
-    \exp_args:Nx \iow_log:n  { Declaring~operator: ~\exp_not:c \l_tmpa_tl~ -> ~\exp_not:V \l_tmpb_tl }
-    \exp_args:NcV \DeclareMathOperator { \l_tmpa_tl } { \l_tmpb_tl }
+	\regex_extract_once:nnNTF { ^(.*?)=(.*)$ } { #1 } \l_tmpa_seq
+	{
+		\seq_pop_left:NN \l_tmpa_seq \l_tmpa_tl
+		
+		\seq_pop_left:NN \l_tmpa_seq \l_tmpa_tl
+		\seq_pop_left:NN \l_tmpa_seq \l_tmpb_tl
+	}
+	{
+		\tl_set:Nn \l_tmpa_tl { #1 }
+		\tl_set:Nn \l_tmpb_tl { #1 }
+	}
+	
+	\exp_args:Nx \iow_log:n  { Declaring~operator: ~\exp_not:c \l_tmpa_tl~ -> ~\exp_not:V \l_tmpb_tl }
+	\exp_args:NcV \DeclareMathOperator { \l_tmpa_tl } { \l_tmpb_tl }
 }
 
 \clist_const:Nn \l_zz_math_operator_list
 {
-    Log, Def, ev, im, codim, itr=int, tr, ch=char,
-    sgn, sing, diam, diagop=diag, arcsinh, arccosh,
-    arctanh, arccoth, pr, proj, rank,
-    supp, grad=\mathbf{grad}, dvs=div, diver=div, curl, rot=\mathbf{rot}, ric=Ricci, ein=Einstein, len, inc, rad, soc,
-    Ann, Der, Aut, Iso, End, Hom,
-    Nat, Lie, Syl, Orb, orb, Stab,
-    Gal, M, GL, SL, U, SU, OO=O, SO, so=\mathfrak{so}, hol,
-    Hol, ord, Norm, Trace, A, con,
-    ad, Ad, spanspace=span, gr, Eff, DscDt=DD, dis, Spec, Specm,
-    Frac, hght=ht, depth, T, Proj, vol, Gr,
-    res, Ext, Tor, Lan, Ran, ob, mor,
-    dom, codom, coker, cov, Cov, Sv,
-    rt
+	yo=\text{よ},				% Yoneda embedding
+	oy=\text{\reflectbox{よ}},	% Yoneda embedding
+	EAut=\mathsf{Aut},			% enriched automorphism
+	EIso=\mathsf{Iso},			% enriched isomorphism
+	EEnd=\mathsf{End},			% enriched endomorphism
+	EHom=\mathsf{Hom},			% enriched homomorphism
+	% EAut=\mcalA ut,				% enriched automorphism
+	% EIso=\mcalI so,				% enriched isomorphism
+	% EEnd=\mcalE nd,				% enriched endomorphism
+	% EHom=\mcalH om,				% enriched homomorphism
+	Log,						% principal branch of logarithm
+	Def,						% definable sets
+	ev,							% evaluation
+	im,							% image
+	codim,						% codimension
+	itr=int,					% interior
+	tr,							% trace
+	ch=char,					% characteristic
+	sgn,						% sign
+	sing,						% singular
+	diam,						% diameter
+	diagop=diag,				% diagonal operator
+	arcsinh,					% inverse hyperbolic sine
+	arccosh,					% inverse hyperbolic cosine
+	arctanh,					% inverse hyperbolic tangent
+	arccoth,					% inverse hyperbolic cotangent
+	pr,							% projection
+	proj,						% projection
+	rank,						% rank
+	supp,						% support
+	grad=\mathbf{grad},			% gradient
+	dvs=div,					% divisor
+	diver=div,					% divergence
+	curl,						% curl
+	rot=\mathbf{rot},			% rotation
+	ric=Ricci,					% Ricci curvature
+	ein=Einstein,				% Einstein tensor
+	len,						% length
+	inc,						% inclusion
+	rad,						% radical
+	soc,						% socle
+	ann,						% annihilator set
+	Ann,						% annihilator
+	Der,						% derivation
+	Aut,						% automorphism
+	Iso,						% isomorphism
+	End,						% endomorphism
+	Hom,						% homomorphism
+	Nat,						% natural transformation
+	Lie,						% Lie functor
+	Syl,						% Sylow subgroup
+	Orb,						% orbit
+	orb,						% orbit set
+	Stab,						% stabilizer
+	Gal,						% Galois group
+	M,							% matrix
+	GL,							% general linear group
+	SL,							% special linear group
+	U,							% unitary group
+	SU,							% special unitary group
+	OO=O,						% orthogonal group
+	SO,							% special orthogonal group
+	so=\mathfrak{so},			% special orthogonal Lie algebra
+	hol,						% linear holonomy group
+	Hol,						% affine holonomy group
+	ord,						% order
+	Norm,						% norm
+	Trace,						% trace
+	A,
+	con,
+	ad,
+	Ad,
+	spanspace=span,				% span
+	gr,							% graded
+	Eff,						% effective
+	DscDt=DD,					% descent datum
+	dis,						% discrete category
+	Spec,						% spectrum
+	Specm,						% maximal spectrum
+	Frac,						% fraction field
+	hght=ht,					% height
+	depth,						% depth
+	T,
+	Proj,						% projective spectrum
+	vol,						% volume
+	Gr,							% Grassmannian
+	res,						% residue
+	Ext,						% extension
+	Tor,						% torsion
+	Lan,						% left Kan extension
+	Ran,						% right Kan extension
+	ob,							% object
+	mor,						% morphism
+	dom,						% domain
+	codom,						% codomain
+	coker,						% cokernel
+	cov,						% covering
+	Cov,						% covering
+	Sv,							% sieve
+	rt,							% restriction
 }
 
 \clist_map_function:NN \l_zz_math_operator_list \__zz_declare_math_operator:n
 
 \int_step_inline:nnn { \int_from_alph:n { a } } { \int_from_alph:n { z } }
 {
-    \cs_new:cpn { mcal\int_to_alph:n { #1 } } { \mathcal { \int_to_alph:n { #1 } } }
-    \cs_new:cpn { mcal\int_to_Alph:n { #1 } } { \mathcal { \int_to_Alph:n { #1 } } }
+	\cs_new:cpn { mcal\int_to_alph:n { #1 } } { \mathcal { \int_to_alph:n { #1 } } }
+	\cs_new:cpn { mcal\int_to_Alph:n { #1 } } { \mathcal { \int_to_Alph:n { #1 } } }
 }
 
 \ExplSyntaxOff
-
-\makeatother
