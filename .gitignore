@@ -1,6 +1,7 @@
 .stfolder/
 docs/
-precompile
+precompile/
+test/
 
 ## Core latex/pdflatex auxiliary files:
 *.aux
