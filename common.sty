@@ -320,21 +320,21 @@
 
 \cs_new_protected:Npn \__zz_declare_mathsf_name:n #1
 {
-	\regex_extract_once:nnNTF { ^(.*?)=(.*)$ } { #1 } \l_tmpa_seq
-	{
-		\seq_pop_left:NN \l_tmpa_seq \l_tmpa_tl
-		
-		\seq_pop_left:NN \l_tmpa_seq \l_tmpa_tl
-		\seq_pop_left:NN \l_tmpa_seq \l_tmpb_tl
-	}
-	{
-		\tl_set:Nn \l_tmpa_tl { #1 }
-		\tl_set:Nn \l_tmpb_tl { #1 }
-	}
+\regex_extract_once:nnNTF { ^(.*?)=(.*)$ } { #1 } \l_tmpa_seq
+{
+	\seq_pop_left:NN \l_tmpa_seq \l_tmpa_tl
 	
-	\exp_args:Nx \iow_log:n  { Declaring~mathsf~name: ~\exp_not:c \l_tmpa_tl~ -> ~{ \exp_not:N \mathsf { \exp_not:V \l_tmpb_tl } } }
+	\seq_pop_left:NN \l_tmpa_seq \l_tmpa_tl
+	\seq_pop_left:NN \l_tmpa_seq \l_tmpb_tl
+}
+{
+	\tl_set:Nn \l_tmpa_tl { #1 }
+	\tl_set:Nn \l_tmpb_tl { #1 }
+}
 
-	\exp_args:Ncx \newcommand \l_tmpa_tl { { \exp_not:N \mathsf { \exp_not:V \l_tmpb_tl } } }
+\exp_args:Nx \iow_log:n  { Declaring~mathsf~name: ~\exp_not:c \l_tmpa_tl~ -> ~{ \exp_not:N \mathsf { \exp_not:V \l_tmpb_tl } } }
+
+\exp_args:Ncx \newcommand \l_tmpa_tl { { \exp_not:N \mathsf { \exp_not:V \l_tmpb_tl } } }
 }
 
 \clist_const:Nn \l_zz_mathsf_name_list
@@ -371,7 +371,7 @@
 	Sh,			% sheaves
 	Aff,		% affine schemes
 	Sch,		% schemes
-
+	
 	GrCRing,	% graded commutative rings
 	GrMod,		% graded modules
 	Cone,		% cones
