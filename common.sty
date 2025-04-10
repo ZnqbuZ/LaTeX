@@ -380,154 +380,53 @@
 \newcommand{\LMod}[1]{#1\text{-}\Mod} % left modules
 \newcommand{\RMod}[1]{\Mod\text{-}#1} % right modules
 
-\DeclareMathOperator{\Log}{Log} % principal branch of logarithm
-\DeclareMathOperator{\Def}{Def} % definable sets
-\DeclareMathOperator{\ev}{ev} % evaluation
-\DeclareMathOperator{\im}{im} % image
-\DeclareMathOperator{\codim}{codim} % codimension
-\DeclareMathOperator{\interior}{int} % interior
-\DeclareMathOperator{\tr}{tr} % trace
-\DeclareMathOperator{\ch}{char} % characteristic
-\DeclareMathOperator{\sgn}{sgn} % sign
-\DeclareMathOperator{\sing}{sing} % singular
-\DeclareMathOperator{\diam}{diam} % diameter
-\DeclareMathOperator{\diagop}{diag} % diagonal
-\DeclareMathOperator{\arcsinh}{arcsinh} % arcsinh
-\DeclareMathOperator{\arccosh}{arcsinh} % arccosh
-\DeclareMathOperator{\arctanh}{arcsinh} % arctanh
-\DeclareMathOperator{\arccoth}{arcsinh} % arccoth
-\DeclareMathOperator{\pr}{pr} % projection
-\DeclareMathOperator{\proj}{proj} % projection
-\DeclareMathOperator{\rank}{rank} % rank
-\DeclareMathOperator{\supp}{supp} % support
-\DeclareMathOperator{\grad}{\mathbf{grad}} % gradient
-\DeclareMathOperator{\dvs}{div} % divisor
-\DeclareMathOperator{\diver}{div} % divergence
-\DeclareMathOperator{\curl}{curl} % curl
-\DeclareMathOperator{\rot}{\mathbf{rot}} % rotation
-\DeclareMathOperator{\ric}{Ricci} % Ricci curvature
-\DeclareMathOperator{\ein}{Einstein} % Einstein tensor
-\DeclareMathOperator{\len}{len} % length
-\DeclareMathOperator{\inc}{inc} % inclusion
-\DeclareMathOperator{\rad}{rad} % radical
-\DeclareMathOperator{\soc}{soc} % socle
-\DeclareMathOperator{\Ann}{Ann} % annihilator
-\DeclareMathOperator{\Der}{Der} % derivation
-\DeclareMathOperator{\Aut}{Aut} % automorphism
-\DeclareMathOperator{\Iso}{Iso} % isomorphism
-\DeclareMathOperator{\End}{End} % endomorphism
-\DeclareMathOperator{\Hom}{Hom} % homomorphism
-\DeclareMathOperator{\Nat}{Nat} % natural transformation
-\DeclareMathOperator{\Lie}{Lie} % Lie functor
-\DeclareMathOperator{\Syl}{Syl} % Sylow subgroup
-\DeclareMathOperator{\Orb}{Orb} % orbit
-\DeclareMathOperator{\orb}{orb} % orbit set
-\DeclareMathOperator{\Stab}{Stab} % stabilizer
-\DeclareMathOperator{\Gal}{Gal} % Galois group
-\DeclareMathOperator{\M}{M} % matrix group
-\DeclareMathOperator{\GL}{GL} % general linear group
-\DeclareMathOperator{\SL}{SL} % special linear group
-\DeclareMathOperator{\U}{U} % unitary group
-\DeclareMathOperator{\SU}{SU} % special unitary group
-\DeclareMathOperator{\OO}{O} % orthogonal group
-\DeclareMathOperator{\SO}{SO} % special orthogonal group
-\DeclareMathOperator{\so}{\mathfrak{so}} % special orthogonal Lie algebra
-\DeclareMathOperator{\hol}{hol} % linear holonomy group
-\DeclareMathOperator{\Hol}{Hol} % affine holonomy group
-\DeclareMathOperator{\ord}{ord} % order
-\DeclareMathOperator{\Norm}{Norm} % norm
-\DeclareMathOperator{\Trace}{Trace} % trace
-\DeclareMathOperator{\A}{A}
-\DeclareMathOperator{\con}{con}
-\DeclareMathOperator{\ad}{ad}
-\DeclareMathOperator{\Ad}{Ad}
-\DeclareMathOperator{\spanspace}{span}
-\DeclareMathOperator{\gr}{gr} % graded
-\DeclareMathOperator{\Eff}{Eff} % effective
-\DeclareMathOperator{\DscDt}{DD} % descent datum
-\DeclareMathOperator{\dis}{dis} % discrete category
-\DeclareMathOperator{\Spec}{Spec} % spectrum
-\DeclareMathOperator{\Specm}{Specm} % maximal spectrum
-\DeclareMathOperator{\Frac}{Frac} % field of fractions
-\DeclareMathOperator{\hght}{ht} % height
-\DeclareMathOperator{\depth}{depth} % depth
-\DeclareMathOperator{\T}{T}
-\DeclareMathOperator{\Proj}{Proj} % projective spectrum
-\DeclareMathOperator{\vol}{vol} % volume
-\DeclareMathOperator{\Gr}{Gr} % Grassmannian
+\makeatletter
 
-\DeclareMathOperator{\res}{res} % residue
+\ExplSyntaxOn
 
-\DeclareMathOperator{\Ext}{Ext} % extension
-\DeclareMathOperator{\Tor}{Tor} % torsion
+\cs_new_protected:Npn \__zz_declare_math_operator:n #1
+{
+    \regex_extract_once:nnNTF { ^(.*?)=(.*)$ } { #1 } \l_tmpa_seq
+    {
+        \seq_pop_left:NN \l_tmpa_seq \l_tmpa_tl
+        
+        \seq_pop_left:NN \l_tmpa_seq \l_tmpa_tl
+        \seq_pop_left:NN \l_tmpa_seq \l_tmpb_tl
+    }
+    {
+        \tl_set:Nn \l_tmpa_tl { #1 }
+        \tl_set:Nn \l_tmpb_tl { #1 }
+    }
 
-\DeclareMathOperator{\Lan}{Lan} % left Kan extension
-\DeclareMathOperator{\Ran}{Ran} % right Kan extension
+    \exp_args:Nx \iow_log:n  { Declaring~operator: ~\exp_not:c \l_tmpa_tl~ -> ~\exp_not:V \l_tmpb_tl }
+    \exp_args:NcV \DeclareMathOperator { \l_tmpa_tl } { \l_tmpb_tl }
+}
 
-\DeclareMathOperator{\ob}{ob} % object
-\DeclareMathOperator{\mor}{mor} % morphism
-\DeclareMathOperator{\dom}{dom} % domain
-\DeclareMathOperator{\codom}{codom} % codomain
-\DeclareMathOperator{\coker}{coker} % cokernel
-\DeclareMathOperator{\cov}{cov} % covering
-\DeclareMathOperator{\Cov}{Cov} % covering
-\DeclareMathOperator{\Sv}{Sv} % sieve
+\clist_const:Nn \l_zz_math_operator_list
+{
+    Log, Def, ev, im, codim, itr=int, tr, ch=char,
+    sgn, sing, diam, diagop=diag, arcsinh, arccosh,
+    arctanh, arccoth, pr, proj, rank,
+    supp, grad=\mathbf{grad}, dvs=div, diver=div, curl, rot=\mathbf{rot}, ric=Ricci, ein=Einstein, len, inc, rad, soc,
+    Ann, Der, Aut, Iso, End, Hom,
+    Nat, Lie, Syl, Orb, orb, Stab,
+    Gal, M, GL, SL, U, SU, OO=O, SO, so=\mathfrak{so}, hol,
+    Hol, ord, Norm, Trace, A, con,
+    ad, Ad, spanspace=span, gr, Eff, DscDt=DD, dis, Spec, Specm,
+    Frac, hght=ht, depth, T, Proj, vol, Gr,
+    res, Ext, Tor, Lan, Ran, ob, mor,
+    dom, codom, coker, cov, Cov, Sv,
+    rt
+}
 
-\DeclareMathOperator{\rt}{rt}
+\clist_map_function:NN \l_zz_math_operator_list \__zz_declare_math_operator:n
 
-% \begin{mathcal abbreviation}
-\newcommand{\mcalA}{{\mathcal{A}}}
-\newcommand{\mcalB}{{\mathcal{B}}}
-\newcommand{\mcalC}{{\mathcal{C}}}
-\newcommand{\mcalD}{{\mathcal{D}}}
-\newcommand{\mcalE}{{\mathcal{E}}}
-\newcommand{\mcalF}{{\mathcal{F}}}
-\newcommand{\mcalG}{{\mathcal{G}}}
-\newcommand{\mcalH}{{\mathcal{H}}}
-\newcommand{\mcalI}{{\mathcal{I}}}
-\newcommand{\mcalJ}{{\mathcal{J}}}
-\newcommand{\mcalK}{{\mathcal{K}}}
-\newcommand{\mcalL}{{\mathcal{L}}}
-\newcommand{\mcalM}{{\mathcal{M}}}
-\newcommand{\mcalN}{{\mathcal{N}}}
-\newcommand{\mcalO}{{\mathcal{O}}}
-\newcommand{\mcalP}{{\mathcal{P}}}
-\newcommand{\mcalQ}{{\mathcal{Q}}}
-\newcommand{\mcalR}{{\mathcal{R}}}
-\newcommand{\mcalS}{{\mathcal{S}}}
-\newcommand{\mcalT}{{\mathcal{T}}}
-\newcommand{\mcalU}{{\mathcal{U}}}
-\newcommand{\mcalV}{{\mathcal{V}}}
-\newcommand{\mcalW}{{\mathcal{W}}}
-\newcommand{\mcalX}{{\mathcal{X}}}
-\newcommand{\mcalY}{{\mathcal{Y}}}
-\newcommand{\mcalZ}{{\mathcal{Z}}}
+\int_step_inline:nnn { \int_from_alph:n { a } } { \int_from_alph:n { z } }
+{
+    \cs_new:cpn { mcal\int_to_alph:n { #1 } } { \mathcal { \int_to_alph:n { #1 } } }
+    \cs_new:cpn { mcal\int_to_Alph:n { #1 } } { \mathcal { \int_to_Alph:n { #1 } } }
+}
 
+\ExplSyntaxOff
 
-\newcommand{\mcala}{{\mathcal{a}}}
-\newcommand{\mcalb}{{\mathcal{b}}}
-\newcommand{\mcalc}{{\mathcal{c}}}
-\newcommand{\mcald}{{\mathcal{d}}}
-\newcommand{\mcale}{{\mathcal{e}}}
-\newcommand{\mcalf}{{\mathcal{f}}}
-\newcommand{\mcalg}{{\mathcal{g}}}
-\newcommand{\mcalh}{{\mathcal{h}}}
-\newcommand{\mcali}{{\mathcal{i}}}
-\newcommand{\mcalj}{{\mathcal{j}}}
-\newcommand{\mcalk}{{\mathcal{k}}}
-\newcommand{\mcall}{{\mathcal{l}}}
-\newcommand{\mcalm}{{\mathcal{m}}}
-\newcommand{\mcaln}{{\mathcal{n}}}
-\newcommand{\mcalo}{{\mathcal{o}}}
-\newcommand{\mcalp}{{\mathcal{p}}}
-\newcommand{\mcalq}{{\mathcal{q}}}
-\newcommand{\mcalr}{{\mathcal{r}}}
-\newcommand{\mcals}{{\mathcal{s}}}
-\newcommand{\mcalt}{{\mathcal{t}}}
-\newcommand{\mcalu}{{\mathcal{u}}}
-\newcommand{\mcalv}{{\mathcal{v}}}
-\newcommand{\mcalw}{{\mathcal{w}}}
-\newcommand{\mcalx}{{\mathcal{x}}}
-\newcommand{\mcaly}{{\mathcal{y}}}
-\newcommand{\mcalz}{{\mathcal{z}}}
-% \end{mathcal abbreviation}
+\makeatother
