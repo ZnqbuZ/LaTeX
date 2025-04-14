@@ -9,6 +9,8 @@ while getopts 'v' opt; do
 done
 
 WORK_DIR="precompile"
+WORK_DIR="$(dirname "$(realpath "$0")")/${WORK_DIR}"
+
 CLASSES="article book"
 
 INTERACTION=$([ $DEBUG -eq 1 ] && echo "nonstopmode" || echo "batchmode")
@@ -19,8 +21,14 @@ if [ $INTERACTION = "batchmode" ]; then
     OPT="${OPT} -halt-on-error"
 fi
 
-cd "$(dirname "$(realpath "$0")")/${WORK_DIR}" || exit 1
-echo "Working directory: $(pwd)"
+echo "Working directory: ${WORK_DIR}"
+if [ ! -d "${WORK_DIR}" ]; then
+	echo "Working directory not found. Creating..."
+	mkdir "${WORK_DIR}" || exit 1
+fi
+
+cd "${WORK_DIR}"
+
 for class in ${CLASSES}; do
     echo "Generating ${class}.sty ..."
     CLASS_OPT="11pt"
