@@ -1,0 +1,6 @@
+wrap = false
+tabchar = "space"
+tabsize = 2
+lists = ["garr", "gpmtrx", "gvmtrx", "tikzcd"]
+verbatims = []
+no-indent-envs = []
