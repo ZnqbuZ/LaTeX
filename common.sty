@@ -17,6 +17,7 @@
 \RequirePackage[shortlabels]{enumitem}
 \RequirePackage[lastexercise]{exercise}
 \RequirePackage{fancyhdr}
+\RequirePackage{fixdif}
 \RequirePackage{graphbox,makecell,multicol,setspace,type1cm}
 \RequirePackage{imakeidx}
 \RequirePackage[indent]{parskip}
@@ -171,34 +172,28 @@
 \makeatother
 
 \newcommand{\q}[2]{{\ThisStyle{
-				{\raisebox{0.5\nulldelimiterspace}{\ensuremath{\SavedStyle{#1}}}}
-					{
-						\kern-\nulldelimiterspace
-						\left.
-						\vphantom{\ensuremath{\SavedStyle{#1}}}
-						\kern-\nulldelimiterspace
-						\middle/
-						\kern-\nulldelimiterspace
-						\vphantom{\ensuremath{\SavedStyle{#2}}}
-						\right.
-						\kern-\nulldelimiterspace
-					}
-					{\raisebox{-0.5\nulldelimiterspace}{\ensuremath{\SavedStyle{#2}}}}
+						\mathord{
+							\kern-\nulldelimiterspace
+							\left.
+							\raisebox{.25\LMex}{\ensuremath{\SavedStyle{#1}}}
+							\kern-\nulldelimiterspace
+							\middle\slash
+							\kern-\nulldelimiterspace
+							\raisebox{-.25\LMex}{\ensuremath{\SavedStyle{#2}}}
+							\right.
+							\kern-\nulldelimiterspace
+						}
 			}}}
 \newcommand{\coq}[2]{{\ThisStyle{
-				{\raisebox{-0.5\nulldelimiterspace}{\ensuremath{\SavedStyle{#2}}}}
-					{
-						\kern-\nulldelimiterspace
-						\left.
-						\vphantom{\ensuremath{\SavedStyle{#2}}}
-						\kern-\nulldelimiterspace
-						\middle\backslash
-						\kern-\nulldelimiterspace
-						\vphantom{\ensuremath{\SavedStyle{#1}}}
-						\right.
-						\kern-\nulldelimiterspace
-					}
-					{\raisebox{0.5\nulldelimiterspace}{\ensuremath{\SavedStyle{#1}}}}
+						\mathord{
+							\kern-\nulldelimiterspace
+							\left.
+							\raisebox{-.25\LMex}{\ensuremath{\SavedStyle{#1}}}
+							\middle\backslash
+							\raisebox{.25\LMex}{\ensuremath{\SavedStyle{#2}}}
+							\right.
+							\kern-\nulldelimiterspace
+						}
 			}}}
 
 \newcommand{\rmnum}[1]{{\romannumeral#1}}
@@ -224,23 +219,21 @@
 \newcommand{\ii}{\mathrm{i}}
 \newcommand{\transpose}[1]{\prescript{T}{}{#1}}
 
-\newcommand{\dif}{\mathrm{d}}
+\newcommand{\dx}{\d x}
+\newcommand{\dy}{\d y}
+\newcommand{\dz}{\d z}
+\newcommand{\du}{\d u}
+\newcommand{\dv}{\d v}
+\newcommand{\ds}{\d s}
+\newcommand{\dt}{\d t}
+\newcommand{\dr}{\d r}
+\newcommand{\da}{\d\alpha}
+\newcommand{\bdp}{\d\symbfit{p}}
+\newcommand{\dth}{\d\theta}
+\newcommand{\dph}{\d\varphi}
 
-\newcommand{\dx}{\dif x}
-\newcommand{\dy}{\dif y}
-\newcommand{\dz}{\dif z}
-\newcommand{\du}{\dif u}
-\newcommand{\dv}{\dif v}
-\newcommand{\ds}{\dif s}
-\newcommand{\dt}{\dif t}
-\newcommand{\dr}{\dif r}
-\newcommand{\da}{\dif\alpha}
-\newcommand{\bdp}{\dif\symbfit{p}}
-\newcommand{\dth}{\dif\theta}
-\newcommand{\dph}{\dif\varphi}
-
-\newcommand{\D}[2]{\frac{\dif#1}{\dif#2}}
-\newcommand{\DD}[2]{\frac{\dif^2#1}{\dif#2^2}}
+\newcommand{\D}[2]{\frac{\d#1}{\d#2}}
+\newcommand{\DD}[2]{\frac{\d^2#1}{\d#2^2}}
 
 \renewcommand{\P}[2]{\frac{\partial#1}{\partial#2}}
 \newcommand{\PP}[2]{\frac{\partial^2#1}{\partial#2^2}}
@@ -287,7 +280,7 @@
 \newcommand{\DDth}[1]{\DD{#1}{\theta}}
 \newcommand{\DDph}[1]{\DD{#1}{\varphi}}
 
-\newcommand{\infint}[3][x]{\int_{#2}^{+\infty}#3\dif #1}
+\newcommand{\infint}[3][x]{\int_{#2}^{+\infty}#3\d #1}
 \newcommand{\ceil}[1]{\left\lceil#1\right\rceil}
 \newcommand{\floor}[1]{\left\lfloor#1\right\rfloor}
 \newcommand{\vepsl}{\varepsilon}
@@ -313,6 +306,8 @@
 \newcommand{\wt}{\widetilde}
 
 \newcommand{\id}{\mathrm{id}}
+
+\DeclareMathOperator{\interior}{int}
 
 \ExplSyntaxOn
 
@@ -495,6 +490,7 @@
 	T,
 	Proj,						% projective spectrum
 	vol,						% volume
+	covol,						% covolume
 	Gr,							% Grassmannian
 	res,						% residue
 	Ext,						% extension
@@ -517,8 +513,8 @@
 
 \int_step_inline:nnn { \int_from_alph:n { a } } { \int_from_alph:n { z } }
 {
-	\cs_new:cpn { mcal\int_to_alph:n { #1 } } { \mathcal { \int_to_alph:n { #1 } } }
-	\cs_new:cpn { mcal\int_to_Alph:n { #1 } } { \mathcal { \int_to_Alph:n { #1 } } }
+	\cs_new:cpn { mcal\int_to_alph:n { #1 } } { { \mathcal { \int_to_alph:n { #1 } } } }
+	\cs_new:cpn { mcal\int_to_Alph:n { #1 } } { { \mathcal { \int_to_Alph:n { #1 } } } }
 }
 
 \ExplSyntaxOff
