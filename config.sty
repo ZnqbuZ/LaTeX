@@ -1,9 +1,14 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{config}[Partial Config]
 
-\RequirePackage[warnings-off={mathtools-colon, mathtools-overbracket}]{unicode-math}
-\RequirePackage[default]{fontsetup}
-\setmathfont[range={\mathcal, \mathbfcal}, StylisticSet=1]{NewComputerModernMath}
+\ExplSyntaxOn
+\bool_if:nT { \sys_if_engine_xetex_p: || \sys_if_engine_luatex_p: } {
+    \RequirePackage[warnings-off={mathtools-colon, mathtools-overbracket}, bold-style=ISO]{unicode-math}
+    \RequirePackage[default]{fontsetup}
+    \setmathfont[range={cal, bfcal}, StylisticSet=0]{NewComputerModernMath}
+    \setmathfont[range={"1D49C-"1D4B5, "1D4D0-"1D4E9}, StylisticSet=1]{NewComputerModernMath}
+}
+\ExplSyntaxOff
 
 \AtBeginEnvironment{proof}{\vspace*{-\parskip}}
 
