@@ -9,6 +9,31 @@
 
 \swapnumbers
 
+\newcounter{thm}
+\numberwithin{thm}{section}
+\numberwithin{equation}{section}
+
+\renewkeytheoremstyle{remark}{
+    headfont=\itshape,
+    bodyfont=\normalfont,
+    tcolorbox={
+        enhanced,
+        breakable,
+        attach title to upper,
+        after title={\hskip 0.5em},
+        coltitle=black,
+        interior hidden,
+        frame hidden,
+        borderline east={2pt}{0pt}{gray!50},
+        size=minimal,
+        boxrule=0pt, boxsep=0pt, left=0pt, right=1em, top=0pt, bottom=0pt,
+        sharp corners,
+        arc=0pt,
+        outer arc=0pt,
+        parbox=false,
+    }
+}
+
 \NewDocumentCommand{\declthm}{ o m m }{
     \IfValueTF{#1}
     {\declaretheorem[name=#3, #1]{#2}}
