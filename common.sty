@@ -1,7 +1,9 @@
+\RequirePackage{iftex}
+
 \RequirePackage[tbtags]{amsmath}
-\usepackage[thmtools-compat]{keytheorems}
-\RequirePackage{amssymb,extarrows,etoolbox,mathtools,overarrows,tensor}
-\RequirePackage{array}
+\RequirePackage[thmtools-compat]{keytheorems}
+\RequirePackage{amssymb,diffcoeff,extarrows,etoolbox,mathtools,overarrows,tensor}
+\RequirePackage{array,tabularx}
 
 \RequirePackage[backend=biber,style=alphabetic]{biblatex}
 \DeclareFieldFormat{postnote}{#1}
@@ -289,8 +291,6 @@
 \newcommand{\fsers}[2][n]{\inv{\pi}\int_{-\pi}^\pi#2\sin#1x\dx}
 \newcommand{\fsero}[1]{\inv{2\pi}\int_{-\pi}^\pi#1\dx}
 
-\newcommand{\diag}[1]{\diagop\Bra{#1}}
-
 \newcommand{\sint}{\int\limits}
 \newcommand{\dint}{\iint\limits}
 \newcommand{\tint}{\iiint\limits}
@@ -423,6 +423,7 @@
 	% EIso=\mcalI so,				% enriched isomorphism
 	% EEnd=\mcalE nd,				% enriched endomorphism
 	% EHom=\mcalH om,				% enriched homomorphism
+	Pf,							% Pfaffian
 	Log,						% principal branch of logarithm
 	Def,						% definable sets
 	ev,							% evaluation
@@ -434,7 +435,7 @@
 	sgn,						% sign
 	sing,						% singular
 	diam,						% diameter
-	diagop=diag,				% diagonal operator
+	diag,						% diagonal operator
 	arcsinh,					% inverse hyperbolic sine
 	arccosh,					% inverse hyperbolic cosine
 	arctanh,					% inverse hyperbolic tangent
@@ -444,8 +445,9 @@
 	rank,						% rank
 	supp,						% support
 	grad=\mathbf{grad},			% gradient
-	dvs=div,					% divisor
-	diver=div,					% divergence
+	Div,						% divisor
+	PDiv,						% principal divisor
+	div,						% divergence
 	curl,						% curl
 	rot=\mathbf{rot},			% rotation
 	ric=Ricci,					% Ricci curvature
@@ -474,7 +476,7 @@
 	SL,							% special linear group
 	U,							% unitary group
 	SU,							% special unitary group
-	OO=O,						% orthogonal group
+	O,							% orthogonal group
 	SO,							% special orthogonal group
 	so=\mathfrak{so},			% special orthogonal Lie algebra
 	hol,						% linear holonomy group
@@ -516,7 +518,13 @@
 	Sv,							% sieve
 	rt,							% restriction
 	conv,						% convex hull
+	Jac,						% Jacobian
+	Cl,							% class group
+	Ell,						% elliptic curve
+	Pic,						% Picard group
 }
+
+\let\div\relax
 
 \clist_map_inline:Nn \l_zz_math_operator_list {
 	\__zz_define_cmd:nn { DeclareMathOperator } { #1 }
