@@ -311,25 +311,46 @@
 
 \ExplSyntaxOn
 
-\cs_new_protected:Npn \__zz_declare_mathsf_name:n #1
-{
-\regex_extract_once:nnNTF { ^(.*?)=(.*)$ } { #1 } \l_tmpa_seq
-{
-	\seq_pop_left:NN \l_tmpa_seq \l_tmpa_tl
-	
-	\seq_pop_left:NN \l_tmpa_seq \l_tmpa_tl
-	\seq_pop_left:NN \l_tmpa_seq \l_tmpb_tl
-}
-{
-	\tl_set:Nn \l_tmpa_tl { #1 }
-	\tl_set:Nn \l_tmpb_tl { #1 }
+\letdif{\laplacian}{Delta}
+
+\newcommand{\del}{\partial}
+
+\bool_if:nTF { \sys_if_engine_xetex_p: || \sys_if_engine_luatex_p: } {
+	\newdif*{\dbar}{\bar{\partialnondif}}
+} {
+	\newdif{\dbar}{\bar{\partialnondif}}
 }
 
-\exp_args:Nx \iow_log:n  { Declaring~mathsf~name: ~\exp_not:c \l_tmpa_tl~ -> ~{ \exp_not:N \mathsf { \exp_not:V \l_tmpb_tl } } }
-
-\exp_args:Ncx \newcommand \l_tmpa_tl { { \exp_not:N \mathsf { \exp_not:V \l_tmpb_tl } } }
+% region Define commands from lists
+\msg_new:nnn { zz-math } { cmd-already-defined } {
+	Command~\textbackslash #1~is~already~defined!
 }
 
+\cs_new_protected:Npn \__zz_define_cmd:nn #1#2 {
+	\seq_set_split:Nnn \l_tmpa_seq { = } { #2 }
+	\tl_set:Nx \l_tmpa_tl { \seq_item:Nn \l_tmpa_seq { 1 } }
+	\int_compare:nNnTF { \seq_count:N \l_tmpa_seq } > { 1 } {
+		\tl_set:Nx \l_tmpb_tl { \seq_item:Nn \l_tmpa_seq { 2 } }
+	} {
+		\tl_set:Nx \l_tmpb_tl { \l_tmpa_tl }
+	}
+
+	\cs_if_exist:cT { \l_tmpa_tl } {
+		\msg_fatal:nnx { zz-math } { cmd-already-defined } { \l_tmpa_tl }
+	}
+
+	\str_if_eq:nnT { #1 } { mathsf } {
+		\iow_log:n { Declaring~mathsf~name:~\exp_not:c { \l_tmpa_tl }~->~{ \mathsf { \exp_not:V \l_tmpb_tl } } }
+		\exp_args:Ncx \newcommand { \l_tmpa_tl } { { \exp_not:N \mathsf { \exp_not:V \l_tmpb_tl } } }
+	}
+	\str_if_eq:nnT { #1 } { DeclareMathOperator } {
+		\iow_log:n { Declaring~operator:~\exp_not:c { \l_tmpa_tl }~->~\exp_not:V \l_tmpb_tl }
+		\exp_args:NcV \DeclareMathOperator { \l_tmpa_tl } \l_tmpb_tl
+	}
+}
+% endregion
+
+% region Define mathsf
 \clist_const:Nn \l_zz_mathsf_name_list
 {
 	Cat,		% categories
@@ -374,6 +395,13 @@
 	El,			% category of elements
 }
 
+\let\O\relax
+
+\clist_map_inline:Nn \l_zz_mathsf_name_list {
+	\__zz_define_cmd:nn { mathsf } { #1 }
+}
+% endregion
+
 \DeclareMathOperator{\FunOp}{\mathsf{Fun}}
 \newcommand{\Fun}[2]{{\FunOp\dbra{#1}{#2}}} % functors
 
@@ -382,26 +410,7 @@
 \newcommand{\LMod}[1]{#1\text{-}\Mod} % left modules
 \newcommand{\RMod}[1]{\Mod\text{-}#1} % right modules
 
-\clist_map_function:NN \l_zz_mathsf_name_list \__zz_declare_mathsf_name:n
-
-\cs_new_protected:Npn \__zz_declare_math_operator:n #1
-{
-	\regex_extract_once:nnNTF { ^(.*?)=(.*)$ } { #1 } \l_tmpa_seq
-	{
-		\seq_pop_left:NN \l_tmpa_seq \l_tmpa_tl
-		
-		\seq_pop_left:NN \l_tmpa_seq \l_tmpa_tl
-		\seq_pop_left:NN \l_tmpa_seq \l_tmpb_tl
-	}
-	{
-		\tl_set:Nn \l_tmpa_tl { #1 }
-		\tl_set:Nn \l_tmpb_tl { #1 }
-	}
-	
-	\exp_args:Nx \iow_log:n  { Declaring~operator: ~\exp_not:c \l_tmpa_tl~ -> ~\exp_not:V \l_tmpb_tl }
-	\exp_args:NcV \DeclareMathOperator { \l_tmpa_tl } { \l_tmpb_tl }
-}
-
+% region Define math operators
 \clist_const:Nn \l_zz_math_operator_list
 {
 	yo=\text{よ},				% Yoneda embedding
@@ -509,12 +518,48 @@
 	conv,						% convex hull
 }
 
-\clist_map_function:NN \l_zz_math_operator_list \__zz_declare_math_operator:n
-
-\int_step_inline:nnn { \int_from_alph:n { a } } { \int_from_alph:n { z } }
-{
-	\cs_new:cpn { mcal\int_to_alph:n { #1 } } { { \mathcal { \int_to_alph:n { #1 } } } }
-	\cs_new:cpn { mcal\int_to_Alph:n { #1 } } { { \mathcal { \int_to_Alph:n { #1 } } } }
+\clist_map_inline:Nn \l_zz_math_operator_list {
+	\__zz_define_cmd:nn { DeclareMathOperator } { #1 }
 }
+% endregion
+
+% region Define letters
+\cs_new_protected:Npn \__zz_define_letters:nn #1#2 {
+	\cs_set_protected:Npn \__zz_tmp_loop:n ##1 {
+		\tl_set:Nx \l_tmpa_tl { \char_generate:nn { ##1 } { 11 } }
+		\tl_set:Nx \l_tmpb_tl { #1 \l_tmpa_tl }
+
+		\cs_if_exist:cTF { \l_tmpb_tl } {
+			\msg_warning:nnx { zz-math } { cmd-already-defined } { \l_tmpb_tl }
+		} {
+			\exp_args:Ncx \newcommand { \l_tmpb_tl } { { \exp_not:n { #2 } { \l_tmpa_tl } } }
+		}
+	}
+
+	\int_step_function:nnN { `A } { `Z } \__zz_tmp_loop:n
+	\int_step_function:nnN { `a } { `z } \__zz_tmp_loop:n
+}
+
+\__zz_define_letters:nn { mcal } { \mathcal }
+\sys_if_engine_pdftex:T {
+	\RequirePackage{amsfonts}
+	\RequirePackage{mathrsfs}
+
+	\cs_if_exist:NF \mscr {
+		\cs_new_protected:Npn \mscr #1 { \mathscr { #1 } }
+	}
+	\__zz_define_letters:nn { mscr } { \mathscr }
+
+	\cs_if_exist:NF \Bbb {
+		\cs_new_protected:Npn \Bbb #1 { \mathbb { #1 } }
+	}
+	\__zz_define_letters:nn { Bbb } { \mathbb }
+
+	\cs_if_exist:NF \mfrak {
+		\cs_new_protected:Npn \mfrak #1 { \mathfrak { #1 } }
+	}
+	\__zz_define_letters:nn { mfrak } { \mathfrak }
+}
+% endregion
 
 \ExplSyntaxOff
