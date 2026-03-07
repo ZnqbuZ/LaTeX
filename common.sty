@@ -202,8 +202,6 @@
 \newcommand{\rmnum}[1]{{\romannumeral#1}}
 \newcommand{\Rmnum}[1]{{\uppercase\expandafter{\romannumeral#1}}}
 
-\newcommand{\slnid}[1]{\textbf{(\rmnum{#1})}}
-
 \newcommand{\inv}[1]{\frac{1}{#1}}
 \newcommand{\toinf}[2][]{\lim_{#2\rightarrow#1\infty}}
 \newcommand{\toinfsup}[2][]{\varlimsup_{#2\rightarrow#1\infty}}
@@ -217,26 +215,12 @@
 \newcommand{\Y}{\bra{Y}}
 \newcommand{\z}{\bra{z}}
 \newcommand{\Z}{\bra{Z}}
-\newcommand{\nege}{\bra{-1}}
-\newcommand{\e}{\mathrm{e}}
-\newcommand{\ii}{\mathrm{i}}
-\newcommand{\transpose}[1]{\prescript{T}{}{#1}}
-
 \newcommand{\dx}{\d x}
 \newcommand{\dy}{\d y}
 \newcommand{\dz}{\d z}
-\newcommand{\du}{\d u}
-\newcommand{\dv}{\d v}
-\newcommand{\ds}{\d s}
-\newcommand{\dt}{\d t}
-\newcommand{\dr}{\d r}
-\newcommand{\da}{\d\alpha}
-\newcommand{\bdp}{\d\symbfit{p}}
-\newcommand{\dth}{\d\theta}
-\newcommand{\dph}{\d\varphi}
 
-\newcommand{\D}[1]{\diff{}{#1}}
-\renewcommand{\P}[1]{\diffp{}{#1}}
+\newcommand{\e}{\mathrm{e}}
+\newcommand{\transpose}[1]{{#1}^{\mathsf{T}}}
 
 \newcommand{\infint}[3][x]{\int_{#2}^{+\infty}#3\d #1}
 \newcommand{\ceil}[1]{\left\lceil#1\right\rceil}
@@ -264,6 +248,24 @@
 \newcommand{\id}{\mathrm{id}}
 
 \ExplSyntaxOn
+
+\cs_set_eq:NN \__zz_i_text: \i
+\cs_undefine:N \i
+\cs_new_protected:Npn \__zz_i_math: { \mathrm{i} }
+\NewDocumentCommand { \i } { } {
+    \mode_if_math:TF { \__zz_i_math: } { \__zz_i_text: }
+}
+
+\NewDocumentCommand { \D } { m } { \diff{}{#1} }
+
+\cs_set_eq:NN \__zz_P_text: \P
+\cs_undefine:N \P
+\cs_new_protected:Npn \__zz_P_math:n #1 {
+	\diffp { } { #1 }
+}
+\NewDocumentCommand { \P } { } {
+    \mode_if_math:TF { \__zz_P_math:n } { \__zz_P_text: }
+}
 
 \letdif{\laplacian}{Delta}
 
@@ -348,8 +350,6 @@
 	cWdg,		% cowedges
 	El,			% category of elements
 }
-
-\let\O\relax
 
 \clist_map_inline:Nn \l_zz_mathsf_name_list {
 	\__zz_define_cmd:nn { mathsf } { #1 }
@@ -478,10 +478,20 @@
 	Pic,						% Picard group
 }
 
-\let\div\relax
+\cs_undefine:N \div
+
+\cs_set_eq:NN \__zz_O_text: \O
+\cs_undefine:N \O
 
 \clist_map_inline:Nn \l_zz_math_operator_list {
 	\__zz_define_cmd:nn { DeclareMathOperator } { #1 }
+}
+
+\cs_set_eq:NN \__zz_O_math: \O
+\cs_undefine:N \O
+
+\NewDocumentCommand { \O } { } {
+    \mode_if_math:TF { \__zz_O_math: } { \__zz_O_text: }
 }
 % endregion
 
