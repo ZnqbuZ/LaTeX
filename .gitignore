@@ -2,6 +2,7 @@
 docs/
 precompile/
 test/
+build/
 
 ## Core latex/pdflatex auxiliary files:
 *.aux
