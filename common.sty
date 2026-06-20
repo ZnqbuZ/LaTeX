@@ -335,13 +335,11 @@
 	Mod,		% modules
 	Field,		% fields
 	Vect,		% vector spaces
-	Alg,		% (unital) associative algebras
 	AlgVar,		% algebraic varieties
 	PSh,		% presheaves
 	Sh,			% sheaves
 	Aff,		% affine schemes
 	Sch,		% schemes
-	
 	GrCRing,	% graded commutative rings
 	GrMod,		% graded modules
 	Cone,		% cones
@@ -363,6 +361,11 @@
 
 \newcommand{\LMod}[1]{#1\text{-}\Mod} % left modules
 \newcommand{\RMod}[1]{\Mod\text{-}#1} % right modules
+
+\DeclareMathOperator{\AlgOp}{\mathsf{Alg}}
+\newcommand{\Alg}[1]{#1\text{-}\AlgOp} % (unital) associative algebras
+\DeclareMathOperator{\CAlgOp}{\mathsf{CAlg}}
+\newcommand{\CAlg}[1]{#1\text{-}\AlgOp} % (unital) commutative associative algebras
 
 % region Define math operators
 \clist_const:Nn \l_zz_math_operator_list
