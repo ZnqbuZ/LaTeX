@@ -3,6 +3,8 @@
 
 \ExplSyntaxOn
 \bool_if:nT { \sys_if_engine_xetex_p: || \sys_if_engine_luatex_p: } {
+    \let\circledR\relax
+    \let\circledS\relax
     \RequirePackage[warnings-off={mathtools-colon, mathtools-overbracket}, bold-style=ISO]{unicode-math}
     \RequirePackage[default]{fontsetup}
     \setmathfont[range={cal, bfcal}, StylisticSet=0]{NewComputerModernMath}
