@@ -279,7 +279,7 @@
 
 % region Define commands from lists
 \msg_new:nnn { zz-math } { cmd-already-defined } {
-	Command~\textbackslash #1~is~already~defined!
+	Command~\c_backslash_str#1~is~already~defined!
 }
 
 \cs_new_protected:Npn \__zz_define_cmd:nn #1#2 {
@@ -431,10 +431,15 @@
 	Gal,						% Galois group
 	M,							% matrix
 	GL,							% general linear group
+	gl=\mathfrak{gl},			% general linear Lie algebra
 	SL,							% special linear group
+	sl=\mathfrak{sl},			% special linear Lie algebra
 	U,							% unitary group
+	u=\mathfrak{u},				% unitary Lie algebra
 	SU,							% special unitary group
+	su=\mathfrak{su},			% special unitary Lie algebra
 	O,							% orthogonal group
+	o=\mathfrak{o},				% orthogonal Lie algebra
 	SO,							% special orthogonal group
 	so=\mathfrak{so},			% special orthogonal Lie algebra
 	hol,						% linear holonomy group
@@ -484,18 +489,44 @@
 
 \cs_undefine:N \div
 
-\cs_set_eq:NN \__zz_O_text: \O
-\cs_undefine:N \O
+\clist_const:Nn \l_zz_dual_mode_cmd_list
+{
+	sl,
+    u,
+    O,
+    o,
+}
+
+\clist_map_inline:Nn \l_zz_dual_mode_cmd_list
+{
+    \cs_set_eq:cc { __zz_#1_text: } { #1 }
+    \cs_undefine:c { #1 }
+}
 
 \clist_map_inline:Nn \l_zz_math_operator_list {
 	\__zz_define_cmd:nn { DeclareMathOperator } { #1 }
 }
 
-\cs_set_eq:NN \__zz_O_math: \O
-\cs_undefine:N \O
+\clist_map_inline:Nn \l_zz_dual_mode_cmd_list
+{
+    \cs_set_eq:cc { __zz_#1_math: } { #1 }
+    \cs_undefine:c { #1 }
+}
 
 \NewDocumentCommand { \O } { } {
     \mode_if_math:TF { \__zz_O_math: } { \__zz_O_text: }
+}
+
+\NewDocumentCommand { \o } { } {
+    \mode_if_math:TF { \__zz_o_math: } { \__zz_o_text: }
+}
+
+\cs_new_protected:Npn \u {
+    \mode_if_math:TF {
+            \__zz_u_math:
+        } {
+            \__zz_u_text:
+        }
 }
 % endregion
 

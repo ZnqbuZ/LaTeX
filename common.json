@@ -429,6 +429,13 @@
       }
     },
     {
+      "name": "Ds",
+      "arg": {
+        "format": "{}",
+        "snippet": "Ds{${1:}}"
+      }
+    },
+    {
       "name": "Dt",
       "arg": {
         "format": "{}",
@@ -712,6 +719,9 @@
       "name": "Alg"
     },
     {
+      "name": "CAlg"
+    },
+    {
       "name": "AlgVar"
     },
     {
@@ -932,16 +942,31 @@
       "name": "GL"
     },
     {
+      "name": "gl"
+    },
+    {
       "name": "SL"
+    },
+    {
+      "name": "sl"
     },
     {
       "name": "U"
     },
     {
+      "name": "u"
+    },
+    {
       "name": "SU"
     },
     {
-      "name": "OO"
+      "name": "su"
+    },
+    {
+      "name": "O"
+    },
+    {
+      "name": "o"
     },
     {
       "name": "SO"
