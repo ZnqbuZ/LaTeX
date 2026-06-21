@@ -1089,6 +1089,33 @@
       "name": "conv"
     },
     {
+      "name": "Jac"
+    },
+    {
+      "name": "Ell"
+    },
+    {
+      "name": "Pic"
+    },
+    {
+      "name": "Cl"
+    },
+    {
+      "name": "CCl"
+    },
+    {
+      "name": "Pin"
+    },
+    {
+      "name": "pin"
+    },
+    {
+      "name": "Spin"
+    },
+    {
+      "name": "spin"
+    },
+    {
       "name": "mcalA"
     },
     {

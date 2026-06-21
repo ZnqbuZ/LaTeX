@@ -41,6 +41,7 @@
 	colorlinks=true,
 	citecolor=darkred,
 	linkcolor=darkblue,
+	unicode,
 ]{hyperref}
 \RequirePackage{zref-clever}
 
@@ -249,11 +250,19 @@
 
 \ExplSyntaxOn
 
-\cs_set_eq:NN \__zz_i_text: \i
-\cs_undefine:N \i
-\cs_new_protected:Npn \__zz_i_math: { \mathrm{i} }
-\NewDocumentCommand { \i } { } {
-    \mode_if_math:TF { \__zz_i_math: } { \__zz_i_text: }
+\cs_set_eq:cc { __zz_i_text: } { i }
+\RenewDocumentCommand { \i } { } {
+    \mode_if_math:TF { \mathrm{i} } { \__zz_i_text: }
+}
+
+\cs_set_eq:cc { __zz_j_text: } { j }
+\RenewDocumentCommand { \j } { } {
+    \mode_if_math:TF { \mathrm{j} } { \__zz_j_text: }
+}
+
+\cs_set_eq:cc { __zz_k_text: } { k }
+\RenewDocumentCommand { \k } { } {
+    \mode_if_math:TF { \mathrm{k} } { \__zz_k_text: }
 }
 
 \NewDocumentCommand { \D } { m } { \diff{}{#1} }
@@ -296,11 +305,11 @@
 }
 
 \str_if_eq:nnT { #1 } { mathsf } {
-\iow_log:n { Declaring~mathsf~name:~\exp_not:c { \l_tmpa_tl }~->~{ \mathsf { \exp_not:V \l_tmpb_tl } } }
+\iow_log:x { Declaring~mathsf~name:~\exp_not:c { \l_tmpa_tl }~->~{ \exp_not:N \mathsf { \exp_not:V \l_tmpb_tl } } }
 \exp_args:Ncx \newcommand { \l_tmpa_tl } { { \exp_not:N \mathsf { \exp_not:V \l_tmpb_tl } } }
 }
 \str_if_eq:nnT { #1 } { DeclareMathOperator } {
-	\iow_log:n { Declaring~operator:~\exp_not:c { \l_tmpa_tl }~->~\exp_not:V \l_tmpb_tl }
+	\iow_log:x { Declaring~operator:~\exp_not:c { \l_tmpa_tl }~->~\exp_not:V \l_tmpb_tl }
 	\exp_args:NcV \DeclareMathOperator { \l_tmpa_tl } \l_tmpb_tl
 }
 }
@@ -482,9 +491,14 @@
 	rt,							% restriction
 	conv,						% convex hull
 	Jac,						% Jacobian
-	Cl,							% class group
 	Ell,						% elliptic curve
 	Pic,						% Picard group
+	Cl,							% class group
+	CCl={\BbbC l},				% complexified Clifford algebra
+	Pin,						% Pin group
+	pin=\mathfrak{pin},			% Pin Lie algebra
+	Spin,						% Spin group
+	spin=\mathfrak{spin},		% Spin Lie algebra
 }
 
 \cs_undefine:N \div
