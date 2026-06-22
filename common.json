@@ -1107,10 +1107,16 @@
       "name": "Pin"
     },
     {
+      "name": "Pinc"
+    },
+    {
       "name": "pin"
     },
     {
       "name": "Spin"
+    },
+    {
+      "name": "Spinc"
     },
     {
       "name": "spin"
