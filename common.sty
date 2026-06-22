@@ -189,27 +189,10 @@
 \newcommand{\series}[1][n=1]{\sum_{#1}^\infty}
 \newcommand{\product}[1][n=1]{\prod_{#1}^\infty}
 
-\ExplSyntaxOn
-
-\str_map_inline:nn { x X y Y z Z } {
-	\cs_new_protected:cpn { #1 } { \bra { #1 } }
-	\cs_new_protected:cpn { d#1 } { \d #1 }
-}
-
-\clist_map_inline:nn { p, v, b, B, V } {
-	\NewDocumentEnvironment { g #1 mtrx } { }
-	{ \setcellgapes{5pt}\makegapedcells\begin{#1matrix} }
-	{ \end{#1matrix} }
-}
-
-\ExplSyntaxOff
-
 \newcommand{\e}{\mathrm{e}}
 \newcommand{\transpose}[1]{{#1}^{\mathsf{T}}}
 
 \newcommand{\infint}[3][x]{\int_{#2}^{+\infty}#3\d #1}
-\newcommand{\ceil}[1]{\left\lceil#1\right\rceil}
-\newcommand{\floor}[1]{\left\lfloor#1\right\rfloor}
 \newcommand{\vepsl}{\varepsilon}
 
 \newcommand{\fserc}[2][n]{\inv{\pi}\int_{-\pi}^\pi#2\cos#1x\dx}
@@ -234,6 +217,17 @@
 
 \ExplSyntaxOn
 
+\str_map_inline:nn { x X y Y z Z } {
+	\cs_new_protected:cpn { #1 } { \bra { #1 } }
+	\cs_new_protected:cpn { d#1 } { \d #1 }
+}
+
+\clist_map_inline:nn { p, v, b, B, V } {
+	\NewDocumentEnvironment { g #1 mtrx } { }
+	{ \setcellgapes{5pt}\makegapedcells\begin{#1matrix} }
+	{ \end{#1matrix} }
+}
+
 \cs_set_eq:cc { __zz_i_text: } { i }
 \RenewDocumentCommand { \i } { } {
 	\mode_if_math:TF { \mathrm{i} } { \__zz_i_text: }
@@ -249,16 +243,12 @@
 	\mode_if_math:TF { \mathrm{k} } { \__zz_k_text: }
 }
 
-\NewDocumentCommand { \D } { m } { \diff{}{#1} }
-
-\cs_set_eq:NN \__zz_P_text: \P
-\cs_undefine:N \P
-\cs_new_protected:Npn \__zz_P_math:n #1 {
-	\diffp { } { #1 }
-}
-\NewDocumentCommand { \P } { } {
+\cs_set_eq:cc { __zz_P_text: } { P }
+\RenewDocumentCommand { \P } { } {
 	\mode_if_math:TF { \__zz_P_math:n } { \__zz_P_text: }
 }
+
+\NewDocumentCommand { \D } { m } { \diff{}{#1} }
 
 \letdif{\laplacian}{Delta}
 
@@ -522,11 +512,7 @@
 }
 
 \cs_new_protected:Npn \u {
-	\mode_if_math:TF {
-		\__zz_u_math:
-	} {
-		\__zz_u_text:
-	}
+	\mode_if_math:TF { \__zz_u_math: } { \__zz_u_text: }
 }
 % endregion
 
