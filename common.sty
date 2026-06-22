@@ -74,10 +74,6 @@
 
 \raggedbottom
 
-\newenvironment{gpmtrx}{\setcellgapes{5pt}\makegapedcells\begin{pmatrix}}{\end{pmatrix}}
-\newenvironment{gvmtrx}{\setcellgapes{5pt}\makegapedcells\begin{vmatrix}}{\end{vmatrix}}
-\newenvironment{garr}[1]{\setcellgapes{5pt}\makegapedcells\begin{array}{#1}}{\end{array}}
-
 \makeatletter
 
 \newcommand{\pushright}[1]{\ifmeasuring@#1\else\omit\hfill$\displaystyle#1$\fi\ignorespaces}
@@ -110,10 +106,10 @@
 }
 
 \NewDocumentCommand{\rightparatrans}{ o m }{
-    \IfNoValueTF{#1}
-        { \rightptarrow@{#2} }
-        { \settowidth{\@tempdima}{$#1$}
-          \tensor[^{\lowermathbox{\smallermathstyle{#1}}\mspace{-12mu}}]{{\rightptarrowx@{#2}}}{} }
+	\IfNoValueTF{#1}
+	{ \rightptarrow@{#2} }
+	{ \settowidth{\@tempdima}{$#1$}
+		\tensor[^{\lowermathbox{\smallermathstyle{#1}}\mspace{-12mu}}]{{\rightptarrowx@{#2}}}{} }
 }
 
 \NewOverArrowCommand{\leftptarrow@}{%
@@ -139,11 +135,13 @@
 }
 
 \NewDocumentCommand{\leftparatrans}{ o m }{
-    \IfNoValueTF{#1}
-        { \leftptarrow@{#2} }
-        { \settowidth{\@tempdima}{$#1$}
-          \tensor{{\leftptarrowx@{#2}}}{^{\mspace{-12mu}\lowermathbox{\smallermathstyle{#1}}}} }
+	\IfNoValueTF{#1}
+	{ \leftptarrow@{#2} }
+	{ \settowidth{\@tempdima}{$#1$}
+		\tensor{{\leftptarrowx@{#2}}}{^{\mspace{-12mu}\lowermathbox{\smallermathstyle{#1}}}} }
 }
+
+\makeatother
 
 \DeclarePairedDelimiter\bra{\lparen}{\rparen}
 \DeclarePairedDelimiterX\dbra[2]{\lparen}{\rparen}{#1,#2}
@@ -153,8 +151,8 @@
 \DeclarePairedDelimiter\angbra{\langle}{\rangle}
 \DeclarePairedDelimiter\abs{\lvert}{\rvert}
 \DeclarePairedDelimiter\norm{\lVert}{\rVert}
-
-\makeatother
+\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
 
 \newcommand{\q}[2]{{\ThisStyle{
 			\mathord{
@@ -191,15 +189,20 @@
 \newcommand{\series}[1][n=1]{\sum_{#1}^\infty}
 \newcommand{\product}[1][n=1]{\prod_{#1}^\infty}
 
-\newcommand{\x}{\bra{x}}
-\newcommand{\y}{\bra{y}}
-\newcommand{\z}{\bra{z}}
-\newcommand{\X}{\bra{X}}
-\newcommand{\Y}{\bra{Y}}
-\newcommand{\Z}{\bra{Z}}
-\newcommand{\dx}{\d x}
-\newcommand{\dy}{\d y}
-\newcommand{\dz}{\d z}
+\ExplSyntaxOn
+
+\str_map_inline:nn { x X y Y z Z } {
+	\cs_new_protected:cpn { #1 } { \bra { #1 } }
+	\cs_new_protected:cpn { d#1 } { \d #1 }
+}
+
+\clist_map_inline:nn { p, v, b, B, V } {
+	\NewDocumentEnvironment { g #1 mtrx } { }
+	{ \setcellgapes{5pt}\makegapedcells\begin{#1matrix} }
+	{ \end{#1matrix} }
+}
+
+\ExplSyntaxOff
 
 \newcommand{\e}{\mathrm{e}}
 \newcommand{\transpose}[1]{{#1}^{\mathsf{T}}}
