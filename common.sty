@@ -12,15 +12,13 @@
 \RequirePackage{bm}
 \RequirePackage{booktabs}
 \RequirePackage{cancel}
-\RequirePackage{color}
 \RequirePackage{csquotes}
 \RequirePackage{draftwatermark}
-\RequirePackage{enumerate}
 \RequirePackage[shortlabels]{enumitem}
 \RequirePackage[lastexercise]{exercise}
 \RequirePackage{fancyhdr}
 \RequirePackage{fixdif}
-\RequirePackage{graphbox,makecell,multicol,setspace,type1cm}
+\RequirePackage{graphbox,makecell,multicol,setspace}
 \RequirePackage{imakeidx}
 \RequirePackage[indent]{parskip}
 \RequirePackage{pdfpages}
@@ -35,7 +33,6 @@
 
 \RequirePackage[
 	pdfstartview=FitH,
-	CJKbookmarks=true,
 	bookmarksnumbered=true,
 	bookmarksopen=true,
 	colorlinks=true,
@@ -112,15 +109,11 @@
 	shift right=-2
 }
 
-\newcommand{\rightparatrans}[2][\@nil]{%
-	\def\tmp{#1}%
-	\ifx\tmp\@nnil
-		\rightptarrow@{#2}
-	\else
-		\settowidth{\@tempdima}{$#1$}
-		\tensor[^{\lowermathbox{\smallermathstyle{#1}}\mspace{-12mu}}]{{\rightptarrowx@{#2}}}{}
-
-	\fi
+\NewDocumentCommand{\rightparatrans}{ o m }{
+    \IfNoValueTF{#1}
+        { \rightptarrow@{#2} }
+        { \settowidth{\@tempdima}{$#1$}
+          \tensor[^{\lowermathbox{\smallermathstyle{#1}}\mspace{-12mu}}]{{\rightptarrowx@{#2}}}{} }
 }
 
 \NewOverArrowCommand{\leftptarrow@}{%
@@ -145,15 +138,11 @@
 	shift right=-4
 }
 
-\newcommand{\leftparatrans}[2][\@nil]{%
-	\def\tmp{#1}%
-	\ifx\tmp\@nnil
-		\leftptarrow@{#2}
-	\else
-		\settowidth{\@tempdima}{$#1$}
-		\tensor{{\leftptarrowx@{#2}}}{^{\mspace{-12mu}\lowermathbox{\smallermathstyle{#1}}}}
-
-	\fi
+\NewDocumentCommand{\leftparatrans}{ o m }{
+    \IfNoValueTF{#1}
+        { \leftptarrow@{#2} }
+        { \settowidth{\@tempdima}{$#1$}
+          \tensor{{\leftptarrowx@{#2}}}{^{\mspace{-12mu}\lowermathbox{\smallermathstyle{#1}}}} }
 }
 
 \DeclarePairedDelimiter\raw@bra\lparen\rparen
@@ -211,10 +200,10 @@
 \newcommand{\product}[1][n=1]{\prod_{#1}^\infty}
 
 \newcommand{\x}{\bra{x}}
-\newcommand{\X}{\bra{X}}
 \newcommand{\y}{\bra{y}}
-\newcommand{\Y}{\bra{Y}}
 \newcommand{\z}{\bra{z}}
+\newcommand{\X}{\bra{X}}
+\newcommand{\Y}{\bra{Y}}
 \newcommand{\Z}{\bra{Z}}
 \newcommand{\dx}{\d x}
 \newcommand{\dy}{\d y}
