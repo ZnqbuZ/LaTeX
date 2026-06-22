@@ -145,22 +145,14 @@
           \tensor{{\leftptarrowx@{#2}}}{^{\mspace{-12mu}\lowermathbox{\smallermathstyle{#1}}}} }
 }
 
-\DeclarePairedDelimiter\raw@bra\lparen\rparen
-\def\bra{\@ifstar{\raw@bra}{\raw@bra*}}
-\DeclarePairedDelimiterX\raw@dbra[2]\lparen\rparen{#1,#2}
-\def\dbra{\@ifstar{\raw@dbra}{\raw@dbra*}}
-\DeclarePairedDelimiter\raw@Bra\lbrace\rbrace
-\def\Bra{\@ifstar{\raw@Bra}{\raw@Bra*}}
-\DeclarePairedDelimiterX\raw@set[2]\lbrace\rbrace{\,{#1}\,\delimsize\vert\,\mathopen{}{#2}\,}
-\def\set{\@ifstar{\raw@set}{\raw@set*}}
-\DeclarePairedDelimiter\raw@sqbra\lbrack\rbrack
-\def\sqbra{\@ifstar{\raw@sqbra}{\raw@sqbra*}}
-\DeclarePairedDelimiter\raw@angbra\langle\rangle
-\def\angbra{\@ifstar{\raw@angbra}{\raw@angbra*}}
-\DeclarePairedDelimiter\raw@abs\lvert\rvert
-\def\abs{\@ifstar{\raw@abs}{\raw@abs*}}
-\DeclarePairedDelimiter\raw@norm\lVert\rVert
-\def\norm{\@ifstar{\raw@norm}{\raw@norm*}}
+\DeclarePairedDelimiter\bra{\lparen}{\rparen}
+\DeclarePairedDelimiterX\dbra[2]{\lparen}{\rparen}{#1,#2}
+\DeclarePairedDelimiter\Bra{\lbrace}{\rbrace}
+\DeclarePairedDelimiterX\set[2]{\lbrace}{\rbrace}{\,#1\mathrel{}\delimsize\vert\mathrel{}#2\,}
+\DeclarePairedDelimiter\sqbra{\lbrack}{\rbrack}
+\DeclarePairedDelimiter\angbra{\langle}{\rangle}
+\DeclarePairedDelimiter\abs{\lvert}{\rvert}
+\DeclarePairedDelimiter\norm{\lVert}{\rVert}
 
 \makeatother
 
