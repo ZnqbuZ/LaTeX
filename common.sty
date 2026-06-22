@@ -289,11 +289,12 @@
 }
 % endregion
 
-% region Define mathsf
+% region Define categories
 \clist_const:Nn \l_zz_mathsf_name_list
 {
 	Cat,		% categories
 	MonCat,		% monoidal categories
+	Fun,		% functors
 	Fib,		% fibrations
 	Pair,		% pairs
 	Set,		% sets
@@ -316,6 +317,8 @@
 	Ring,		% rings
 	CRing,		% commutative rings
 	Mod,		% modules
+	Alg,		% algebras
+	CAlg,		% commutative algebras
 	Field,		% fields
 	Vect,		% vector spaces
 	AlgVar,		% algebraic varieties
@@ -335,20 +338,29 @@
 \clist_map_inline:Nn \l_zz_mathsf_name_list {
 	\__zz_define_cmd:nn { mathsf } { #1 }
 }
-% endregion
 
-\DeclareMathOperator{\FunOp}{\mathsf{Fun}}
-\newcommand{\Fun}[2]{{\FunOp\dbra{#1}{#2}}} % functors
+\DeclarePairedDelimiterX\commacat[2]{\lparen}{\rparen}{
+	#1 \mathrel{}\delimsize\downarrow\mathrel{} #2
+} % comma category
 
-\newcommand{\commacat}[2]{{\left(#1\middle\downarrow #2\right)}} % comma category
+\cs_set_eq:cc { __zz_Fun: } { Fun }
+\RenewDocumentCommand { \Fun } { s m m } {
+	\IfBooleanTF { #1 } { \__zz_Fun: } { \__zz_Fun: \dbra*{#2}{#3} }
+}
+
+\cs_set_eq:cc { __zz_Alg: } { Alg }
+\RenewDocumentCommand { \Alg } { s m } {
+    \IfBooleanTF { #1 } { \__zz_Alg: } { #2 \text{-} \__zz_Alg: }
+}
+
+\cs_set_eq:cc { __zz_CAlg: } { CAlg }
+\RenewDocumentCommand { \CAlg } { s m } {
+    \IfBooleanTF { #1 } { \__zz_CAlg: } { #2 \text{-} \__zz_CAlg: }
+}
 
 \newcommand{\LMod}[1]{#1\text{-}\Mod} % left modules
 \newcommand{\RMod}[1]{\Mod\text{-}#1} % right modules
-
-\DeclareMathOperator{\AlgOp}{\mathsf{Alg}}
-\newcommand{\Alg}[1]{#1\text{-}\AlgOp} % (unital) associative algebras
-\DeclareMathOperator{\CAlgOp}{\mathsf{CAlg}}
-\newcommand{\CAlg}[1]{#1\text{-}\AlgOp} % (unital) commutative associative algebras
+% endregion
 
 % region Define math operators
 \clist_const:Nn \l_zz_math_operator_list
@@ -391,8 +403,8 @@
 	div,						% divergence
 	curl,						% curl
 	rot=\mathbf{rot},			% rotation
-	ric=Ricci,					% Ricci curvature
-	ein=Einstein,				% Einstein tensor
+	Ric=Ricci,					% Ricci curvature
+	Ein=Einstein,				% Einstein tensor
 	len,						% length
 	inc,						% inclusion
 	ind,						% index
