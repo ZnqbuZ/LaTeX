@@ -37,25 +37,28 @@ fi
 
 cd "${WORK_DIR}"
 
-for class in ${CLASSES}; do
-    log "$(printf '=%0.s' {1..50})"
-    log "Generating ${class}.sty ..."
-    CLASS_OPT="11pt"
-    cat <<EOF > "${class}.sty"
-\RequirePackage[OT1]{fontenc}
+LANGUAGES="en fr cn"
 
+for lang in ${LANGUAGES}; do
+    for class in ${CLASSES}; do
+        log "$(printf '=%0.s' {1..50})"
+        log "Generating ${lang}.${class}.sty ..."
+        CLASS_OPT="11pt"
+        cat <<EOF > "${lang}.${class}.sty"
+\def\precompile{}
+\RequirePackage[T1]{fontenc}
 \documentclass[${CLASS_OPT}]{${class}}
-
-\RequirePackage{../common}
+\RequirePackage[${lang}]{../config}
 EOF
-    for engine in ${ENGINES}; do
-        log "$(printf -- '-%.0s' {1..50})"
-        log "Precompiling ${class}.sty with engine ${engine}..."
-        ${engine} -ini $OPT -jobname=${class}.${engine} "&${engine} ${class}.sty\dump"
-        if [ $? -ne 0 ]; then
-            log "Error: Failed to precompile ${class}.sty"
-            exit 1
-        fi
+        for engine in ${ENGINES}; do
+            log "$(printf -- '-%.0s' {1..50})"
+            log "Precompiling ${lang}.${class}.sty with engine ${engine}..."
+            ${engine} -ini $OPT -jobname=${lang}.${class}.${engine} "&${engine} ${lang}.${class}.sty\dump"
+            if [ $? -ne 0 ]; then
+                log "Error: Failed to precompile ${lang}.${class}.sty"
+                exit 1
+            fi
+        done
     done
 done
 
