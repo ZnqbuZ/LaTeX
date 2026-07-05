@@ -342,25 +342,63 @@
 \numberwithin{thm}{section}
 \numberwithin{equation}{section}
 
+\tcbset{
+	bracket depth/.store in=\bdepth,
+    bracket depth=0.5em,
+    bracket overhang/.store in=\boverhang,
+    bracket overhang=0.3ex,
+    bracket rule/.store in=\brule,
+    bracket rule=1.5pt,
+    thm-box/.style={
+        enhanced,
+        breakable,
+        attach title to upper,
+        after title={\hskip 0.5em},
+        coltitle=black,
+        interior hidden,
+        frame hidden,
+        size=minimal,
+        boxrule=0pt, boxsep=0pt, left=0pt, right=0.7em, top=0pt, bottom=0pt,
+        sharp corners,
+        arc=0pt,
+        outer arc=0pt,
+        parbox=false,
+		overlay unbroken={
+            \draw[gray!50, line width=\brule] 
+                ([xshift=-\bdepth, yshift=\boverhang]frame.north east) -- 
+                ([yshift=\boverhang]frame.north east) -- 
+                ([yshift=-\boverhang]frame.south east) -- 
+                ([xshift=-\bdepth, yshift=-\boverhang]frame.south east);
+        },
+        overlay first={
+            \draw[gray!50, line width=\brule] 
+                ([xshift=-\bdepth, yshift=\boverhang]frame.north east) -- 
+                ([yshift=\boverhang]frame.north east) -- 
+                (frame.south east);
+        },
+        overlay middle={
+            \draw[gray!50, line width=\brule] 
+                (frame.north east) -- (frame.south east);
+        },
+        overlay last={
+            \draw[gray!50, line width=\brule] 
+                (frame.north east) --
+                ([yshift=-\boverhang]frame.south east) -- 
+                ([xshift=-\bdepth, yshift=-\boverhang]frame.south east);
+        }
+    }
+}
+
 \renewkeytheoremstyle{remark}{
-	headfont=\itshape,
-	bodyfont=\normalfont,
-	tcolorbox={
-			enhanced,
-			breakable,
-			attach title to upper,
-			after title={\hskip 0.5em},
-			coltitle=black,
-			interior hidden,
-			frame hidden,
-			borderline east={2pt}{0pt}{gray!50},
-			size=minimal,
-			boxrule=0pt, boxsep=0pt, left=0pt, right=1em, top=0pt, bottom=0pt,
-			sharp corners,
-			arc=0pt,
-			outer arc=0pt,
-			parbox=false,
-		}
+    headfont=\itshape,
+    bodyfont=\normalfont,
+    tcolorbox=thm-box
+}
+
+\renewkeytheoremstyle{definition}{
+    headfont=\bfseries,
+    bodyfont=\normalfont,
+    tcolorbox=thm-box
 }
 
 \NewDocumentCommand{\declthm}{ o m m }{
