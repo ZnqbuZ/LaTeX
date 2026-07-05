@@ -538,15 +538,8 @@
 
 \NewDocumentCommand { \D } { m } { \diff{}{#1} }
 
-\letdif{\laplacian}{Delta}
-
-\newcommand{\del}{\partial}
-
-\bool_if:nTF { \sys_if_engine_xetex_p: || \sys_if_engine_luatex_p: } {
-	\newdif*{\dbar}{\bar{\partialnondif}}
-} {
-	\newdif{\dbar}{\bar{\partialnondif}}
-}
+\let\del\partial
+\NewDocumentCommand { \dbar } {} { \ol{\del} }
 
 % region Define commands from lists
 \msg_new:nnn { zz-math } { cmd-already-defined } {
