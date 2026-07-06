@@ -531,6 +531,9 @@
 	\mode_if_math:TF { \mathrm{k} } { \__zz_k_text: }
 }
 
+\cs_new_protected:Npn \__zz_P_math:n #1 {
+	\diffp { } { #1 }
+}
 \cs_set_eq:cc { __zz_P_text: } { P }
 \RenewDocumentCommand { \P } { } {
 	\mode_if_math:TF { \__zz_P_math:n } { \__zz_P_text: }
@@ -563,9 +566,28 @@
 		\iow_log:x { Declaring~mathsf~name:~\exp_not:c { \l_tmpa_tl }~->~{ \exp_not:N \mathsf { \exp_not:V \l_tmpb_tl } } }
 		\exp_args:Ncx \newcommand { \l_tmpa_tl } { { \exp_not:N \mathsf { \exp_not:V \l_tmpb_tl } } }
 	}
-	\str_if_eq:nnT { #1 } { DeclareMathOperator } {
-		\iow_log:x { Declaring~operator:~\exp_not:c { \l_tmpa_tl }~->~\exp_not:V \l_tmpb_tl }
+    
+	\str_if_eq:nnT { #1 } { Operator } {
+		\iow_log:x { Declaring~math~operator:~\exp_not:c { \l_tmpa_tl }~->~\exp_not:V \l_tmpb_tl }
 		\exp_args:NcV \DeclareMathOperator { \l_tmpa_tl } \l_tmpb_tl
+	}
+
+	\str_if_eq:nnT { #1 } { Symbol } {
+		\iow_log:x { Declaring~math~symbol:~\exp_not:c { \l_tmpa_tl }~->~\exp_not:V \l_tmpb_tl }
+		\cs_new_protected:cpx { \l_tmpa_tl } {
+            \exp_not:N \mathrm { \exp_not:V \l_tmpb_tl }
+        }
+	}
+
+	\str_if_eq:nnT { #1 } { Dual } {
+		\iow_log:x { Declaring~operator~&~symbol:~\exp_not:c { \l_tmpa_tl }~->~\exp_not:V \l_tmpb_tl }
+		\use:e {
+            \exp_not:N \NewDocumentCommand \exp_not:c { \l_tmpa_tl } { s } {
+                \exp_not:N \IfBooleanTF { ##1 }
+                { \exp_not:N \mathrm { \exp_not:V \l_tmpb_tl } }
+                { \exp_not:N \operatorname { \exp_not:V \l_tmpb_tl } }
+            }
+        }
 	}
 }
 % endregion
@@ -646,8 +668,6 @@
 % region Define math operators
 \clist_const:Nn \l_zz_math_operator_clist
 {
-	yo=\text{よ},				% Yoneda embedding
-	oy=\text{\reflectbox{よ}},	% Yoneda embedding
 	EAut=\mathsf{Aut},			% enriched automorphism
 	EIso=\mathsf{Iso},			% enriched isomorphism
 	EEnd=\mathsf{End},			% enriched endomorphism
@@ -663,8 +683,6 @@
 	im,							% image
 	codim,						% codimension
 	itr=int,					% interior
-	tr,							% trace
-	ch=char,					% characteristic
 	cond,						% conductor
 	sgn,						% sign
 	sing,						% singular
@@ -674,8 +692,6 @@
 	arccosh,					% inverse hyperbolic cosine
 	arctanh,					% inverse hyperbolic tangent
 	arccoth,					% inverse hyperbolic cotangent
-	pr,							% projection
-	proj,						% projection
 	rank,						% rank
 	supp,						% support
 	grad=\mathbf{grad},			% gradient
@@ -684,8 +700,6 @@
 	div,						% divergence
 	curl,						% curl
 	rot=\mathbf{rot},			% rotation
-	Ric=Ricci,					% Ricci curvature
-	Ein=Einstein,				% Einstein tensor
 	len,						% length
 	inc,						% inclusion
 	ind,						% index
@@ -705,43 +719,23 @@
 	orb,						% orbit set
 	Stab,						% stabilizer
 	Gal,						% Galois group
-	M,							% matrix
-	GL,							% general linear group
-	gl=\mathfrak{gl},			% general linear Lie algebra
-	SL,							% special linear group
-	sl=\mathfrak{sl},			% special linear Lie algebra
-	U,							% unitary group
-	u=\mathfrak{u},				% unitary Lie algebra
-	SU,							% special unitary group
-	su=\mathfrak{su},			% special unitary Lie algebra
-	O,							% orthogonal group
-	o=\mathfrak{o},				% orthogonal Lie algebra
-	SO,							% special orthogonal group
-	so=\mathfrak{so},			% special orthogonal Lie algebra
 	hol,						% linear holonomy group
 	Hol,						% affine holonomy group
 	ord,						% order
 	Norm,						% norm
-	Trace,						% trace
-	A,
 	con,
 	ad,
 	Ad,
 	spanspace=span,				% span
 	gr,							% graded
 	Eff,						% effective
-	DscDt=DD,					% descent datum
 	dis,						% discrete category
 	Spec,						% spectrum
 	Specm,						% maximal spectrum
 	Frac,						% fraction field
 	hght=ht,					% height
 	depth,						% depth
-	T,
 	Proj,						% projective spectrum
-	vol,						% volume
-	covol,						% covolume
-	Gr,							% Grassmannian
 	res,						% residue
 	Ext,						% extension
 	Tor,						% torsion
@@ -757,17 +751,51 @@
 	Sv,							% sieve
 	rt,							% restriction
 	conv,						% convex hull
+}
+
+\clist_const:Nn \l_zz_math_symbol_clist {
+	yo=\text{よ},				% Yoneda embedding
+	oy=\text{\reflectbox{よ}},	% Yoneda embedding
+	DD,							% descent datum
+	pr,							% projection
+	proj,						% projection
+	Ric,						% Ricci curvature
+	Ein,						% Einstein tensor
+	A,
+	M,							% matrix
+	T,
+	Gr,							% Grassmannian
 	Jac,						% Jacobian
 	Ell,						% elliptic curve
 	Pic,						% Picard group
 	Cl,							% class group
 	CCl={\BbbC l},				% complexified Clifford algebra
+	GL,							% general linear group
+	gl=\mathfrak{gl},			% general linear Lie algebra
+	SL,							% special linear group
+	sl=\mathfrak{sl},			% special linear Lie algebra
+	U,							% unitary group
+	u=\mathfrak{u},				% unitary Lie algebra
+	SU,							% special unitary group
+	su=\mathfrak{su},			% special unitary Lie algebra
+	O,							% orthogonal group
+	o=\mathfrak{o},				% orthogonal Lie algebra
+	SO,							% special orthogonal group
+	so=\mathfrak{so},			% special orthogonal Lie algebra
 	Pin,						% Pin group
 	Pinc={Pin^c},				% Pin^c group
 	pin=\mathfrak{pin},			% Pin Lie algebra
 	Spin,						% Spin group
-	Spinc={Spin^c},			% Spin^c group
+	Spinc={Spin^c},				% Spin^c group
 	spin=\mathfrak{spin},		% Spin Lie algebra
+}
+
+\clist_const:Nn \l_zz_math_dual_clist {
+	vol,						% volume / volume form
+	covol,						% covolume / covolume form
+	tr,							% trace / trace form
+	Trace,						% trace / trace form
+	ch,							% characteristic / Chern character
 }
 
 \cs_undefine:N \div
@@ -782,12 +810,20 @@
 
 \clist_map_inline:Nn \l_zz_dual_mode_cmd_clist
 {
-	\cs_set_eq:cc { __zz_#1_text: } { #1 }
+	\exp_args:Ncc \NewCommandCopy { __zz_#1_text: } { #1 }
 	\cs_undefine:c { #1 }
 }
 
 \clist_map_inline:Nn \l_zz_math_operator_clist {
-	\__zz_define_cmd:nn { DeclareMathOperator } { #1 }
+	\__zz_define_cmd:nn { Operator } { #1 }
+}
+
+\clist_map_inline:Nn \l_zz_math_symbol_clist {
+	\__zz_define_cmd:nn { Symbol } { #1 }
+}
+
+\clist_map_inline:Nn \l_zz_math_dual_clist {
+	\__zz_define_cmd:nn { Dual } { #1 }
 }
 
 \clist_map_inline:Nn \l_zz_dual_mode_cmd_clist
@@ -796,16 +832,20 @@
 	\cs_undefine:c { #1 }
 }
 
+\NewDocumentCommand { \sl } { } {
+	\mode_if_math:TF { \__zz_sl_math: } { \__zz_sl_text: }
+}
+
+\NewDocumentCommand { \u } { } {
+	\mode_if_math:TF { \__zz_u_math: } { \__zz_u_text: }
+}
+
 \NewDocumentCommand { \O } { } {
 	\mode_if_math:TF { \__zz_O_math: } { \__zz_O_text: }
 }
 
 \NewDocumentCommand { \o } { } {
 	\mode_if_math:TF { \__zz_o_math: } { \__zz_o_text: }
-}
-
-\cs_new_protected:Npn \u {
-	\mode_if_math:TF { \__zz_u_math: } { \__zz_u_text: }
 }
 % endregion
 
