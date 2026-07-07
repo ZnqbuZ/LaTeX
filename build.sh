@@ -43,7 +43,7 @@ for lang in ${LANGUAGES}; do
     for class in ${CLASSES}; do
         log "$(printf '=%0.s' {1..50})"
         log "Generating ${lang}.${class}.sty ..."
-        CLASS_OPT="11pt"
+        CLASS_OPT="11pt, a4paper"
         cat <<EOF > "${lang}.${class}.sty"
 \def\precompile{}
 \RequirePackage[T1]{fontenc}
