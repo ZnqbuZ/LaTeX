@@ -343,12 +343,6 @@
 \numberwithin{equation}{section}
 
 \tcbset{
-	bracket depth/.store in=\bdepth,
-    bracket depth=0.5em,
-    bracket overhang/.store in=\boverhang,
-    bracket overhang=0.3ex,
-    bracket rule/.store in=\brule,
-    bracket rule=1.5pt,
     thm-box/.style={
         enhanced,
         breakable,
@@ -357,12 +351,24 @@
         coltitle=black,
         interior hidden,
         frame hidden,
-        size=minimal,
-        boxrule=0pt, boxsep=0pt, left=0pt, right=0.7em, top=0pt, bottom=0pt,
+        boxrule=0pt,
+		size=minimal,
+		nobeforeafter,
+		after upper=\par\hrule height 0pt,
         sharp corners,
         arc=0pt,
         outer arc=0pt,
         parbox=false,
+    },
+	bracket depth/.store in=\bdepth,
+    bracket depth=0.5em,
+    bracket overhang/.store in=\boverhang,
+    bracket overhang=-0\baselineskip,
+    bracket rule/.store in=\brule,
+    bracket rule=1.5pt,
+    ruled-thm-box/.style={
+        thm-box,
+		right=0.7em,
 		overlay unbroken={
             \draw[gray!50, line width=\brule] 
                 ([xshift=-\bdepth, yshift=\boverhang]frame.north east) -- 
@@ -392,13 +398,17 @@
 \renewkeytheoremstyle{remark}{
     headfont=\itshape,
     bodyfont=\normalfont,
-    tcolorbox=thm-box
+    tcolorbox=ruled-thm-box
 }
 
 \renewkeytheoremstyle{definition}{
     headfont=\bfseries,
     bodyfont=\normalfont,
-    tcolorbox=thm-box
+    tcolorbox=ruled-thm-box,
+}
+
+\renewkeytheoremstyle{plain}{
+    tcolorbox=thm-box,
 }
 
 \NewDocumentCommand{\declthm}{ o m m }{
