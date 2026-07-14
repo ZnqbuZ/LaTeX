@@ -90,7 +90,7 @@
 
 \makeatother
 
-\PassOptionsToPackage{tbtags}{amsmath}
+\RequirePackage[tbtags]{amsmath}
 \RequirePackage[thmtools-compat]{keytheorems}
 \RequirePackage{amssymb,diffcoeff,extarrows,etoolbox,mathtools,overarrows,tensor}
 \RequirePackage{array,tabularx}
@@ -343,186 +343,187 @@
 
 \ifx\beamer\undefined
 
-\AtBeginEnvironment{proof}{\vspace*{-\parskip}}
+	\AtBeginEnvironment{proof}{\vspace*{-\parskip}}
 
-\newcounter{thm}
-\numberwithin{thm}{section}
-\numberwithin{equation}{section}
+	\newcounter{thm}
+	\numberwithin{thm}{section}
+	\numberwithin{equation}{section}
 
-\tcbset{
-	thm-box/.style={
-			enhanced,
-			breakable,
-			attach title to upper,
-			after title={\hskip 0.5em},
-			coltitle=black,
-			interior hidden,
-			frame hidden,
-			boxrule=0pt,
-			size=minimal,
-			nobeforeafter,
-			after upper=\par\hrule height 0pt,
-			sharp corners,
-			arc=0pt,
-			outer arc=0pt,
-			parbox=false,
-		},
-	bracket depth/.store in=\bdepth,
-	bracket depth=0.5em,
-	bracket overhang/.store in=\boverhang,
-	bracket overhang=-0\baselineskip,
-	bracket rule/.store in=\brule,
-	bracket rule=1.5pt,
-	ruled-thm-box/.style={
-			thm-box,
-			right=0.7em,
-			overlay unbroken={
-					\draw[gray!50, line width=\brule]
-					([xshift=-\bdepth, yshift=\boverhang]frame.north east) --
-						([yshift=\boverhang]frame.north east) --
+	\tcbset{
+		thm-box/.style={
+				enhanced,
+				breakable,
+				lines before break=0,
+				attach title to upper,
+				after title={\hskip 0.5em},
+				coltitle=black,
+				interior hidden,
+				frame hidden,
+				boxrule=0pt,
+				size=minimal,
+				nobeforeafter,
+				after upper=\par\hrule height 0pt,
+				sharp corners,
+				arc=0pt,
+				outer arc=0pt,
+				parbox=false,
+			},
+		bracket depth/.store in=\bdepth,
+		bracket depth=0.5em,
+		bracket overhang/.store in=\boverhang,
+		bracket overhang=-0\baselineskip,
+		bracket rule/.store in=\brule,
+		bracket rule=1.5pt,
+		ruled-thm-box/.style={
+				thm-box,
+				right=0.7em,
+				overlay unbroken={
+						\draw[gray!50, line width=\brule]
+						([xshift=-\bdepth, yshift=\boverhang]frame.north east) --
+							([yshift=\boverhang]frame.north east) --
+							([yshift=-\boverhang]frame.south east) --
+							([xshift=-\bdepth, yshift=-\boverhang]frame.south east);
+					},
+				overlay first={
+						\draw[gray!50, line width=\brule]
+						([xshift=-\bdepth, yshift=\boverhang]frame.north east) --
+							([yshift=\boverhang]frame.north east) --
+						(frame.south east);
+					},
+				overlay middle={
+						\draw[gray!50, line width=\brule]
+						(frame.north east) -- (frame.south east);
+					},
+				overlay last={
+						\draw[gray!50, line width=\brule]
+						(frame.north east) --
 						([yshift=-\boverhang]frame.south east) --
-						([xshift=-\bdepth, yshift=-\boverhang]frame.south east);
-				},
-			overlay first={
-					\draw[gray!50, line width=\brule]
-					([xshift=-\bdepth, yshift=\boverhang]frame.north east) --
-						([yshift=\boverhang]frame.north east) --
-					(frame.south east);
-				},
-			overlay middle={
-					\draw[gray!50, line width=\brule]
-					(frame.north east) -- (frame.south east);
-				},
-			overlay last={
-					\draw[gray!50, line width=\brule]
-					(frame.north east) --
-					([yshift=-\boverhang]frame.south east) --
-						([xshift=-\bdepth, yshift=-\boverhang]frame.south east);
-				}
-		}
-}
-
-\renewkeytheoremstyle{remark}{
-	headfont=\itshape,
-	bodyfont=\normalfont,
-	tcolorbox=ruled-thm-box
-}
-
-\renewkeytheoremstyle{definition}{
-	headfont=\bfseries,
-	bodyfont=\normalfont,
-	tcolorbox=ruled-thm-box,
-}
-
-\renewkeytheoremstyle{plain}{
-	tcolorbox=thm-box,
-}
-
-\NewDocumentCommand{\declthm}{ o m m }{
-	\IfValueTF{#1}
-	{\declaretheorem[name=#3, #1]{#2}}
-	{\declaretheorem[name=#3]{#2}}
-}
-
-\NewDocumentCommand{\newthm}{ O{plain} m m }{
-	\declthm[numberlike=equation, style=#1]{#2}{#3}
-	\declthm[numbered=no, style=#1]{#2*}{#3}
-}
-
-\ExplSyntaxOn
-
-\__zz_if_lang:nT { en } {
-	\newthm{theorem}{Theorem}
-	\newthm{lemma}{Lemma}
-	\newthm{corollary}{Corollary}
-	\newthm{proposition}{Proposition}
-	\newthm{axiom}{Axiom}
-
-	\newthm[definition]{definition}{Definition}
-
-	\newthm[remark]{remark}{Remark}
-	\newthm[remark]{example}{Example}
-}
-
-\__zz_if_lang:nT { fr } {
-	\newthm{theorem}{Th\'eor\`eme}
-	\newthm{lemma}{Lemme}
-	\newthm{corollary}{Corollaire}
-	\newthm{proposition}{Proposition}
-	\newthm{axiom}{Axiome}
-
-	\newthm[definition]{definition}{D\'efinition}
-
-	\newthm[remark]{remark}{Remarque}
-	\newthm[remark]{example}{Exemple}
-}
-
-\__zz_if_lang:nT { cn } {
-	\zcsetup{pairsep={ 和 }, listsep={、}, lastsep={ 及 }, rangesep={ 至 }}
-
-	\zcRefTypeSetup{chapter}{refbounds={,第,章,}}
-	\zcRefTypeSetup{section}{refbounds={,第,节,}}
-	\zcRefTypeSetup{subsection}{refbounds={,第,小节,}}
-
-	\zcrename{appendix}{附录}
-	\zcnoname{chapter}
-	\zcnoname{section}
-	\zcnoname{subsection}
-
-	\renewcommand{\proofname}{\indent 证明}
-	\newenvironment{proof*}{\begin{proof}\renewcommand{\qedsymbol}{}}{\end{proof}}
-
-	\newenvironment{sln}{\renewcommand{\proofname}{\indent 解}\begin{proof}}{\end{proof}\renewcommand{\proofname}{\indent 证明}}
-	\newenvironment{sln*}{\renewcommand{\proofname}{\indent 解}\begin{proof*}\renewcommand{\proofname}{\indent 解}}{\end{proof*}\renewcommand{\proofname}{\indent 证明}}
-
-	\declaretheoremstyle[
-		headfont=\CJKfamily{zhkai}\bfseries,
-		notefont=\CJKfamily{zhkai}\bfseries,
-		bodyfont=\CJKfamily{zhkai},
-		headindent=2em
-	]{cthm}
-
-	\declaretheoremstyle[
-		headfont=\CJKfamily{zhkai}\bfseries,
-		notefont=\CJKfamily{zhkai}\bfseries,
-		bodyfont=\CJKfamily{zhsong},
-		headindent=2em
-	]{cdef}
-
-	\declaretheoremstyle[
-		headfont=\CJKfamily{zhkai},
-		notefont=\CJKfamily{zhkai},
-		bodyfont=\CJKfamily{zhkai},
-		headindent=2em
-	]{crem}
-
-	\RenewDocumentCommand{\declthm}{ o m m }{
-		\IfValueTF{#1}
-		{\declaretheorem[name=#3, refname={#3, #3}, Refname={#3, #3}, #1]{#2}}
-		{\declaretheorem[name=#3, refname={#3, #3}, Refname={#3, #3}]{#2}}
+							([xshift=-\bdepth, yshift=-\boverhang]frame.south east);
+					}
+			}
 	}
 
-	\RenewDocumentCommand{\newthm}{ O{cthm} m m }{
+	\renewkeytheoremstyle{remark}{
+		headfont=\itshape,
+		bodyfont=\normalfont,
+		tcolorbox=ruled-thm-box
+	}
+
+	\renewkeytheoremstyle{definition}{
+		headfont=\bfseries,
+		bodyfont=\normalfont,
+		tcolorbox=ruled-thm-box,
+	}
+
+	\renewkeytheoremstyle{plain}{
+		tcolorbox=thm-box,
+	}
+
+	\NewDocumentCommand{\declthm}{ o m m }{
+		\IfValueTF{#1}
+		{\declaretheorem[name=#3, #1]{#2}}
+		{\declaretheorem[name=#3]{#2}}
+	}
+
+	\NewDocumentCommand{\newthm}{ O{plain} m m }{
 		\declthm[numberlike=equation, style=#1]{#2}{#3}
 		\declthm[numbered=no, style=#1]{#2*}{#3}
 	}
 
-	\newthm{theorem}{定理}
-	\newthm{lemma}{引理}
-	\newthm{corollary}{推论}
-	\newthm{proposition}{命题}
-	\newthm{axiom}{公理}
+	\ExplSyntaxOn
 
-	\newthm[cdef]{definition}{定义}
+	\__zz_if_lang:nT { en } {
+		\newthm{theorem}{Theorem}
+		\newthm{lemma}{Lemma}
+		\newthm{corollary}{Corollary}
+		\newthm{proposition}{Proposition}
+		\newthm{axiom}{Axiom}
 
-	\newthm[crem]{remark}{注}
-	\newthm[crem]{example}{例}
+		\newthm[definition]{definition}{Definition}
 
-	\declthm[style=cthm]{maintheorem}{主定理}
-	\renewcommand{\themaintheorem}{\Roman{maintheorem}}
-}
+		\newthm[remark]{remark}{Remark}
+		\newthm[remark]{example}{Example}
+	}
 
-\ExplSyntaxOff
+	\__zz_if_lang:nT { fr } {
+		\newthm{theorem}{Th\'eor\`eme}
+		\newthm{lemma}{Lemme}
+		\newthm{corollary}{Corollaire}
+		\newthm{proposition}{Proposition}
+		\newthm{axiom}{Axiome}
+
+		\newthm[definition]{definition}{D\'efinition}
+
+		\newthm[remark]{remark}{Remarque}
+		\newthm[remark]{example}{Exemple}
+	}
+
+	\__zz_if_lang:nT { cn } {
+		\zcsetup{pairsep={ 和 }, listsep={、}, lastsep={ 及 }, rangesep={ 至 }}
+
+		\zcRefTypeSetup{chapter}{refbounds={,第,章,}}
+		\zcRefTypeSetup{section}{refbounds={,第,节,}}
+		\zcRefTypeSetup{subsection}{refbounds={,第,小节,}}
+
+		\zcrename{appendix}{附录}
+		\zcnoname{chapter}
+		\zcnoname{section}
+		\zcnoname{subsection}
+
+		\renewcommand{\proofname}{\indent 证明}
+		\newenvironment{proof*}{\begin{proof}\renewcommand{\qedsymbol}{}}{\end{proof}}
+
+		\newenvironment{sln}{\renewcommand{\proofname}{\indent 解}\begin{proof}}{\end{proof}\renewcommand{\proofname}{\indent 证明}}
+		\newenvironment{sln*}{\renewcommand{\proofname}{\indent 解}\begin{proof*}\renewcommand{\proofname}{\indent 解}}{\end{proof*}\renewcommand{\proofname}{\indent 证明}}
+
+		\declaretheoremstyle[
+			headfont=\CJKfamily{zhkai}\bfseries,
+			notefont=\CJKfamily{zhkai}\bfseries,
+			bodyfont=\CJKfamily{zhkai},
+			headindent=2em
+		]{cthm}
+
+		\declaretheoremstyle[
+			headfont=\CJKfamily{zhkai}\bfseries,
+			notefont=\CJKfamily{zhkai}\bfseries,
+			bodyfont=\CJKfamily{zhsong},
+			headindent=2em
+		]{cdef}
+
+		\declaretheoremstyle[
+			headfont=\CJKfamily{zhkai},
+			notefont=\CJKfamily{zhkai},
+			bodyfont=\CJKfamily{zhkai},
+			headindent=2em
+		]{crem}
+
+		\RenewDocumentCommand{\declthm}{ o m m }{
+			\IfValueTF{#1}
+			{\declaretheorem[name=#3, refname={#3, #3}, Refname={#3, #3}, #1]{#2}}
+			{\declaretheorem[name=#3, refname={#3, #3}, Refname={#3, #3}]{#2}}
+		}
+
+		\RenewDocumentCommand{\newthm}{ O{cthm} m m }{
+			\declthm[numberlike=equation, style=#1]{#2}{#3}
+			\declthm[numbered=no, style=#1]{#2*}{#3}
+		}
+
+		\newthm{theorem}{定理}
+		\newthm{lemma}{引理}
+		\newthm{corollary}{推论}
+		\newthm{proposition}{命题}
+		\newthm{axiom}{公理}
+
+		\newthm[cdef]{definition}{定义}
+
+		\newthm[crem]{remark}{注}
+		\newthm[crem]{example}{例}
+
+		\declthm[style=cthm]{maintheorem}{主定理}
+		\renewcommand{\themaintheorem}{\Roman{maintheorem}}
+	}
+
+	\ExplSyntaxOff
 
 \fi
 
