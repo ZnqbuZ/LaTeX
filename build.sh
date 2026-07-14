@@ -19,7 +19,7 @@ ENGINES="xelatex pdflatex"
 WORK_DIR="precompile"
 WORK_DIR="$(dirname "$(realpath "$0")")/${WORK_DIR}"
 
-CLASSES="article book"
+CLASSES="article book beamer"
 
 INTERACTION=$([ $DEBUG -eq 1 ] && echo "nonstopmode" || echo "batchmode")
 
@@ -37,13 +37,17 @@ fi
 
 cd "${WORK_DIR}"
 
-LANGUAGES="en fr cn"
+declare -A LANGUAGES=(
+    [en]="english"
+    [fr]="french"
+    [cn]="chinese"
+)
 
-for lang in ${LANGUAGES}; do
+for lang in "${!LANGUAGES[@]}"; do
     for class in ${CLASSES}; do
         log "$(printf '=%0.s' {1..50})"
         log "Generating ${lang}.${class}.sty ..."
-        CLASS_OPT="11pt, a4paper"
+        [[ "$class" == "beamer" ]] && CLASS_OPT="${LANGUAGES[$lang]:-$lang}" || CLASS_OPT="11pt, a4paper"
         cat <<EOF > "${lang}.${class}.sty"
 \def\precompile{}
 \RequirePackage[T1]{fontenc}
