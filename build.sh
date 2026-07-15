@@ -47,9 +47,10 @@ for lang in "${!LANGUAGES[@]}"; do
     for class in ${CLASSES}; do
         log "$(printf '=%0.s' {1..50})"
         log "Generating ${lang}.${class}.sty ..."
-        [[ "$class" == "beamer" ]] && CLASS_OPT="${LANGUAGES[$lang]:-$lang}" || CLASS_OPT="11pt, a4paper"
+        [[ "$class" == "beamer" ]] && CLASS_OPT="${LANGUAGES[$lang]:-$lang}, aspectratio=169" || CLASS_OPT="11pt, a4paper"
         cat <<EOF > "${lang}.${class}.sty"
 \def\precompile{}
+\PassOptionsToPackage{tbtags}{amsmath}
 \RequirePackage[T1]{fontenc}
 \documentclass[${CLASS_OPT}]{${class}}
 \RequirePackage[${lang}]{../config}

@@ -104,7 +104,6 @@
 \RequirePackage{cancel, slashed}
 \RequirePackage{csquotes}
 \RequirePackage{draftwatermark}
-\RequirePackage[shortlabels]{enumitem}
 \RequirePackage[lastexercise]{exercise}
 % \RequirePackage{fancyhdr}
 \RequirePackage{fixdif}
@@ -114,15 +113,17 @@
 \RequirePackage{siunitx}
 \RequirePackage[most]{tcolorbox}
 
-\RequirePackage{geometry}
-\geometry{left=2cm,right=2cm,top=2cm,bottom=2cm}
-
 % Cannot be dumped by LuaLaTeX
 \RequirePackage{adjustbox,trimclip}
 \RequirePackage{standalone}
 \RequirePackage{tikz-cd}
 
 \ifx\beamer\undefined
+	\RequirePackage[shortlabels]{enumitem}
+
+	\RequirePackage{geometry}
+	\geometry{left=2cm,right=2cm,top=2cm,bottom=2cm}
+
 	\RequirePackage{imakeidx}
 	\RequirePackage[
 		pdfstartview=FitH,
@@ -566,7 +567,7 @@
 \NewDocumentCommand { \D } { m } { \diff{}{#1} }
 
 \let\del\partial
-\NewDocumentCommand { \dbar } {} { \ol{\del} }
+\NewDocumentCommand { \dbar } {} { \bar{\del} }
 
 % region Define commands from lists
 \msg_new:nnn { zz-math } { cmd-already-defined } {
