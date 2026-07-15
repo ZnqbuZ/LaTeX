@@ -1,20 +1,8 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesExplPackage{config}{}{}{ZnqbuZ LaTeX Config}
 
-\newcommand{\SetupFont@CN}{
-	\IfClassLoadedTF{ctexart}{}
-	{\IfClassLoadedTF{ctexbook}{}
-		{\IfClassLoadedTF{ctexrep}{}
-			{\IfClassLoadedTF{ctexbeamer}{}
-				{
-					\PackageWarning{ctexclass-check}{The document class is not a valid ctex class}
-					\RequirePackage[fontset=none]{ctex}
-					\PackageWarning{ctexclass-check}{CTeX package loaded}
-				}
-			}
-		}
-	}
-
+\ExplSyntaxOff
+\newcommand{\@setCJKfonts}{
 	\setCJKfamilyfont{zhsong}{Source Han Serif SC}[BoldFont=Source Han Serif SC Bold]
 	\setCJKfamilyfont{zhhei}{FZLTHProGBK}[BoldFont=FZLTHProGBK DemiBold]
 	\setCJKfamilyfont{zhfs}{FZQingFangSongS Bold}
@@ -24,48 +12,13 @@
 
 	\setCJKmainfont{Source Han Serif SC}[BoldFont=Source Han Serif SC Bold, ItalicFont=FZQingFangSongS Bold]
 	\setCJKsansfont{FZLTHProGBK}[BoldFont=FZLTHProGBK DemiBold]
-	\setCJKmonofont{Source Han Mono}
+	\setCJKmonofont{Source Han Mono SC}
 }
+\ExplSyntaxOn
 
-\@ifclassloaded { beamer }{ \def\beamer{} }{ }
+\NewDocumentCommand \SetupConfig { m } {
+	\keys_set:nn { __zz_config } { #1 }
 
-\tl_new:N \l_zz_lang_tl
-\tl_set:Nn \l_zz_lang_tl { en }
-
-\msg_new:nnn { __zz_config } { unknown-option } { Unknown~option~'#1'. }
-
-\keys_define:nn { __zz_config } {
-	lang .choice:,
-	unknown .code:n = {
-			\msg_warning:nnx { __zz_config } { unknown-option } { \l_keys_key_tl }
-		}
-}
-
-\clist_map_inline:nn { en , fr , cn } {
-	\keys_define:nn { __zz_config } {
-		lang / #1 .code:n = { \tl_set:Nn \l_zz_lang_tl { #1 } },
-		#1 .meta:n        = { lang = #1 }
-	}
-}
-
-\prg_new_conditional:Npnn \__zz_if_lang:n #1 { T , F , TF } {
-	\tl_if_eq:NnTF \l_zz_lang_tl { #1 } { \prg_return_true: } { \prg_return_false: }
-}
-
-\ProcessKeyOptions [ __zz_config ]
-
-\__zz_if_lang:nF { cn } {
-	\PassOptionsToPackage { english, french } { babel }
-	\__zz_if_lang:nT { en } {
-		\PassOptionsToPackage { main = english, provide = * } { babel }
-	}
-	\__zz_if_lang:nT { fr } {
-		\PassOptionsToPackage { main = french } { babel }
-	}
-	\RequirePackage{babel}
-}
-
-\NewDocumentCommand \SetupFont { } {
 	\bool_if:nT { \sys_if_engine_xetex_p: || \sys_if_engine_luatex_p: } {
 		\let\circledR\relax
 		\let\circledS\relax
@@ -75,12 +28,138 @@
 		\setmathfont[range={"1D49C-"1D4B5, "1D4D0-"1D4E9}, StylisticSet=1]{NewComputerModernMath}
 	}
 
-	\__zz_if_lang:nT { cn } {
-		\SetupFont@CN
+	\__zz_if_lang:nTF { cn } {
+		\bool_if:nF { \sys_if_engine_xetex_p: || \sys_if_engine_luatex_p: } {
+			\msg_new:nnn { __zz_config } { wrong-engine-for-cn } {
+				Compilation~aborted.~Please~switch~to~xelatex~or~lualatex for CN support.
+			}
+			\msg_fatal:nn { __zz_config } { wrong-engine-for-cn }
+		}
+
+		\IfClassLoadedTF{ctexart}{}
+		{\IfClassLoadedTF{ctexbook}{}
+			{\IfClassLoadedTF{ctexrep}{}
+				{\IfClassLoadedTF{ctexbeamer}{}
+					{
+						\msg_new:nnn { __zz_config } { not-ctex-class } { The~document~class~is~not~a~valid~ctex~class. }
+						\msg_warning:nn { __zz_config } { not-ctex-class }
+						\RequirePackage[fontset=none]{ctex}
+						\msg_new:nnn { __zz_config } { ctex-loaded } { CTeX~package~loaded. }
+						\msg_info:nn { __zz_config } { ctex-loaded }
+					}
+				}
+			}
+		}
+
+		\@setCJKfonts
+	} {
+		\RequirePackage[english, french, provide = *]{babel}
+		\str_case:VnF \l_zz_lang_tl {
+			{ en } { \babelprovide[main, import]{english} }
+			{ fr } { \babelprovide[main, import]{french} }
+		} { }
 	}
 }
 
-\@onlypreamble\SetupFont
+\@onlypreamble\SetupConfig
+
+\bool_new:N \g_zz_is_beamer_bool
+\IfClassLoadedTF { beamer }
+{ \bool_gset_true:N \g_zz_is_beamer_bool }
+{ \bool_gset_false:N \g_zz_is_beamer_bool }
+
+\tl_new:N \l_zz_lang_tl
+
+\clist_map_inline:nn { theorem, lemma, corollary, proposition, axiom, definition, remark, example, maintheorem, proof } {
+	\tl_new:c { l__zz_#1_tl }
+}
+
+\keys_define:nn { __zz_config } {
+	lang .choice:,
+	theorem .tl_set:N = \l__zz_theorem_tl,
+	lemma .tl_set:N = \l__zz_lemma_tl,
+	corollary .tl_set:N = \l__zz_corollary_tl,
+	proposition .tl_set:N = \l__zz_proposition_tl,
+	axiom .tl_set:N = \l__zz_axiom_tl,
+	definition .tl_set:N = \l__zz_definition_tl,
+	remark .tl_set:N = \l__zz_remark_tl,
+	example .tl_set:N = \l__zz_example_tl,
+	maintheorem .tl_set:N = \l__zz_maintheorem_tl,
+	unknown .code:n = {
+			\msg_new:nnn { __zz_config } { unknown-option } { Unknown~option~'#1'. }
+			\msg_warning:nnx { __zz_config } { unknown-option } { \l_keys_key_tl }
+		}
+}
+
+\keys_define:nn { __zz_config } {
+	lang .choices:nn =
+		{ en, fr, cn }
+		{
+			\tl_if_empty:NTF \l_zz_lang_tl {
+				\tl_set_eq:NN \l_zz_lang_tl \l_keys_choice_tl
+				\str_case:Vn \l_keys_choice_tl {
+					{ en } {
+						\keys_set:nn { __zz_config } {
+							theorem = Theorem,
+							lemma = Lemma,
+							corollary = Corollary,
+							proposition = Proposition,
+							axiom = Axiom,
+							definition = Definition,
+							remark = Remark,
+							example = Example,
+							maintheorem = Main~Theorem,
+						}
+					}
+					{ fr } {
+						\keys_set:nn { __zz_config } {
+							theorem = Th\'eor\`eme,
+							lemma = Lemme,
+							corollary = Corollaire,
+							proposition = Proposition,
+							axiom = Axiome,
+							definition = D\'efinition,
+							remark = Remarque,
+							example = Exemple,
+							maintheorem = Th\'eor\`eme~Principal,
+						}
+					}
+					{ cn } {
+						\keys_set:nn { __zz_config } {
+							theorem = 定理,
+							lemma = 引理,
+							corollary = 推论,
+							proposition = 命题,
+							axiom = 公理,
+							definition = 定义,
+							remark = 注,
+							example = 例,
+							maintheorem = 主定理,
+						}
+					}
+				}
+			} {
+				\tl_if_eq:NNF \l_zz_lang_tl \l_keys_choice_tl {
+					\msg_new:nnn { __zz_config } { lang-already-specified } { The~language~has~already~been~specified~differently. }
+					\msg_fatal:nn { __zz_config } { lang-already-specified }
+				}
+			}
+		},
+	en .meta:n        = { lang = en },
+	fr .meta:n        = { lang = fr },
+	cn .meta:n        = { lang = cn }
+}
+
+\prg_new_conditional:Npnn \__zz_if_lang:n #1 { T , F , TF } {
+	\tl_if_eq:NnTF \l_zz_lang_tl { #1 } { \prg_return_true: } { \prg_return_false: }
+}
+
+\AddToHook { env/document/before } {
+	\tl_if_empty:NT \l_zz_lang_tl {
+		\msg_new:nnn { __zz_config } { lang-not-specified } { The~language~must~be~specified. }
+		\msg_fatal:nn { __zz_config } { lang-not-specified }
+	}
+}
 
 \RequirePackage[tbtags]{amsmath}
 \RequirePackage[thmtools-compat]{keytheorems}
@@ -110,7 +189,7 @@
 \RequirePackage{standalone}
 \RequirePackage{tikz-cd}
 
-\ifx\beamer\undefined
+\bool_if:NF \g_zz_is_beamer_bool {
 	\RequirePackage[shortlabels]{enumitem}
 
 	\RequirePackage{geometry}
@@ -126,7 +205,7 @@
 		linkcolor=darkblue,
 		unicode,
 	]{hyperref}
-\fi
+}
 
 \RequirePackage{zref-clever}
 
@@ -169,189 +248,157 @@
 
 \raggedbottom
 
-\ifx\beamer\undefined
+\ExplSyntaxOff
+\tcbset{
+	thm-box/.style={
+			enhanced,
+			breakable,
+			lines before break=0,
+			attach title to upper,
+			after title={\hskip 0.5em},
+			coltitle=black,
+			interior hidden,
+			frame hidden,
+			boxrule=0pt,
+			size=minimal,
+			nobeforeafter,
+			after upper=\par\hrule height 0pt,
+			sharp corners,
+			arc=0pt,
+			outer arc=0pt,
+			parbox=false,
+		},
+	bracket depth/.store in=\bdepth,
+	bracket depth=0.5em,
+	bracket overhang/.store in=\boverhang,
+	bracket overhang=-0\baselineskip,
+	bracket rule/.store in=\brule,
+	bracket rule=1.5pt,
+	ruled-thm-box/.style={
+			thm-box,
+			right=0.7em,
+			overlay unbroken={
+					\draw[gray!50, line width=\brule]
+					([xshift=-\bdepth, yshift=\boverhang]frame.north east) --
+						([yshift=\boverhang]frame.north east) --
+						([yshift=-\boverhang]frame.south east) --
+						([xshift=-\bdepth, yshift=-\boverhang]frame.south east);
+				},
+			overlay first={
+					\draw[gray!50, line width=\brule]
+					([xshift=-\bdepth, yshift=\boverhang]frame.north east) --
+						([yshift=\boverhang]frame.north east) --
+					(frame.south east);
+				},
+			overlay middle={
+					\draw[gray!50, line width=\brule]
+					(frame.north east) -- (frame.south east);
+				},
+			overlay last={
+					\draw[gray!50, line width=\brule]
+					(frame.north east) --
+					([yshift=-\boverhang]frame.south east) --
+						([xshift=-\bdepth, yshift=-\boverhang]frame.south east);
+				}
+		}
+}
+\ExplSyntaxOn
+
+\bool_if:NF \g_zz_is_beamer_bool {
 
 	\AtBeginEnvironment{proof}{\vspace*{-\parskip}}
 
-	\newcounter{thm}
-	\numberwithin{thm}{section}
 	\numberwithin{equation}{section}
 
-	\ExplSyntaxOff
-	\tcbset{
-		thm-box/.style={
-				enhanced,
-				breakable,
-				lines before break=0,
-				attach title to upper,
-				after title={\hskip 0.5em},
-				coltitle=black,
-				interior hidden,
-				frame hidden,
-				boxrule=0pt,
-				size=minimal,
-				nobeforeafter,
-				after upper=\par\hrule height 0pt,
-				sharp corners,
-				arc=0pt,
-				outer arc=0pt,
-				parbox=false,
-			},
-		bracket depth/.store in=\bdepth,
-		bracket depth=0.5em,
-		bracket overhang/.store in=\boverhang,
-		bracket overhang=-0\baselineskip,
-		bracket rule/.store in=\brule,
-		bracket rule=1.5pt,
-		ruled-thm-box/.style={
-				thm-box,
-				right=0.7em,
-				overlay unbroken={
-						\draw[gray!50, line width=\brule]
-						([xshift=-\bdepth, yshift=\boverhang]frame.north east) --
-							([yshift=\boverhang]frame.north east) --
-							([yshift=-\boverhang]frame.south east) --
-							([xshift=-\bdepth, yshift=-\boverhang]frame.south east);
-					},
-				overlay first={
-						\draw[gray!50, line width=\brule]
-						([xshift=-\bdepth, yshift=\boverhang]frame.north east) --
-							([yshift=\boverhang]frame.north east) --
-						(frame.south east);
-					},
-				overlay middle={
-						\draw[gray!50, line width=\brule]
-						(frame.north east) -- (frame.south east);
-					},
-				overlay last={
-						\draw[gray!50, line width=\brule]
-						(frame.north east) --
-						([yshift=-\boverhang]frame.south east) --
-							([xshift=-\bdepth, yshift=-\boverhang]frame.south east);
-					}
+	\AddToHook { env/document/before } {
+		\__zz_if_lang:nTF { cn } {
+			\zcsetup{pairsep={ 和 }, listsep={、}, lastsep={ 及 }, rangesep={ 至 }}
+
+			\zcRefTypeSetup{chapter}{refbounds={,第,章,}}
+			\zcRefTypeSetup{section}{refbounds={,第,节,}}
+			\zcRefTypeSetup{subsection}{refbounds={,第,小节,}}
+
+			\zcrename{appendix}{附录}
+			\zcnoname{chapter}
+			\zcnoname{section}
+			\zcnoname{subsection}
+
+			\renewcommand{\proofname}{\indent 证明}
+			\newenvironment{proof*}[1][\proofname]{\begin{proof}[#1]\renewcommand{\qedsymbol}{}}{\end{proof}}
+
+			\renewkeytheoremstyle{remark}{
+				headfont=\CJKfamily{zhkai},
+				notefont=\CJKfamily{zhkai},
+				bodyfont=\CJKfamily{zhkai},
+				tcolorbox=ruled-thm-box,
+				headindent=2em,
 			}
-	}
-	\ExplSyntaxOn
 
-	\renewkeytheoremstyle{remark}{
-		headfont=\itshape,
-		bodyfont=\normalfont,
-		tcolorbox=ruled-thm-box
-	}
+			\renewkeytheoremstyle{definition}{
+				headfont=\CJKfamily{zhkai}\bfseries,
+				notefont=\CJKfamily{zhkai}\bfseries,
+				bodyfont=\CJKfamily{zhsong},
+				tcolorbox=ruled-thm-box,
+				headindent=2em,
+			}
 
-	\renewkeytheoremstyle{definition}{
-		headfont=\bfseries,
-		bodyfont=\normalfont,
-		tcolorbox=ruled-thm-box,
-	}
+			\renewkeytheoremstyle{plain}{
+				headfont=\CJKfamily{zhkai}\bfseries,
+				notefont=\CJKfamily{zhkai}\bfseries,
+				bodyfont=\CJKfamily{zhkai},
+				tcolorbox=thm-box,
+				headindent=2em,
+			}
 
-	\renewkeytheoremstyle{plain}{
-		tcolorbox=thm-box,
-	}
+			\NewDocumentCommand{\@DeclareTheorem}{ o m m }{
+				\IfValueTF{#1}
+				{\declaretheorem[name=#3, refname={#3, #3}, Refname={#3, #3}, #1]{#2}}
+				{\declaretheorem[name=#3, refname={#3, #3}, Refname={#3, #3}]{#2}}
+			}
+		} {
+			\renewkeytheoremstyle{remark}{
+				headfont=\itshape,
+				bodyfont=\normalfont,
+				tcolorbox=ruled-thm-box
+			}
 
-	\NewDocumentCommand{\declthm}{ o m m }{
-		\IfValueTF{#1}
-		{\declaretheorem[name=#3, #1]{#2}}
-		{\declaretheorem[name=#3]{#2}}
-	}
+			\renewkeytheoremstyle{definition}{
+				headfont=\bfseries,
+				bodyfont=\normalfont,
+				tcolorbox=ruled-thm-box,
+			}
 
-	\NewDocumentCommand{\newthm}{ O{plain} m m }{
-		\declthm[numberlike=equation, style=#1]{#2}{#3}
-		\declthm[numbered=no, style=#1]{#2*}{#3}
-	}
+			\renewkeytheoremstyle{plain}{
+				tcolorbox=thm-box,
+			}
 
-	\__zz_if_lang:nT { en } {
-		\newthm{theorem}{Theorem}
-		\newthm{lemma}{Lemma}
-		\newthm{corollary}{Corollary}
-		\newthm{proposition}{Proposition}
-		\newthm{axiom}{Axiom}
-
-		\newthm[definition]{definition}{Definition}
-
-		\newthm[remark]{remark}{Remark}
-		\newthm[remark]{example}{Example}
-	}
-
-	\__zz_if_lang:nT { fr } {
-		\newthm{theorem}{Th\'eor\`eme}
-		\newthm{lemma}{Lemme}
-		\newthm{corollary}{Corollaire}
-		\newthm{proposition}{Proposition}
-		\newthm{axiom}{Axiome}
-
-		\newthm[definition]{definition}{D\'efinition}
-
-		\newthm[remark]{remark}{Remarque}
-		\newthm[remark]{example}{Exemple}
-	}
-
-	\__zz_if_lang:nT { cn } {
-		\zcsetup{pairsep={ 和 }, listsep={、}, lastsep={ 及 }, rangesep={ 至 }}
-
-		\zcRefTypeSetup{chapter}{refbounds={,第,章,}}
-		\zcRefTypeSetup{section}{refbounds={,第,节,}}
-		\zcRefTypeSetup{subsection}{refbounds={,第,小节,}}
-
-		\zcrename{appendix}{附录}
-		\zcnoname{chapter}
-		\zcnoname{section}
-		\zcnoname{subsection}
-
-		\renewcommand{\proofname}{\indent 证明}
-		\newenvironment{proof*}{\begin{proof}\renewcommand{\qedsymbol}{}}{\end{proof}}
-
-		\newenvironment{sln}{\renewcommand{\proofname}{\indent 解}\begin{proof}}{\end{proof}\renewcommand{\proofname}{\indent 证明}}
-		\newenvironment{sln*}{\renewcommand{\proofname}{\indent 解}\begin{proof*}\renewcommand{\proofname}{\indent 解}}{\end{proof*}\renewcommand{\proofname}{\indent 证明}}
-
-		\declaretheoremstyle[
-			headfont=\CJKfamily{zhkai}\bfseries,
-			notefont=\CJKfamily{zhkai}\bfseries,
-			bodyfont=\CJKfamily{zhkai},
-			headindent=2em
-		]{cthm}
-
-		\declaretheoremstyle[
-			headfont=\CJKfamily{zhkai}\bfseries,
-			notefont=\CJKfamily{zhkai}\bfseries,
-			bodyfont=\CJKfamily{zhsong},
-			headindent=2em
-		]{cdef}
-
-		\declaretheoremstyle[
-			headfont=\CJKfamily{zhkai},
-			notefont=\CJKfamily{zhkai},
-			bodyfont=\CJKfamily{zhkai},
-			headindent=2em
-		]{crem}
-
-		\RenewDocumentCommand{\declthm}{ o m m }{
-			\IfValueTF{#1}
-			{\declaretheorem[name=#3, refname={#3, #3}, Refname={#3, #3}, #1]{#2}}
-			{\declaretheorem[name=#3, refname={#3, #3}, Refname={#3, #3}]{#2}}
+			\NewDocumentCommand{\@DeclareTheorem}{ o m m }{
+				\IfValueTF{#1}
+				{\declaretheorem[name=#3, #1]{#2}}
+				{\declaretheorem[name=#3]{#2}}
+			}
 		}
 
-		\RenewDocumentCommand{\newthm}{ O{cthm} m m }{
-			\declthm[numberlike=equation, style=#1]{#2}{#3}
-			\declthm[numbered=no, style=#1]{#2*}{#3}
+		\NewDocumentCommand{\@NewTheorem}{ O{plain} m m }{
+			\@DeclareTheorem[numberlike=equation, style=#1]{#2}{#3}
+			\@DeclareTheorem[numbered=no, style=#1]{#2*}{#3}
 		}
 
-		\newthm{theorem}{定理}
-		\newthm{lemma}{引理}
-		\newthm{corollary}{推论}
-		\newthm{proposition}{命题}
-		\newthm{axiom}{公理}
+		\@NewTheorem{theorem}{\l__zz_theorem_tl}
+		\@NewTheorem{lemma}{\l__zz_lemma_tl}
+		\@NewTheorem{corollary}{\l__zz_corollary_tl}
+		\@NewTheorem{proposition}{\l__zz_proposition_tl}
+		\@NewTheorem{axiom}{\l__zz_axiom_tl}
 
-		\newthm[cdef]{definition}{定义}
+		\@NewTheorem[definition]{definition}{\l__zz_definition_tl}
 
-		\newthm[crem]{remark}{注}
-		\newthm[crem]{example}{例}
+		\@NewTheorem[remark]{remark}{\l__zz_remark_tl}
+		\@NewTheorem[remark]{example}{\l__zz_example_tl}
 
-		\declthm[style=cthm]{maintheorem}{主定理}
+		\@DeclareTheorem{maintheorem}{\l__zz_maintheorem_tl}
 		\renewcommand{\themaintheorem}{\Roman{maintheorem}}
 	}
-
-\fi
+}
 
 \newcommand{\pushright}[1]{\ifmeasuring@#1\else\omit\hfill$\displaystyle#1$\fi\ignorespaces}
 
@@ -553,7 +600,7 @@
 
 \NewDocumentCommand { \D } { m } { \diff{}{#1} }
 
-\let\del\partial
+\NewDocumentCommand { \del } {} {\partial}
 \NewDocumentCommand { \dbar } {} { \bar{\del} }
 
 % region Define commands from lists

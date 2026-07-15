@@ -43,24 +43,37 @@ declare -A LANGUAGES=(
     [cn]="chinese"
 )
 
-for lang in "${!LANGUAGES[@]}"; do
-    for class in ${CLASSES}; do
+for class in ${CLASSES}; do
+    if [[ "$class" == "beamer" ]]; then
+        langs=("${!LANGUAGES[@]}")
+    else
+        langs=("default")
+    fi
+
+    for lang in "${langs[@]}"; do
         log "$(printf '=%0.s' {1..50})"
-        log "Generating ${lang}.${class}.sty ..."
-        [[ "$class" == "beamer" ]] && CLASS_OPT="${LANGUAGES[$lang]:-$lang}, aspectratio=169" || CLASS_OPT="11pt, a4paper"
-        cat <<EOF > "${lang}.${class}.sty"
+        if [[ "$class" == "beamer" ]]; then
+            filename="${lang}.${class}"
+            CLASS_OPT="${LANGUAGES[$lang]:-$lang}, aspectratio=169"
+        else
+            filename="${class}"
+            CLASS_OPT="11pt, a4paper"
+        fi
+
+        log "Generating ${filename}.sty ..."
+        cat <<EOF > "${filename}.sty"
 \def\precompile{}
 \PassOptionsToPackage{tbtags}{amsmath}
 \RequirePackage[T1]{fontenc}
 \documentclass[${CLASS_OPT}]{${class}}
-\RequirePackage[${lang}]{../config}
+\RequirePackage{../config}
 EOF
         for engine in ${ENGINES}; do
             log "$(printf -- '-%.0s' {1..50})"
-            log "Precompiling ${lang}.${class}.sty with engine ${engine}..."
-            ${engine} -ini $OPT -jobname=${lang}.${class}.${engine} "&${engine} ${lang}.${class}.sty\dump"
+            log "Precompiling ${filename}.sty with engine ${engine}..."
+            ${engine} -ini $OPT -jobname=${filename}.${engine} "&${engine} ${filename}.sty\dump"
             if [ $? -ne 0 ]; then
-                log "Error: Failed to precompile ${lang}.${class}.sty"
+                log "Error: Failed to precompile ${filename}.sty"
                 exit 1
             fi
         done
