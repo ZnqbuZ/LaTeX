@@ -1,7 +1,5 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{config}[ZnqbuZ LaTeX Config]
-
-\makeatletter
+\ProvidesExplPackage{config}{}{}{ZnqbuZ LaTeX Config}
 
 \newcommand{\SetupFont@CN}{
 	\IfClassLoadedTF{ctexart}{}
@@ -28,8 +26,6 @@
 	\setCJKsansfont{FZLTHProGBK}[BoldFont=FZLTHProGBK DemiBold]
 	\setCJKmonofont{Source Han Mono}
 }
-
-\ExplSyntaxOn
 
 \@ifclassloaded { beamer }{ \def\beamer{} }{ }
 
@@ -85,10 +81,6 @@
 }
 
 \@onlypreamble\SetupFont
-
-\ExplSyntaxOff
-
-\makeatother
 
 \RequirePackage[tbtags]{amsmath}
 \RequirePackage[thmtools-compat]{keytheorems}
@@ -163,7 +155,10 @@
 % }
 
 \tikzset{elegant/.style={smooth, red, thick, samples=101}}
+
+\ExplSyntaxOff
 \tikzcdset{arrow style=math font}
+\ExplSyntaxOn
 
 \definecolor{darkred}{rgb}{0.6,0,0}
 \definecolor{darkblue}{rgb}{0,0,0.55}
@@ -174,174 +169,6 @@
 
 \raggedbottom
 
-\makeatletter
-
-\newcommand{\pushright}[1]{\ifmeasuring@#1\else\omit\hfill$\displaystyle#1$\fi\ignorespaces}
-
-\newcommand{\lowermathbox}[1]{\mathpalette\lowermathbox@{#1}}
-\newcommand{\lowermathbox@}[2]{
-	\settoheight{\@tempdima}{\m@th$\smallermathstyle{X}$}
-	\raisebox{-0.5\@tempdima}{\m@th$#1#2$}}
-
-\NewOverArrowCommand{\rightptarrow@}{%
-	start={},
-	middle=\harrowextender,
-	end={\clipbox{.5em 0pt 0pt 0pt}{$\rightharpoonup\mathrel{\mspace{-15mu}}\rightharpoonup$}},
-	trim start=0,
-	trim middle=3,
-	trim end=2,
-	shift left=5,
-	shift right=-1
-}
-
-\NewOverArrowCommand{\rightptarrowx@}{%
-	start={\hphantom{\smallermathstyle X}},
-	middle=\harrowextender,
-	end={\clipbox{.5em 0pt 0pt 0pt}{$\rightharpoonup\mathrel{\mspace{-15mu}}\rightharpoonup$}},
-	trim start=1,
-	trim middle=2,
-	trim end=1,
-	shift left=-2,
-	shift right=-2
-}
-
-\NewDocumentCommand{\rightparatrans}{ o m }{
-	\IfNoValueTF{#1}
-	{ \rightptarrow@{#2} }
-	{ \settowidth{\@tempdima}{$#1$}
-		\tensor[^{\lowermathbox{\smallermathstyle{#1}}\mspace{-12mu}}]{{\rightptarrowx@{#2}}}{} }
-}
-
-\NewOverArrowCommand{\leftptarrow@}{%
-	start={\clipbox{0pt 0pt .5em 0pt}{$\leftharpoonup\mathrel{\mspace{-15mu}}\leftharpoonup$}},
-	middle=\harrowextender,
-	end={},
-	trim start=2,
-	trim middle=3,
-	trim end=0,
-	shift left=2,
-	shift right=2
-}
-
-\NewOverArrowCommand{\leftptarrowx@}{%
-	start={\clipbox{0pt 0pt .5em 0pt}{$\leftharpoonup\mathrel{\mspace{-15mu}}\leftharpoonup$}},
-	middle=\harrowextender,
-	end={\hphantom{\smallermathstyle X}},
-	trim start=1,
-	trim middle=2,
-	trim end=0,
-	shift left=2,
-	shift right=-4
-}
-
-\NewDocumentCommand{\leftparatrans}{ o m }{
-	\IfNoValueTF{#1}
-	{ \leftptarrow@{#2} }
-	{ \settowidth{\@tempdima}{$#1$}
-		\tensor{{\leftptarrowx@{#2}}}{^{\mspace{-12mu}\lowermathbox{\smallermathstyle{#1}}}} }
-}
-
-\makeatother
-
-\DeclarePairedDelimiter\bra{\lparen}{\rparen}
-\DeclarePairedDelimiterX\dbra[2]{\lparen}{\rparen}{#1,#2}
-\DeclarePairedDelimiter\Bra{\lbrace}{\rbrace}
-\DeclarePairedDelimiterX\set[2]{\lbrace}{\rbrace}{\mathrel{}#1\mathrel{}\delimsize\vert\mathrel{}#2\mathrel{}}
-\DeclarePairedDelimiter\sqbra{\lbrack}{\rbrack}
-\DeclarePairedDelimiter\angbra{\langle}{\rangle}
-\DeclarePairedDelimiter\abs{\lvert}{\rvert}
-\DeclarePairedDelimiter\norm{\lVert}{\rVert}
-\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
-\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
-
-\ExplSyntaxOn
-
-\cs_new_protected:Npn \__zz_q:nnnn #1#2#3#4
-{
-	\hbox_set:Nn \l_tmpa_box { $#3x$ }
-	\dim_set:Nn \l_tmpa_dim { \box_ht:N \l_tmpa_box }
-	\mathord
-	{
-		\left.
-		\raisebox{.25\l_tmpa_dim}{\ensuremath{#3{#1}}}
-		\kern-\nulldelimiterspace
-		\middle/
-		\kern-\nulldelimiterspace
-		\raisebox{-.25\l_tmpa_dim}{\ensuremath{#3{#2}}}
-		\kern-\nulldelimiterspace
-		\right.
-	}
-}
-
-\NewDocumentCommand { \q } { m m }
-{
-	\mathpalette { \__zz_q:nnnn {#1} {#2} } { }
-}
-
-\cs_new_protected:Npn \__zz_coq:nnnn #1#2#3#4
-{
-	\hbox_set:Nn \l_tmpa_box { $#3x$ }
-	\dim_set:Nn \l_tmpa_dim { \box_ht:N \l_tmpa_box }
-	\mathord
-	{
-		\left.
-		\raisebox{-.25\l_tmpa_dim}{\ensuremath{#3{#1}}}
-		\kern-\nulldelimiterspace
-		\middle\backslash
-		\kern-\nulldelimiterspace
-		\raisebox{.25\l_tmpa_dim}{\ensuremath{#3{#2}}}
-		\kern-\nulldelimiterspace
-		\right.
-	}
-}
-
-\NewDocumentCommand { \coq } { m m }
-{
-	\mathpalette { \__zz_coq:nnnn {#1} {#2} } { }
-}
-
-\ExplSyntaxOff
-
-\newcommand{\rmnum}[1]{{\romannumeral#1}}
-\newcommand{\Rmnum}[1]{{\uppercase\expandafter{\romannumeral#1}}}
-
-\newcommand{\inv}[1]{\frac{1}{#1}}
-\newcommand{\toinf}[2][]{\lim_{#2\rightarrow#1\infty}}
-\newcommand{\toinfsup}[2][]{\varlimsup_{#2\rightarrow#1\infty}}
-\newcommand{\toinfinf}[2][]{\varliminf_{#2\rightarrow#1\infty}}
-\newcommand{\series}[1][n=1]{\sum_{#1}^\infty}
-\newcommand{\product}[1][n=1]{\prod_{#1}^\infty}
-
-\newcommand{\e}{\mathrm{e}}
-\newcommand{\transpose}[1]{{#1}^{\mathsf{T}}}
-
-\newcommand{\infint}[3][x]{\int_{#2}^{+\infty}#3\d #1}
-\newcommand{\vepsl}{\varepsilon}
-
-\newcommand{\fserc}[2][n]{\inv{\pi}\int_{-\pi}^\pi#2\cos#1x\dx}
-\newcommand{\fsers}[2][n]{\inv{\pi}\int_{-\pi}^\pi#2\sin#1x\dx}
-\newcommand{\fsero}[1]{\inv{2\pi}\int_{-\pi}^\pi#1\dx}
-
-\newcommand{\sint}{\int\limits}
-\newcommand{\dint}{\iint\limits}
-\newcommand{\tint}{\iiint\limits}
-
-\newcommand{\restrict}[3][]{{\left.{#2}\right|_{#3}^{#1}}}
-\newcommand{\induce}[3][]{{\left.{#2}\right\uparrow^{#3}_{#1}}}
-
-\newcommand{\sumcyc}{\sum_{\text{cyc}}}
-
-\newcommand{\ol}{\overline}
-\newcommand{\ul}{\underline}
-\newcommand{\wh}{\widehat}
-\newcommand{\wt}{\widetilde}
-
-\newcommand{\id}{\mathrm{id}}
-
-\allowdisplaybreaks
-
-\swapnumbers
-
 \ifx\beamer\undefined
 
 	\AtBeginEnvironment{proof}{\vspace*{-\parskip}}
@@ -350,6 +177,7 @@
 	\numberwithin{thm}{section}
 	\numberwithin{equation}{section}
 
+	\ExplSyntaxOff
 	\tcbset{
 		thm-box/.style={
 				enhanced,
@@ -403,6 +231,7 @@
 					}
 			}
 	}
+	\ExplSyntaxOn
 
 	\renewkeytheoremstyle{remark}{
 		headfont=\itshape,
@@ -430,8 +259,6 @@
 		\declthm[numberlike=equation, style=#1]{#2}{#3}
 		\declthm[numbered=no, style=#1]{#2*}{#3}
 	}
-
-	\ExplSyntaxOn
 
 	\__zz_if_lang:nT { en } {
 		\newthm{theorem}{Theorem}
@@ -524,11 +351,171 @@
 		\renewcommand{\themaintheorem}{\Roman{maintheorem}}
 	}
 
-	\ExplSyntaxOff
-
 \fi
 
+\newcommand{\pushright}[1]{\ifmeasuring@#1\else\omit\hfill$\displaystyle#1$\fi\ignorespaces}
+
+\newcommand{\lowermathbox}[1]{\mathpalette\lowermathbox@{#1}}
+\newcommand{\lowermathbox@}[2]{
+	\settoheight{\@tempdima}{\m@th$\smallermathstyle{X}$}
+	\raisebox{-0.5\@tempdima}{\m@th$#1#2$}}
+
+\ExplSyntaxOff
+
+\NewOverArrowCommand{\rightptarrow@}{%
+	start={},
+	middle=\harrowextender,
+	end={\clipbox{.5em 0pt 0pt 0pt}{$\rightharpoonup\mathrel{\mspace{-15mu}}\rightharpoonup$}},
+	trim start=0,
+	trim middle=3,
+	trim end=2,
+	shift left=5,
+	shift right=-1
+}
+
+\NewOverArrowCommand{\rightptarrowx@}{%
+	start={\hphantom{\smallermathstyle X}},
+	middle=\harrowextender,
+	end={\clipbox{.5em 0pt 0pt 0pt}{$\rightharpoonup\mathrel{\mspace{-15mu}}\rightharpoonup$}},
+	trim start=1,
+	trim middle=2,
+	trim end=1,
+	shift left=-2,
+	shift right=-2
+}
+
+\NewDocumentCommand{\rightparatrans}{ o m }{
+	\IfNoValueTF{#1}
+	{ \rightptarrow@{#2} }
+	{ \settowidth{\@tempdima}{$#1$}
+		\tensor[^{\lowermathbox{\smallermathstyle{#1}}\mspace{-12mu}}]{{\rightptarrowx@{#2}}}{} }
+}
+
+\NewOverArrowCommand{\leftptarrow@}{%
+	start={\clipbox{0pt 0pt .5em 0pt}{$\leftharpoonup\mathrel{\mspace{-15mu}}\leftharpoonup$}},
+	middle=\harrowextender,
+	end={},
+	trim start=2,
+	trim middle=3,
+	trim end=0,
+	shift left=2,
+	shift right=2
+}
+
+\NewOverArrowCommand{\leftptarrowx@}{%
+	start={\clipbox{0pt 0pt .5em 0pt}{$\leftharpoonup\mathrel{\mspace{-15mu}}\leftharpoonup$}},
+	middle=\harrowextender,
+	end={\hphantom{\smallermathstyle X}},
+	trim start=1,
+	trim middle=2,
+	trim end=0,
+	shift left=2,
+	shift right=-4
+}
+
+\NewDocumentCommand{\leftparatrans}{ o m }{
+	\IfNoValueTF{#1}
+	{ \leftptarrow@{#2} }
+	{ \settowidth{\@tempdima}{$#1$}
+		\tensor{{\leftptarrowx@{#2}}}{^{\mspace{-12mu}\lowermathbox{\smallermathstyle{#1}}}} }
+}
+
 \ExplSyntaxOn
+
+\DeclarePairedDelimiter\bra{\lparen}{\rparen}
+\DeclarePairedDelimiterX\dbra[2]{\lparen}{\rparen}{#1,#2}
+\DeclarePairedDelimiter\Bra{\lbrace}{\rbrace}
+\DeclarePairedDelimiterX\set[2]{\lbrace}{\rbrace}{\mathrel{}#1\mathrel{}\delimsize\vert\mathrel{}#2\mathrel{}}
+\DeclarePairedDelimiter\sqbra{\lbrack}{\rbrack}
+\DeclarePairedDelimiter\angbra{\langle}{\rangle}
+\DeclarePairedDelimiter\abs{\lvert}{\rvert}
+\DeclarePairedDelimiter\norm{\lVert}{\rVert}
+\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+
+\cs_new_protected:Npn \__zz_q:nnnn #1#2#3#4
+{
+	\hbox_set:Nn \l_tmpa_box { $#3x$ }
+	\dim_set:Nn \l_tmpa_dim { \box_ht:N \l_tmpa_box }
+	\mathord
+	{
+		\left.
+		\raisebox{.25\l_tmpa_dim}{\ensuremath{#3{#1}}}
+		\kern-\nulldelimiterspace
+		\middle/
+		\kern-\nulldelimiterspace
+		\raisebox{-.25\l_tmpa_dim}{\ensuremath{#3{#2}}}
+		\kern-\nulldelimiterspace
+		\right.
+	}
+}
+
+\NewDocumentCommand { \q } { m m }
+{
+	\mathpalette { \__zz_q:nnnn {#1} {#2} } { }
+}
+
+\cs_new_protected:Npn \__zz_coq:nnnn #1#2#3#4
+{
+	\hbox_set:Nn \l_tmpa_box { $#3x$ }
+	\dim_set:Nn \l_tmpa_dim { \box_ht:N \l_tmpa_box }
+	\mathord
+	{
+		\left.
+		\raisebox{-.25\l_tmpa_dim}{\ensuremath{#3{#1}}}
+		\kern-\nulldelimiterspace
+		\middle\backslash
+		\kern-\nulldelimiterspace
+		\raisebox{.25\l_tmpa_dim}{\ensuremath{#3{#2}}}
+		\kern-\nulldelimiterspace
+		\right.
+	}
+}
+
+\NewDocumentCommand { \coq } { m m }
+{
+	\mathpalette { \__zz_coq:nnnn {#1} {#2} } { }
+}
+
+\newcommand{\rmnum}[1]{{\romannumeral#1}}
+\newcommand{\Rmnum}[1]{{\uppercase\expandafter{\romannumeral#1}}}
+
+\newcommand{\inv}[1]{\frac{1}{#1}}
+\newcommand{\toinf}[2][]{\lim_{#2\rightarrow#1\infty}}
+\newcommand{\toinfsup}[2][]{\varlimsup_{#2\rightarrow#1\infty}}
+\newcommand{\toinfinf}[2][]{\varliminf_{#2\rightarrow#1\infty}}
+\newcommand{\series}[1][n=1]{\sum_{#1}^\infty}
+\newcommand{\product}[1][n=1]{\prod_{#1}^\infty}
+
+\newcommand{\e}{\mathrm{e}}
+\newcommand{\transpose}[1]{{#1}^{\mathsf{T}}}
+
+\newcommand{\infint}[3][x]{\int_{#2}^{+\infty}#3\d #1}
+\newcommand{\vepsl}{\varepsilon}
+
+\newcommand{\fserc}[2][n]{\inv{\pi}\int_{-\pi}^\pi#2\cos#1x\dx}
+\newcommand{\fsers}[2][n]{\inv{\pi}\int_{-\pi}^\pi#2\sin#1x\dx}
+\newcommand{\fsero}[1]{\inv{2\pi}\int_{-\pi}^\pi#1\dx}
+
+\newcommand{\sint}{\int\limits}
+\newcommand{\dint}{\iint\limits}
+\newcommand{\tint}{\iiint\limits}
+
+\newcommand{\restrict}[3][]{{\left.{#2}\right|_{#3}^{#1}}}
+\newcommand{\induce}[3][]{{\left.{#2}\right\uparrow^{#3}_{#1}}}
+
+\newcommand{\sumcyc}{\sum_{\text{cyc}}}
+
+\newcommand{\ol}{\overline}
+\newcommand{\ul}{\underline}
+\newcommand{\wh}{\widehat}
+\newcommand{\wt}{\widetilde}
+
+\newcommand{\id}{\mathrm{id}}
+
+\allowdisplaybreaks
+
+\swapnumbers
 
 \str_map_inline:nn { x X y Y z Z } {
 	\cs_new_protected:cpn { #1 } { \bra { #1 } }
@@ -913,5 +900,3 @@
 	\__zz_define_letters:nn { mfrak } { \mathfrak }
 }
 % endregion
-
-\ExplSyntaxOff
