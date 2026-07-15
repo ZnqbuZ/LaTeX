@@ -1,6 +1,11 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesExplPackage{config}{}{}{ZnqbuZ LaTeX Config}
 
+\bool_new:N \g_zz_beamer_bool
+\IfClassLoadedTF { beamer }
+{ \bool_gset_true:N \g_zz_beamer_bool }
+{ \bool_gset_false:N \g_zz_beamer_bool }
+
 \ExplSyntaxOff
 \newcommand{\@setCJKfonts}{
 	\setCJKfamilyfont{zhsong}{Source Han Serif SC}[BoldFont=Source Han Serif SC Bold]
@@ -53,20 +58,26 @@
 
 		\@setCJKfonts
 	} {
-		\RequirePackage[english, french, provide = *]{babel}
-		\str_case:VnF \l_zz_lang_tl {
-			{ en } { \babelprovide[main, import]{english} }
-			{ fr } { \babelprovide[main, import]{french} }
-		} { }
+		\str_case:Vn \l_zz_lang_tl {
+			{ en } {
+				\RequirePackage[french, english, main=english, provide = *]{babel}
+				\bool_if:NT \g_zz_beamer_bool {
+					\uselanguage{English}
+					\languagepath{English}
+				}
+			}
+			{ fr } {
+				\RequirePackage[english, french, main=french, provide = *]{babel}
+				\bool_if:NT \g_zz_beamer_bool {
+					\uselanguage{French}
+					\languagepath{French}
+				}
+			}
+		}
 	}
 }
 
 \@onlypreamble\SetupConfig
-
-\bool_new:N \g_zz_is_beamer_bool
-\IfClassLoadedTF { beamer }
-{ \bool_gset_true:N \g_zz_is_beamer_bool }
-{ \bool_gset_false:N \g_zz_is_beamer_bool }
 
 \tl_new:N \l_zz_lang_tl
 
@@ -189,7 +200,7 @@
 \RequirePackage{standalone}
 \RequirePackage{tikz-cd}
 
-\bool_if:NF \g_zz_is_beamer_bool {
+\bool_if:NF \g_zz_beamer_bool {
 	\RequirePackage[shortlabels]{enumitem}
 
 	\RequirePackage{geometry}
@@ -304,7 +315,7 @@
 }
 \ExplSyntaxOn
 
-\bool_if:NF \g_zz_is_beamer_bool {
+\bool_if:NF \g_zz_beamer_bool {
 
 	\AtBeginEnvironment{proof}{\vspace*{-\parskip}}
 
