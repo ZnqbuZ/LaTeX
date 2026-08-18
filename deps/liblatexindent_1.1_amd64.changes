@@ -1,0 +1,26 @@
+Format: 1.8
+Date: Tue, 18 Aug 2026 14:57:28 +0000
+Source: liblatexindent
+Binary: liblatexindent
+Built-For-Profiles: derivative.ubuntu noudeb
+Architecture: all
+Version: 1.1
+Distribution: unstable
+Urgency: low
+Maintainer: Luna Yao <me@znqbuz.com>
+Changed-By: Luna Yao <me@znqbuz.com>
+Description:
+ liblatexindent - Dummy package to fulfill package dependencies
+Changes:
+ liblatexindent (1.1) unstable; urgency=low
+ .
+   * First version
+Checksums-Sha1:
+ 397d756b99f5f3c3a89f8dd96d49298706e15db4 2322 liblatexindent_1.1_all.deb
+ 5579250f21f8d4f725e418c8b056644636c64d9e 5958 liblatexindent_1.1_amd64.buildinfo
+Checksums-Sha256:
+ 78ba24bc44dd6e68b8a42a208e4c4b93b9f693f58a02de5a7bf29b17109b6614 2322 liblatexindent_1.1_all.deb
+ 2367ca6bb7a91ac9b3d8f0b7d4839cb7073bb0e67794a90b932e0ba8455f4ae4 5958 liblatexindent_1.1_amd64.buildinfo
+Files:
+ 5f9e61a7c7637f32a86873f3bd592d9e 2322 misc optional liblatexindent_1.1_all.deb
+ 015734513731f3a23140435ba3c1add4 5958 misc optional liblatexindent_1.1_amd64.buildinfo
