@@ -24,19 +24,29 @@
 \NewDocumentCommand \SetupConfig { m } {
 	\keys_set:nn { __zz_config } { #1 }
 
-	\bool_if:nT { \sys_if_engine_xetex_p: || \sys_if_engine_luatex_p: } {
-		\let\circledR\relax
-		\let\circledS\relax
-		\RequirePackage[warnings-off={mathtools-colon, mathtools-overbracket}, bold-style=ISO]{unicode-math}
-		\RequirePackage[default]{fontsetup}
-		\setmathfont[range={cal, bfcal}, StylisticSet=0]{NewComputerModernMath}
-		\setmathfont[range={"1D49C-"1D4B5, "1D4D0-"1D4E9}, StylisticSet=1]{NewComputerModernMath}
+	\AtEndPreamble {
+		\bool_if:nTF { \sys_if_engine_xetex_p: || \sys_if_engine_luatex_p: } {
+			\let\circledR\relax
+			\let\circledS\relax
+			\RequirePackage[warnings-off={mathtools-colon, mathtools-overbracket}, bold-style=ISO]{unicode-math}
+			\RequirePackage[default]{fontsetup}
+
+			\IfFontExistsTF { NewComputerModern~Math } {
+                \setmathfont[range={cal, bfcal}, StylisticSet=0]{NewComputerModern~Math}
+                \setmathfont[range={"1D49C-"1D4B5, "1D4D0-"1D4E9}, StylisticSet=1]{NewComputerModern~Math}
+            } {
+				\setmathfont[range={cal, bfcal}, StylisticSet=0]{NewComputerModernMath}
+				\setmathfont[range={"1D49C-"1D4B5, "1D4D0-"1D4E9}, StylisticSet=1]{NewComputerModernMath}
+			}
+		} {
+			\RequirePackage{amssymb, bm}
+		}
 	}
 
 	\__zz_if_lang:nTF { cn } {
 		\bool_if:nF { \sys_if_engine_xetex_p: || \sys_if_engine_luatex_p: } {
 			\msg_new:nnn { __zz_config } { wrong-engine-for-cn } {
-				Compilation~aborted.~Please~switch~to~xelatex~or~lualatex for CN support.
+				Compilation~aborted.~Please~switch~to~xelatex~or~lualatex~for~Chinese~support.
 			}
 			\msg_fatal:nn { __zz_config } { wrong-engine-for-cn }
 		}
@@ -174,14 +184,13 @@
 
 \RequirePackage[tbtags]{amsmath}
 \RequirePackage[thmtools-compat]{keytheorems}
-\RequirePackage{amssymb,diffcoeff,extarrows,etoolbox,mathtools,overarrows,tensor}
+\RequirePackage{diffcoeff,extarrows,etoolbox,mathtools,overarrows,tensor}
 \RequirePackage{array,tabularx}
 
 \RequirePackage[backend=biber,style=alphabetic,backref=true,url=false]{biblatex}
 \DeclareFieldFormat{postnote}{#1}
 \DeclareFieldFormat{multipostnote}{#1}
 
-\RequirePackage{bm}
 \RequirePackage{booktabs}
 \RequirePackage{cancel, slashed}
 \RequirePackage{csquotes}
